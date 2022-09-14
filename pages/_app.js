@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
+import { ReducedMotionProvider } from '../context/context';
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <ReducedMotionProvider>
+      <Component {...pageProps} />
+    </ReducedMotionProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;

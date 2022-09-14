@@ -1,0 +1,29 @@
+# Ignore artifacts:
+build
+coverage
+.next
+
+.environments
+public
+
+package-lock.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules
+
+.npm
+.node_repl_history
+.next
+.netlify
+.parcel-cache
+.yarn
+out
+build
+# Test
+lib
+tsconfig.json
