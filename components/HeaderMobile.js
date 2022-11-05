@@ -4,15 +4,7 @@ import { animated, useSpring } from 'react-spring';
 import { ReducedMotionContext } from '../context/context.js';
 import ReducedMotionToggle from './ReducedMotionToggle.js';
 import Hamburger from './icons/Hamburger.js';
-import {
-  red,
-  lightYellow,
-  green,
-  darkPurple,
-  chartreuse,
-  black,
-  yellow,
-} from '../styles/colors';
+import { red, lightYellow, green } from '../styles/colors';
 
 export default function Header() {
   const { animation } = useContext(ReducedMotionContext);
@@ -28,10 +20,6 @@ export default function Header() {
       <HeaderWrapper openNav={openNav} animation={animation}>
         <div className="toggle-wrapper">
           <ReducedMotionToggle />
-        </div>
-        <div className="header-title">
-          <h1>Amy Frear</h1>
-          <h2>Web Developer</h2>
         </div>
         <dialog id="mySidenav" className="sidenav">
           <button
@@ -58,40 +46,46 @@ export default function Header() {
             <Hamburger />
           </button>
         </div>
+        <div className="header-title">
+          <h1>Amy Frear</h1>
+          <h2>Web Developer</h2>
+        </div>
       </HeaderWrapper>
     </animated.div>
   );
 }
 
 const HeaderWrapper = styled.div`
-  display: none;
+  position: absolute;
+  display: grid;
+  justify-content: space-between;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  background-color: ${green};
+  height: 200px;
   @media (min-width: 750px) {
-    position: absolute;
-    display: grid;
-    background-color: ${green};
-    justify-content: space-between;
-    width: 100%;
-    grid-template-columns: 1fr 2fr 1fr;
-    height: 160px;
+    display: none;
   }
   .toggle-wrapper {
-    margin: 2rem 0 0 2rem;
+    margin: 1rem 0 0 1rem;
+    max-width: 100px;
+    height: 20px;
   }
   .header-title {
     text-align: center;
+    grid-column: 1 / -1;
   }
   h1 {
-    margin-top: 1rem;
     font-family: 'Bowlby One SC';
-    font-size: clamp(18px, 10vw, 86px);
+    font-size: clamp(50px, 10vw, 98px);
     color: ${lightYellow};
-    text-shadow: -4px 4px 0 #000, 4px 4px 0 #000, 4px -4px 0 #000,
-      -4px -4px 0 #000;
+    text-shadow: -3px 3px 0 #000, 3px 3px 0 #000, 3px -3px 0 #000,
+      -3px -3px 0 #000;
   }
 
   h2 {
     font-family: 'Bowlby One SC';
-    font-size: clamp(14px, 4vw, 34px);
+    font-size: clamp(24px, 4vw, 42px);
     color: ${lightYellow};
     text-shadow: -3px 3px 0 #000, 3px 3px 0 #000, 3px -3px 0 #000,
       -3px -3px 0 #000;
@@ -113,14 +107,14 @@ const HeaderWrapper = styled.div`
   /* The side navigation menu */
   .sidenav {
     display: block;
-    height: 100%; /* 100% Full-height */
+    height: 100%;
     width: ${(props) => (props.openNav ? `250px` : `0px`)};
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
+    position: fixed;
+    z-index: 1;
+    top: 0;
     right: 0;
     left: unset;
-    background-color: ${yellow};
+    background-color: ${lightYellow};
     border-radius: 50% 0 0 50%;
     border: ${(props) => (props.openNav ? `2px solid black` : `none`)};
     border-right: none;

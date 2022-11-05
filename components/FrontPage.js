@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import Curve2 from './icons/Curve2';
+import VideoBG from './VideoBG';
+import { ReducedMotionContext } from '../context/context';
+import { red } from '../styles/colors';
 
 export default function FrontPage() {
-  return <IntroSection />;
+  const { animation } = useContext(ReducedMotionContext);
+  return (
+    <IntroSection isAnimation={animation}>
+      {animation && <VideoBG isAnimation={animation} />}
+    </IntroSection>
+  );
 }
 
 const IntroSection = styled.section`
-  position: relative;
+  background: ${(props) =>
+    props.isAnimation ? red : `url(assets/eyesite-demo-still.jpeg)`};
   height: 100vh;
-  background-image: url(assets/blob.jpg);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-position-x: 70%;
   z-index: -1;
   margin-top: 0;
+  @media (min-width: 750px) {
+    background-position-x: unset;
+  }
 `;

@@ -54,9 +54,12 @@ const ReducedMotionToggleWrapper = styled.div`
 
     font-family: 'Fjalla One', sans-serif;
     text-transform: uppercase;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 99.5%;
     color: black;
+    @media (min-width: 750px) {
+      font-size: 22px;
+    }
   }
 
   /* Hide default HTML checkbox */

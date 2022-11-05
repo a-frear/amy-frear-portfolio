@@ -8,7 +8,7 @@ export default function Curve2({ fill = green, animate = false }) {
   const { animation } = useContext(ReducedMotionContext);
   const springProps = useSpring({
     config: { mass: 1, friction: 100 },
-    from: { y: animation ? -15 : -200 },
+    from: { y: animation ? -100 : -200 },
     to: { y: 0 },
   });
 

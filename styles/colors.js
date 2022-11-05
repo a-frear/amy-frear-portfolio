@@ -1,7 +1,12 @@
-export const green = '#bbc085';
+export const green = '#d1d646';
 export const red = '#F72C25';
 export const purple = '#DAB6FC';
-export const blue = '#3BA99C';
+export const blue = '#57c4e5';
+export const hotPink = '#F73BB2';
 export const orange = '#FFB86F';
 export const lightYellow = '#fcf6b1';
-export const pink = '#FE938C';
+export const pink = '#E24E1B';
+export const chartreuse = '#f97068';
+export const darkPurple = '#033860';
+export const yellow = '#FCE762';
+export const black = '#0C0A09';
