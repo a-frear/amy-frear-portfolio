@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { hotPink, lightYellow } from '../styles/colors';
+import { green, hotPink, lightYellow } from '../styles/colors';
 import VisuallyHiddenText from './VisuallyHiddenText';
 
 export default function Intro() {
@@ -29,7 +29,7 @@ export default function Intro() {
 }
 
 const IntroSection = styled.section`
-  background-color: ${hotPink};
+  background-color: #d4a840;
   display: grid;
   align-items: center;
   justify-content: center;
@@ -54,9 +54,9 @@ const Heading = styled.h2`
 
 const Body = styled.p`
   margin-top: 2rem;
-  color: white;
+  color: black;
   a {
-    color: white;
+    color: black;
     text-decoration: none;
   }
 `;
@@ -64,6 +64,7 @@ const Body = styled.p`
 const Headshot = styled.div`
   width: 300px;
   height: 300px;
+  border: 10px solid ${green};
   background-image: url('assets/amy-hs.jpeg');
   -webkit-background-size: cover;
   -moz-background-size: cover;

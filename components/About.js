@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {
   orange,
   lightYellow,
+  lightGreen,
   green,
   pink,
   hotPink,
@@ -11,11 +12,29 @@ import {
   chartreuse,
   darkPurple,
 } from '../styles/colors';
+import VisuallyHiddenText from './VisuallyHiddenText';
 
 export default function About() {
   return (
-    <AboutWrapper id="about">
-      <Content class="half-section">
+    <AboutWrapper id="about" className="full-section">
+      <Media>
+        <iframe
+          title="about-video"
+          src="https://player.vimeo.com/video/796281157?h=2f46cc8f63&autoplay=1&loop=1&background=1"
+          width="500"
+          height="500"
+          frameBorder="0"
+          allow="autoplay; loop"
+          allowFullScreen
+        />
+        <VisuallyHiddenText>
+          A recording of an interactive component plays on a retro computer. The
+          component shows a rod. It is clicked once and the temperature rises.
+          It is clicked again and it expands. A microscopic view of its contents
+          appears.{' '}
+        </VisuallyHiddenText>
+      </Media>
+      <Content>
         <Heading>About</Heading>
         <Body>
           My approach to developing is heavily influenced by my background in
@@ -39,29 +58,39 @@ export default function About() {
 
 const AboutWrapper = styled.section`
   display: grid;
+  display: grid;
+  align-items: center;
+  justify-content: center;
   grid-gap: 10%;
-  background-color: ${lightYellow};
+  background-color: #ccd131;
   @media (min-width: 750px) {
     grid-template-columns: 1fr 1fr;
+    padding-left: 50px;
+    padding-right: 50px;
   }
 `;
 
 const Content = styled.div`
-  grid-column: 1 / 2;
+  grid-column: 2 / -1;
+  display: grid;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Heading = styled.h2`
   font-size: clamp(52px, 8vw, 76px);
   font-family: 'Bowlby One SC';
-  color: ${red};
+  color: ${lightYellow};
   text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000,
     -1px -1px 0 #000;
 `;
 
 const Body = styled.p`
+  color: #fff;
   margin-top: 2rem;
+  color: black;
   a {
-    color: ${red};
+    color: black;
     text-decoration: none;
 
     font-size: 38px;
@@ -70,5 +99,15 @@ const Body = styled.p`
     color: ${blue};
     text-shadow: -0.8px 0.8px 0 #000, 0.8px 0.8px 0 #000, 0.8px -0.8px 0 #000,
       -0.8px -0.8px 0 #000;
+  }
+`;
+
+const Media = styled.div`
+  grid-column: 1 / 2;
+  display: grid;
+  justify-content: right;
+  align-items: center;
+  iframe {
+    border: 10px solid ${hotPink};
   }
 `;

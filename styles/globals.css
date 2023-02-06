@@ -190,9 +190,9 @@ p {
   position: relative;
   display: block;
   width: calc(100% + 1.3px);
-  height: 30vh;
+  /* height: 30vh; */
   transform: rotateY(180deg);
   @media (min-width: 750px) {
-    height: 5vh;
+    /* height: 5vh; */
   }
 }

@@ -7,7 +7,7 @@ export default function VideoBG() {
       <Overlay />
       <iframe
         title="bg-video"
-        src="https://player.vimeo.com/video/547280824?h=050797c24d?autoplay=1&loop=1&background=1"
+        src="https://player.vimeo.com/video/547280824?h=050797c24d?autoplay=1&loop=1&background=1&autopause=0"
         width="100%"
         height="100%"
         frameBorder="0"
