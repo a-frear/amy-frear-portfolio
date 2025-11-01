@@ -25,9 +25,11 @@ export default function Header() {
   if (!mounted) return null;
 
   return (
-    <HeaderAnimationWrapper style={springProps}>
-      <Curve2 />
-      <HeaderWrapper openNav={openNav} animation={animation}>
+    <HeaderWrapper>
+      <AnimatedBackground style={springProps}>
+        <Curve2 />
+      </AnimatedBackground>
+      <HeaderContainer openNav={openNav} animation={animation}>
         <div className="toggle-wrapper">
           <ReducedMotionToggle />
         </div>
@@ -58,28 +60,39 @@ export default function Header() {
           <h1>Amy Frear</h1>
           <h2>Web Developer</h2>
         </div>
-      </HeaderWrapper>
-    </HeaderAnimationWrapper>
+      </HeaderContainer>
+    </HeaderWrapper>
   );
 }
 
-const HeaderAnimationWrapper = animated(styled.div`
+const HeaderWrapper = styled.div`
   position: relative;
-  z-index: 10;
+  background-color: ${red};
   @media (min-width: 750px) {
     display: none;
   }
+`;
+
+const AnimatedBackground = animated(styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  pointer-events: none;
+  background-color: ${green};
+  height: 200px;
 `);
 
-const HeaderWrapper = styled.div`
+const HeaderContainer = styled.div`
   position: relative;
+  z-index: 10;
   display: grid;
   justify-content: space-between;
   width: 100%;
   grid-template-columns: 1fr 1fr;
-  background-color: ${green};
+  background-color: transparent;
   height: 200px;
-  z-index: 20;
   @media (min-width: 750px) {
     display: none;
   }
