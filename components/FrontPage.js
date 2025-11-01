@@ -8,14 +8,13 @@ export default function FrontPage() {
   const { animation } = useContext(ReducedMotionContext);
   return (
     <IntroSection isAnimation={animation}>
-      {animation && <VideoBG isAnimation={animation} />}
+      <VideoBG isAnimation={animation} />
     </IntroSection>
   );
 }
 
 const IntroSection = styled.section`
-  background: ${(props) =>
-    props.isAnimation ? red : `url(assets/eyesite-demo-still.jpeg)`};
+  background: red;
   height: 100vh;
   -webkit-background-size: cover;
   -moz-background-size: cover;

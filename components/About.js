@@ -17,22 +17,24 @@ import VisuallyHiddenText from './VisuallyHiddenText';
 export default function About() {
   return (
     <AboutWrapper id="about" className="full-section">
-      <Media>
-        <iframe
-          title="about-video"
-          src="https://player.vimeo.com/video/796281157?h=2f46cc8f63&autoplay=1&loop=1&background=1"
-          width="500"
-          height="500"
-          frameBorder="0"
-          allow="autoplay; loop"
-          allowFullScreen
-        />
-        <VisuallyHiddenText>
+      <Media tabIndex={0}>
+        <div className="media-iframe-wrapper">
+          <iframe
+            title="about-video"
+            src="https://player.vimeo.com/video/796281157?h=2f46cc8f63&autoplay=1&loop=1&background=1"
+            width="500"
+            height="500"
+            frameBorder="0"
+            allow="autoplay; loop"
+            allowFullScreen
+          />
+        </div>
+        {/* <VisuallyHiddenText>
           A recording of an interactive component plays on a retro computer. The
           component shows a rod. It is clicked once and the temperature rises.
           It is clicked again and it expands. A microscopic view of its contents
           appears.{' '}
-        </VisuallyHiddenText>
+        </VisuallyHiddenText> */}
       </Media>
       <Content>
         <Heading>About</Heading>
@@ -40,13 +42,9 @@ export default function About() {
           My approach to developing is heavily influenced by my background in
           film and theater. Whether on set or at my computer, collaborating with
           others to make something exciting and beautiful is a passion of mine.
-          I am currently a developer at{' '}
+          I am currently a developer with the amazing team at{' '}
           <a href="https://www.bluecadet.com/" target="_blank" rel="noreferrer">
             Bluecadet
-          </a>
-          , where I get to work on{' '}
-          <a href="https://muttermuseum.org/" target="_blank" rel="noreferrer">
-            amazing projects
           </a>
           .
         </Body>
@@ -63,7 +61,7 @@ const AboutWrapper = styled.section`
   grid-gap: 5%;
   background-color: #ccd131;
   @media (min-width: 750px) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto 1fr;
     padding-left: 50px;
     padding-right: 50px;
   }
@@ -94,18 +92,9 @@ const Body = styled.p`
   line-height: 180%;
   a {
     color: black;
-
-    font-size: 28px;
-    @media (min-width: 750px) {
-      font-size: 38px;
-      /* text-decoration: none; */
-    }
   }
   a:hover {
     color: ${blue};
-    text-shadow: -0.8px 0.8px 0 #000, 0.8px 0.8px 0 #000, 0.8px -0.8px 0 #000,
-      -0.8px -0.8px 0 #000;
-    text-decoration: none;
   }
 `;
 
@@ -115,24 +104,49 @@ const Media = styled.div`
   align-items: center;
   width: 100%;
   max-width: 100vw;
-  iframe {
-    border: 10px solid ${hotPink};
-    width: 90vw;
-    height: 90vw;
-    margin: 0 auto;
-    @media (min-width: 750px) {
-      width: 350px;
-      height: 350px;
-    }
-    @media (min-width: 1024px) {
-      width: 500px;
-      height: 500px;
-    }
-  }
+  position: relative;
+  background-image: url('/assets/meet-your-computer.png');
+  background-size: cover;
+  background-position: center;
+  border: 10px solid ${hotPink};
+  width: 90vw;
+  height: 90vw;
   @media (min-width: 750px) {
     grid-column: 1 / 2;
+    width: 400px;
+    height: 400px;
   }
   @media (min-width: 1024px) {
     justify-content: right;
+  }
+  .media-iframe-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    background: black;
+  }
+  /*
+  &:hover .media-iframe-wrapper,
+  &:focus .media-iframe-wrapper {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  */
+  .media-iframe-wrapper iframe {
+    border: 10px solid ${hotPink};
+    width: 90vw;
+    height: 90vw;
+    @media (min-width: 750px) {
+      width: 400px;
+      height: 400px;
+    }
   }
 `;

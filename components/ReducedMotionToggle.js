@@ -20,12 +20,12 @@ export default function ReducedMotionToggle() {
           Animate
           <span aria-hidden>
             : {animation ? 'on' : 'off'}{' '}
-            <WhatsThisLink
+            {/* <WhatsThisLink
               href="https://medium.com/@afrear/reduced-motion-toggle-using-react-context-4683a9047593"
               target="blank"
             >
               What's this?
-            </WhatsThisLink>
+            </WhatsThisLink> */}
           </span>
         </span>
       </label>

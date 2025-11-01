@@ -11,3 +11,4 @@ export const chartreuse = '#f97068';
 export const darkPurple = '#033860';
 export const yellow = '#FCE762';
 export const black = '#0C0A09';
+export const gold = '#d4a840';

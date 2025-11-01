@@ -1,35 +1,68 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Play from './icons/Play';
+import Pause from './icons/Pause';
 
 export default function VideoBG() {
-  const [pause, setPause] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [player, setPlayer] = useState(null);
   const iframe = useRef(null);
 
-  const controlVideo = function (e) {
-    console.log('hi');
-    if (iframe) {
-      const iframeSrc = iframe.src;
-      iframe.src = iframeSrc;
-    }
-    if (iframe.video) {
-      iframe.video.pause();
+  useEffect(() => {
+    // Load Vimeo Player API
+    const script = document.createElement('script');
+    script.src = 'https://player.vimeo.com/api/player.js';
+    script.async = true;
+    script.onload = () => {
+      if (window.Vimeo && iframe.current) {
+        const vimeoPlayer = new window.Vimeo.Player(iframe.current);
+        setPlayer(vimeoPlayer);
+
+        // Listen to play/pause events
+        vimeoPlayer.on('play', () => setIsPlaying(true));
+        vimeoPlayer.on('pause', () => setIsPlaying(false));
+      }
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
+
+  const togglePlayPause = async () => {
+    if (!player) return;
+
+    try {
+      const paused = await player.getPaused();
+      if (paused) {
+        await player.play();
+        setIsPlaying(true);
+      } else {
+        await player.pause();
+        setIsPlaying(false);
+      }
+    } catch (error) {
+      console.error('Error controlling video:', error);
     }
   };
+
   return (
     <VideoBGWrapper>
       <iframe
         ref={iframe}
         title="bg-video"
-        src="https://player.vimeo.com/video/547280824?h=050797c24d?autoplay=1&loop=1&background=1&autopause=0"
+        src="https://player.vimeo.com/video/547280824?h=050797c24d&autoplay=1&loop=1&background=1&autopause=0"
         width="100%"
         height="100%"
         frameBorder="0"
         allow="autoplay; fullscreen"
         allowFullScreen
       />
-      <Button type="button" onClick={() => controlVideo()}>
-        <Play />
+      <Button type="button" onClick={togglePlayPause}>
+        {isPlaying ? <Pause /> : <Play />}
       </Button>
     </VideoBGWrapper>
   );
@@ -64,9 +97,12 @@ const Button = styled.button`
   cursor: pointer;
   z-index: 2;
   background-color: transparent;
+  border: none;
+  padding: 0;
   svg {
     width: 50px;
     height: 50px;
+    display: block;
   }
   &:hover {
     background-color: green;

@@ -10,19 +10,12 @@ import { red, lightYellow, green } from '../styles/colors';
 export default function Header() {
   const { animation } = useContext(ReducedMotionContext);
   const [openNav, setOpenNav] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const springProps = useSpring({
     config: { mass: 1, friction: 100 },
     from: { y: animation ? -100 : -200 },
     to: { y: 0 },
   });
-
-  if (!mounted) return null;
 
   return (
     <HeaderWrapper>
@@ -43,8 +36,7 @@ export default function Header() {
           </button>
 
           <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#clients">Clients</a>
+          <a href="#work">Work</a>
           <a href="#contact">Contact</a>
         </dialog>
         <div className="nav-button-wrapper">

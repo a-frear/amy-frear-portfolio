@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { green, hotPink, lightYellow } from '../styles/colors';
+import { green, gold, lightYellow } from '../styles/colors';
 import VisuallyHiddenText from './VisuallyHiddenText';
 
 export default function Intro() {
@@ -14,10 +14,14 @@ export default function Intro() {
             Philly
           </a>
           . I love solving problems and creating websites that are fun to
-          explore.
+          explore. Currently a developer with the amazing team at{' '}
+          <a href="https://www.bluecadet.com/" target="_blank" rel="noreferrer">
+            Bluecadet
+          </a>
+          .
         </Body>
       </Content>
-      <Headshot>
+      <Headshot tabIndex={0}>
         <VisuallyHiddenText>
           An image of Amy Frear, a woman with red hair in a bun, alternates
           between an image of Gritty, the loyal but mischievous mascot for the
@@ -29,7 +33,7 @@ export default function Intro() {
 }
 
 const IntroSection = styled.section`
-  background-color: #d4a840;
+  background-color: ${gold};
   display: grid;
   align-items: center;
   justify-content: center;
@@ -70,7 +74,8 @@ const Headshot = styled.div`
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  &:hover {
+  &:hover,
+  &:focus-visible {
     background-image: url('assets/gritty.jpg');
   }
   @media (min-width: 750px) {

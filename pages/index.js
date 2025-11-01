@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import HeaderMobile from '../components/HeaderMobile';
 import Intro from '../components/Intro';
-import FrontPage from '../components/FrontPage';
 import About from '../components/About';
-import Projects from '../components/Projects';
+import FrontPage from '../components/FrontPage';
+import Work from '../components/Work';
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
       <FrontPage />
       <Intro />
       <About />
-      <Projects />
+      <Work />
     </HomeWrapper>
   );
 }
