@@ -17,7 +17,8 @@ import VisuallyHiddenText from './VisuallyHiddenText';
 export default function About() {
   return (
     <AboutWrapper id="about" className="full-section">
-      <Media tabIndex={0}>
+      <Heading>About</Heading>
+      {/* <Media tabIndex={0}>
         <div className="media-iframe-wrapper">
           <iframe
             title="about-video"
@@ -28,16 +29,16 @@ export default function About() {
             allow="autoplay; loop"
             allowFullScreen
           />
+          <div className="image-overlay" aria-hidden="true" />
         </div>
-        {/* <VisuallyHiddenText>
+        <VisuallyHiddenText>
           A recording of an interactive component plays on a retro computer. The
           component shows a rod. It is clicked once and the temperature rises.
           It is clicked again and it expands. A microscopic view of its contents
           appears.{' '}
-        </VisuallyHiddenText> */}
-      </Media>
+        </VisuallyHiddenText>
+      </Media> */}
       <Content>
-        <Heading>About</Heading>
         <Body>
           My approach to developing is heavily influenced by my background in
           film and theater. Whether on set or at my computer, collaborating with
@@ -55,13 +56,12 @@ export default function About() {
 
 const AboutWrapper = styled.section`
   display: grid;
-  display: grid;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   grid-gap: 5%;
   background-color: #ccd131;
   @media (min-width: 750px) {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr auto;
     padding-left: 50px;
     padding-right: 50px;
   }
@@ -70,14 +70,8 @@ const AboutWrapper = styled.section`
   }
 `;
 
-const Content = styled.div`
-  grid-column: 2 / -1;
-  display: grid;
-  justify-content: center;
-  align-items: center;
-`;
-
 const Heading = styled.h2`
+  grid-column: 1 / -1;
   font-size: clamp(52px, 8vw, 76px);
   font-family: 'Bowlby One SC';
   color: ${lightYellow};
@@ -85,9 +79,15 @@ const Heading = styled.h2`
     -1px -1px 0 #000;
 `;
 
+const Content = styled.div`
+  @media (min-width: 750px) {
+    grid-column: 1 / 2;
+    order: 1;
+  }
+`;
+
 const Body = styled.p`
   color: #fff;
-  margin-top: 2rem;
   color: black;
   line-height: 180%;
   a {
@@ -105,41 +105,27 @@ const Media = styled.div`
   width: 100%;
   max-width: 100vw;
   position: relative;
-  background-image: url('/assets/meet-your-computer.png');
-  background-size: cover;
-  background-position: center;
-  border: 10px solid ${hotPink};
   width: 90vw;
   height: 90vw;
   @media (min-width: 750px) {
-    grid-column: 1 / 2;
+    grid-column: 2 / -1;
     width: 400px;
     height: 400px;
+    order: 2;
   }
   @media (min-width: 1024px) {
     justify-content: right;
   }
   .media-iframe-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-    background: black;
-  }
-  /*
-  &:hover .media-iframe-wrapper,
-  &:focus .media-iframe-wrapper {
     opacity: 1;
     pointer-events: auto;
   }
-  */
   .media-iframe-wrapper iframe {
     border: 10px solid ${hotPink};
     width: 90vw;
@@ -148,5 +134,24 @@ const Media = styled.div`
       width: 400px;
       height: 400px;
     }
+  }
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/meet-your-computer.png');
+    border: 10px solid ${hotPink};
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 2;
+  }
+  &:hover .image-overlay,
+  &:focus .image-overlay {
+    opacity: 1;
   }
 `;

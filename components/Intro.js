@@ -68,6 +68,7 @@ const Body = styled.p`
 const Headshot = styled.div`
   width: 300px;
   height: 300px;
+  margin: 0 auto;
   border: 10px solid ${green};
   background-image: url('assets/amy-hs.jpeg');
   -webkit-background-size: cover;
