@@ -40,8 +40,7 @@ export default function About() {
           My approach to developing is heavily influenced by my background in
           film and theater. Whether on set or at my computer, collaborating with
           others to make something exciting and beautiful is a passion of mine.
-          I believe in a balance of being practical and playful. Currently a
-          developer at{' '}
+          I am currently a developer at{' '}
           <a href="https://www.bluecadet.com/" target="_blank" rel="noreferrer">
             Bluecadet
           </a>
@@ -61,12 +60,15 @@ const AboutWrapper = styled.section`
   display: grid;
   align-items: center;
   justify-content: center;
-  grid-gap: 10%;
+  grid-gap: 5%;
   background-color: #ccd131;
   @media (min-width: 750px) {
     grid-template-columns: 1fr 1fr;
     padding-left: 50px;
     padding-right: 50px;
+  }
+  @media (min-width: 1024px) {
+    grid-gap: 10%;
   }
 `;
 
@@ -89,25 +91,48 @@ const Body = styled.p`
   color: #fff;
   margin-top: 2rem;
   color: black;
+  line-height: 180%;
   a {
     color: black;
-    text-decoration: none;
 
-    font-size: 38px;
+    font-size: 28px;
+    @media (min-width: 750px) {
+      font-size: 38px;
+      /* text-decoration: none; */
+    }
   }
   a:hover {
     color: ${blue};
     text-shadow: -0.8px 0.8px 0 #000, 0.8px 0.8px 0 #000, 0.8px -0.8px 0 #000,
       -0.8px -0.8px 0 #000;
+    text-decoration: none;
   }
 `;
 
 const Media = styled.div`
-  grid-column: 1 / 2;
+  grid-column: 1 / -1;
   display: grid;
-  justify-content: right;
   align-items: center;
+  width: 100%;
+  max-width: 100vw;
   iframe {
     border: 10px solid ${hotPink};
+    width: 90vw;
+    height: 90vw;
+    margin: 0 auto;
+    @media (min-width: 750px) {
+      width: 350px;
+      height: 350px;
+    }
+    @media (min-width: 1024px) {
+      width: 500px;
+      height: 500px;
+    }
+  }
+  @media (min-width: 750px) {
+    grid-column: 1 / 2;
+  }
+  @media (min-width: 1024px) {
+    justify-content: right;
   }
 `;

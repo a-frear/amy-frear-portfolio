@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Fjalla+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Share:wght@400;700&display=swap");
 
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -158,12 +159,18 @@ section {
 }
 
 .full-section {
-  padding: 100px 20vw;
+  padding: 100px 20px;
   align-items: center;
+  @media (min-width: 750px) {
+    padding: 100px 20vw;
+  }
 }
 
 .half-section {
-  padding: 100px 0 100px 10vw;
+  padding: 100px 0 100px 20px;
+  @media (min-width: 750px) {
+    padding: 100px 0 100px 10vw;
+  }
 }
 
 p {
@@ -178,6 +185,7 @@ p {
   width: 100%;
   overflow: hidden;
   line-height: 0;
+  z-index: 5;
 }
 
 @media only screen and (min-width: 750px) {

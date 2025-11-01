@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { animated, useSpring } from 'react-spring';
 import { ReducedMotionContext } from '../context/context.js';
 import ReducedMotionToggle from './ReducedMotionToggle.js';
 import Hamburger from './icons/Hamburger.js';
+import Curve2 from './icons/Curve2.js';
 import {
   red,
   lightYellow,
@@ -17,14 +18,23 @@ import {
 export default function Header() {
   const { animation } = useContext(ReducedMotionContext);
   const [openNav, setOpenNav] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const springProps = useSpring({
     config: { mass: 1, friction: 100 },
     from: { y: animation ? -100 : -200 },
     to: { y: 0 },
   });
 
+  if (!mounted) return null;
+
   return (
-    <animated.div style={springProps}>
+    <HeaderAnimationWrapper style={springProps}>
+      <Curve2 animate="true" />
       <HeaderWrapper openNav={openNav} animation={animation}>
         <div className="toggle-wrapper">
           <ReducedMotionToggle />
@@ -43,8 +53,7 @@ export default function Header() {
           </button>
 
           <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#clients">Clients</a>
+          <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
 
           <div ariah-hidden="true" className="curve-vertical" />
@@ -59,14 +68,21 @@ export default function Header() {
           </button>
         </div>
       </HeaderWrapper>
-    </animated.div>
+    </HeaderAnimationWrapper>
   );
 }
 
+const HeaderAnimationWrapper = animated(styled.div`
+  position: relative;
+  z-index: 10;
+`);
+
 const HeaderWrapper = styled.div`
+  z-index: 20;
   display: none;
+  width: 100%;
+  position: relative;
   @media (min-width: 750px) {
-    position: absolute;
     display: grid;
     background-color: ${green};
     justify-content: space-between;

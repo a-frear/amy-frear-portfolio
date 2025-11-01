@@ -1,22 +1,32 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { animated, useSpring } from 'react-spring';
 import { ReducedMotionContext } from '../context/context.js';
 import ReducedMotionToggle from './ReducedMotionToggle.js';
 import Hamburger from './icons/Hamburger.js';
+import Curve2 from './icons/Curve2.js';
 import { red, lightYellow, green } from '../styles/colors';
 
 export default function Header() {
   const { animation } = useContext(ReducedMotionContext);
   const [openNav, setOpenNav] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const springProps = useSpring({
     config: { mass: 1, friction: 100 },
     from: { y: animation ? -100 : -200 },
     to: { y: 0 },
   });
 
+  if (!mounted) return null;
+
   return (
-    <animated.div style={springProps}>
+    <HeaderAnimationWrapper style={springProps}>
+      <Curve2 />
       <HeaderWrapper openNav={openNav} animation={animation}>
         <div className="toggle-wrapper">
           <ReducedMotionToggle />
@@ -34,8 +44,6 @@ export default function Header() {
           <a href="#services">Services</a>
           <a href="#clients">Clients</a>
           <a href="#contact">Contact</a>
-
-          <div ariah-hidden="true" className="curve-vertical" />
         </dialog>
         <div className="nav-button-wrapper">
           <button
@@ -51,24 +59,32 @@ export default function Header() {
           <h2>Web Developer</h2>
         </div>
       </HeaderWrapper>
-    </animated.div>
+    </HeaderAnimationWrapper>
   );
 }
 
+const HeaderAnimationWrapper = animated(styled.div`
+  position: relative;
+  z-index: 10;
+  @media (min-width: 750px) {
+    display: none;
+  }
+`);
+
 const HeaderWrapper = styled.div`
-  position: absolute;
+  position: relative;
   display: grid;
   justify-content: space-between;
   width: 100%;
   grid-template-columns: 1fr 1fr;
   background-color: ${green};
   height: 200px;
+  z-index: 20;
   @media (min-width: 750px) {
     display: none;
   }
   .toggle-wrapper {
     margin: 1rem 0 0 1rem;
-    max-width: 100px;
     height: 20px;
   }
   .header-title {

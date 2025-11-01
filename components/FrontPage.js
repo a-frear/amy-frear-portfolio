@@ -22,8 +22,8 @@ const IntroSection = styled.section`
   -o-background-size: cover;
   background-size: cover;
   background-position-x: 70%;
-  z-index: -1;
   margin-top: 0;
+  /* z-index: -1; */
   @media (min-width: 750px) {
     background-position-x: unset;
   }

@@ -34,7 +34,12 @@ export default function ReducedMotionToggle() {
 }
 
 const ReducedMotionToggleWrapper = styled.div`
-  height: 300px;
+  /* height: 300px; */
+  width: 100%;
+  height: 100%;
+  @media (min-width: 750px) {
+    height: 300px;
+  }
   &:hover {
     a {
       display: block;
@@ -43,9 +48,15 @@ const ReducedMotionToggleWrapper = styled.div`
 
   .switch {
     position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    height: 100%;
     width: 100%;
     pointer-events: auto;
+    @media (min-width: 750px) {
+      height: auto;
+      display: inline-block;
+    }
   }
 
   .label-text {
@@ -55,7 +66,6 @@ const ReducedMotionToggleWrapper = styled.div`
     font-family: 'Fjalla One', sans-serif;
     text-transform: uppercase;
     font-size: 18px;
-    line-height: 99.5%;
     color: black;
     @media (min-width: 750px) {
       font-size: 22px;

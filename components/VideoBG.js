@@ -1,11 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import Play from './icons/Play';
 
 export default function VideoBG() {
+  const [pause, setPause] = useState(false);
+  const iframe = useRef(null);
+
+  const controlVideo = function (e) {
+    console.log('hi');
+    if (iframe) {
+      const iframeSrc = iframe.src;
+      iframe.src = iframeSrc;
+    }
+    if (iframe.video) {
+      iframe.video.pause();
+    }
+  };
   return (
     <VideoBGWrapper>
-      <Overlay />
       <iframe
+        ref={iframe}
         title="bg-video"
         src="https://player.vimeo.com/video/547280824?h=050797c24d?autoplay=1&loop=1&background=1&autopause=0"
         width="100%"
@@ -14,6 +28,9 @@ export default function VideoBG() {
         allow="autoplay; fullscreen"
         allowFullScreen
       />
+      <Button type="button" onClick={() => controlVideo()}>
+        <Play />
+      </Button>
     </VideoBGWrapper>
   );
 }
@@ -24,8 +41,6 @@ const VideoBGWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
-  pointer-events: none;
   overflow: hidden;
   iframe {
     width: 100vw;
@@ -42,14 +57,18 @@ const VideoBGWrapper = styled.div`
   }
 `;
 
-const Overlay = styled.div`
+const Button = styled.button`
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
+  right: 20px;
+  bottom: 40px;
+  cursor: pointer;
   z-index: 2;
-  /* background: linear-gradient(0deg, rgba(0, 42, 61, 0), rgba(0, 42, 61, 0.3)); */
-  /* background: rgba(187, 192, 133, 0.2); */
+  background-color: transparent;
+  svg {
+    width: 50px;
+    height: 50px;
+  }
+  &:hover {
+    background-color: green;
+  }
 `;
