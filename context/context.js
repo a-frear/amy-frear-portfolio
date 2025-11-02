@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 export const ReducedMotionContext = createContext();
 
 export const ReducedMotionProvider = ({ children }) => {
-  const [animation, setAnimation] = useState(false);
+  const [animation, setAnimation] = useState(true);
 
   // check users settings
   useEffect(() => {

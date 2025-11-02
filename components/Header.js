@@ -5,15 +5,8 @@ import { ReducedMotionContext } from '../context/context.js';
 import ReducedMotionToggle from './ReducedMotionToggle.js';
 import Hamburger from './icons/Hamburger.js';
 import Curve2 from './icons/Curve2.js';
-import {
-  red,
-  lightYellow,
-  green,
-  darkPurple,
-  chartreuse,
-  black,
-  yellow,
-} from '../styles/colors';
+import { isFeatureEnabled } from '../config/featureFlags.js';
+import { red, lightYellow, green, yellow } from '../styles/colors';
 
 export default function Header() {
   const { animation } = useContext(ReducedMotionContext);
@@ -31,37 +24,43 @@ export default function Header() {
         <Curve2 animate="true" />
       </AnimatedBackground>
       <HeaderContainer openNav={openNav} animation={animation}>
-        <div className="toggle-wrapper">
-          <ReducedMotionToggle />
-        </div>
+        {isFeatureEnabled('SHOW_ANIMATION_TOGGLE') && (
+          <div className="toggle-wrapper">
+            <ReducedMotionToggle />
+          </div>
+        )}
         <div className="header-title">
           <h1>Amy Frear</h1>
           <h2>Web Developer</h2>
         </div>
-        <dialog id="mySidenav" className="sidenav">
-          <button
-            className="closebtn"
-            onClick={() => setOpenNav(!openNav)}
-            type="button"
-          >
-            &times;
-          </button>
+        {isFeatureEnabled('SHOW_SIDENAV') && (
+          <>
+            <dialog id="mySidenav" className="sidenav">
+              <button
+                className="closebtn"
+                onClick={() => setOpenNav(!openNav)}
+                type="button"
+              >
+                &times;
+              </button>
 
-          <a href="#about">About</a>
-          <a href="#work">Work</a>
-          <a href="#contact">Contact</a>
+              <a href="#about">About</a>
+              <a href="#work">Work</a>
+              <a href="#contact">Contact</a>
 
-          <div ariah-hidden="true" className="curve-vertical" />
-        </dialog>
-        <div className="nav-button-wrapper">
-          <button
-            className="nav-button"
-            onClick={() => setOpenNav(!openNav)}
-            type="button"
-          >
-            <Hamburger />
-          </button>
-        </div>
+              <div aria-hidden="true" className="curve-vertical" />
+            </dialog>
+            <div className="nav-button-wrapper">
+              <button
+                className="nav-button"
+                onClick={() => setOpenNav(!openNav)}
+                type="button"
+              >
+                <Hamburger />
+              </button>
+            </div>
+          </>
+        )}
       </HeaderContainer>
     </HeaderWrapper>
   );
@@ -107,6 +106,7 @@ const HeaderContainer = styled.div`
   }
   .header-title {
     text-align: center;
+    grid-column: 2 / 3;
   }
   h1 {
     margin-top: 1rem;

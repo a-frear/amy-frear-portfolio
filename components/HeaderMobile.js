@@ -5,6 +5,7 @@ import { ReducedMotionContext } from '../context/context.js';
 import ReducedMotionToggle from './ReducedMotionToggle.js';
 import Hamburger from './icons/Hamburger.js';
 import Curve2 from './icons/Curve2.js';
+import { isFeatureEnabled } from '../config/featureFlags.js';
 import { red, lightYellow, green } from '../styles/colors';
 
 export default function Header() {
@@ -23,31 +24,37 @@ export default function Header() {
         <Curve2 />
       </AnimatedBackground>
       <HeaderContainer openNav={openNav} animation={animation}>
-        <div className="toggle-wrapper">
-          <ReducedMotionToggle />
-        </div>
-        <dialog id="mySidenav" className="sidenav">
-          <button
-            className="closebtn"
-            onClick={() => setOpenNav(!openNav)}
-            type="button"
-          >
-            &times;
-          </button>
+        {isFeatureEnabled('SHOW_ANIMATION_TOGGLE') && (
+          <div className="toggle-wrapper">
+            <ReducedMotionToggle />
+          </div>
+        )}
+        {isFeatureEnabled('SHOW_SIDENAV') && (
+          <>
+            <dialog id="mySidenav" className="sidenav">
+              <button
+                className="closebtn"
+                onClick={() => setOpenNav(!openNav)}
+                type="button"
+              >
+                &times;
+              </button>
 
-          <a href="#about">About</a>
-          <a href="#work">Work</a>
-          <a href="#contact">Contact</a>
-        </dialog>
-        <div className="nav-button-wrapper">
-          <button
-            className="nav-button"
-            onClick={() => setOpenNav(!openNav)}
-            type="button"
-          >
-            <Hamburger />
-          </button>
-        </div>
+              <a href="#about">About</a>
+              <a href="#work">Work</a>
+              <a href="#contact">Contact</a>
+            </dialog>
+            <div className="nav-button-wrapper">
+              <button
+                className="nav-button"
+                onClick={() => setOpenNav(!openNav)}
+                type="button"
+              >
+                <Hamburger />
+              </button>
+            </div>
+          </>
+        )}
         <div className="header-title">
           <h1>Amy Frear</h1>
           <h2>Web Developer</h2>
