@@ -164,6 +164,11 @@ body,
   height: 100%;
 }
 
+html,
+body {
+  overscroll-behavior: none;
+}
+
 section {
   position: relative;
 }
