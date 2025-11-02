@@ -10,6 +10,7 @@ export default function VideoBG() {
   const [isPlaying, setIsPlaying] = useState(() => animation);
   const [player, setPlayer] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [videoHasStarted, setVideoHasStarted] = useState(false);
   const iframe = useRef(null);
   const hasPlayedBeforeRef = useRef(false);
   const initialMountRef = useRef(true);
@@ -43,6 +44,7 @@ export default function VideoBG() {
           // Autoplay might be blocked, that's ok
         });
         setIsPlaying(true);
+        setVideoHasStarted(true);
         hasPlayedBeforeRef.current = true;
       } else {
         // If animation is off on mount, make sure button shows Play icon
@@ -66,6 +68,7 @@ export default function VideoBG() {
         }
         await player.play();
         setIsPlaying(true);
+        setVideoHasStarted(true);
 
         // Hide spinner after 2 seconds (covers most buffering)
         setTimeout(() => {
@@ -83,7 +86,7 @@ export default function VideoBG() {
 
   return (
     <VideoBGWrapper>
-      <PosterWrapper isPlaying={isPlaying}>
+      <PosterWrapper isPlaying={videoHasStarted}>
         <iframe
           ref={iframe}
           title="bg-video"
