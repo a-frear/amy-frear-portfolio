@@ -129,8 +129,8 @@ const HeaderContainer = styled.div`
     font-family: 'Bowlby One SC';
     font-size: clamp(18px, 10vw, 86px);
     color: ${lightYellow};
-    text-shadow: -4px 4px 0 #000, 4px 4px 0 #000, 4px -4px 0 #000,
-      -4px -4px 0 #000;
+    text-shadow: -3px 3px 0 #000, 3px 3px 0 #000, 3px -3px 0 #000,
+      -3px -3px 0 #000;
   }
 
   p {

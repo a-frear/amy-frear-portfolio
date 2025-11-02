@@ -1,16 +1,32 @@
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
 import styled from 'styled-components';
+import { motion } from 'motion/react';
 import { green } from '../../styles/colors';
 import { breakpoints } from '../../styles/breakpoints';
+import { ReducedMotionContext } from '../../context/context';
 
 export default function Curve({ fill = green }) {
+  const { animation } = useContext(ReducedMotionContext);
+
   return (
     <CurveWrapper>
-      <svg
+      <AnimatedSvg
         data-name="Layer 1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1200 120"
         preserveAspectRatio="none"
+        initial={animation ? { scaleY: 0.2 } : { scaleY: 1 }}
+        animate={{ scaleY: 1 }}
+        transition={
+          animation
+            ? {
+                duration: 0.8,
+                delay: 0.2,
+                ease: 'easeOut',
+              }
+            : { duration: 0 }
+        }
       >
         <defs>
           <filter id="slimeShadow" x="-50%" y="-50%" width="200%" height="200%">
@@ -35,10 +51,12 @@ export default function Curve({ fill = green }) {
           fill="url(#slimeGradient)"
           filter="url(#slimeShadow)"
         />
-      </svg>
+      </AnimatedSvg>
     </CurveWrapper>
   );
 }
+
+const AnimatedSvg = motion.svg;
 
 const CurveWrapper = styled.div`
   position: absolute;
@@ -58,6 +76,7 @@ const CurveWrapper = styled.div`
     display: block;
     width: calc(100% + 1.3px);
     transform: rotateY(180deg);
+    transform-origin: center top;
   }
 `;
 

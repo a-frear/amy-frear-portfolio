@@ -1,15 +1,18 @@
-import { useRef } from 'react';
+import { useRef, useContext } from 'react';
 import styled from 'styled-components';
 import { motion } from 'motion/react';
 import { hotPink } from '../../styles/colors';
 import { useParallax } from '../../hooks/useParallax';
 import { useMobile } from '../../hooks/useMobile';
+import { ReducedMotionContext } from '../../context/context';
 import { breakpoints } from '../../styles/breakpoints';
 
 export default function ParallaxWave() {
   const waveRef = useRef(null);
   const isMobile = useMobile();
-  const waveY = useParallax(isMobile ? 0 : 0.1, waveRef);
+  const { animation } = useContext(ReducedMotionContext);
+  // Disable parallax if on mobile or if reduced motion is enabled
+  const waveY = useParallax(isMobile || !animation ? 0 : 0.1, waveRef);
 
   return <Wave ref={waveRef} style={{ y: waveY }} />;
 }
