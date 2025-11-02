@@ -195,7 +195,8 @@ const Button = styled.button`
     display: block;
     color: white;
   }
-  &:hover {
+  &:hover,
+  &:focus-visible {
     opacity: 0.8;
   }
   &:active {

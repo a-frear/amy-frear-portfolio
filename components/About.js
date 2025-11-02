@@ -51,7 +51,8 @@ const Body = styled.p`
   a {
     color: black;
   }
-  a:hover {
+  a:hover,
+  a:focus-visible {
     color: ${blue};
   }
 `;

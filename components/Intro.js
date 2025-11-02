@@ -30,12 +30,8 @@ export default function Intro() {
       <Content>
         <Heading>I'm Amy.</Heading>
         <Body>
-          I live in{' '}
-          <a href="#phillyTweet" className="button-vid more" id="tweetLink">
-            Philly
-          </a>
-          . I love solving problems and creating websites that are fun to
-          explore.
+          I live in Philly. I love solving problems and creating websites that
+          are fun to explore.
         </Body>
       </Content>
       <ParallaxHeadshot
