@@ -21,15 +21,11 @@ export default function VideoBG() {
       // Listen for the 'loadstart' event to detect when video starts loading
       // Listen for 'canplay' event to know when it's ready to play
       vimeoPlayer.on('canplay', () => {
-        console.log('Video can play');
         setIsVideoReady(true);
       });
 
       // Also mark as ready after a short delay to ensure it's initialized
       setTimeout(() => {
-        console.log(
-          'Video initialization timeout reached, setting isVideoReady to true'
-        );
         setIsVideoReady(true);
       }, 2000);
     }
@@ -72,21 +68,11 @@ export default function VideoBG() {
 
     try {
       const paused = await player.getPaused();
-      console.log(
-        'Play button clicked. Paused?',
-        paused,
-        'isVideoReady?',
-        isVideoReady
-      );
       if (paused) {
         // Only show loading spinner if video hasn't been fully loaded yet
         if (!isVideoReady) {
           setIsLoading(true);
-          console.log('Showing loading spinner because video not ready');
-        } else {
-          console.log('NOT showing spinner because video is already ready');
         }
-
         await player.play();
         setIsPlaying(true);
 
