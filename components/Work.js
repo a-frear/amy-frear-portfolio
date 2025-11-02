@@ -94,7 +94,10 @@ export default function Projects() {
 
 const WorkWrapper = styled.section`
   text-align: left;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
+  @media (min-width: ${breakpoints.tablet}) {
+    padding-bottom: 100px;
+  }
 `;
 
 const Heading = styled.h2`
@@ -108,6 +111,7 @@ const Heading = styled.h2`
 
 const ProjectsList = styled.ul`
   margin-top: 40px;
+  margin-bottom: 100px;
   list-style: none;
   padding: 0;
   display: grid;

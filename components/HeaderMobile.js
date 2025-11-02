@@ -10,69 +10,12 @@ import { red, lightYellow, green } from '../styles/colors';
 import { breakpoints } from '../styles/breakpoints';
 
 export default function Header() {
-  const { animation } = useContext(ReducedMotionContext);
+  const { animation, mounted } = useContext(ReducedMotionContext);
   const [openNav, setOpenNav] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render until mounted to avoid hydration mismatch
-  if (!mounted) {
-    return (
-      <HeaderWrapper>
-        <AnimatedBackground
-          initial={false}
-          animate={{ y: 0 }}
-          transition={{ duration: 0 }}
-        >
-          <Curve />
-        </AnimatedBackground>
-        <HeaderContainer openNav={openNav} animation={animation}>
-          {isFeatureEnabled('SHOW_ANIMATION_TOGGLE') && (
-            <div className="toggle-wrapper">
-              <ReducedMotionToggle />
-            </div>
-          )}
-          {isFeatureEnabled('SHOW_SIDENAV') && (
-            <>
-              <dialog id="mySidenav" className="sidenav">
-                <button
-                  className="closebtn"
-                  onClick={() => setOpenNav(!openNav)}
-                  type="button"
-                >
-                  &times;
-                </button>
-
-                <a href="#about">About</a>
-                <a href="#work">Work</a>
-                <a href="#contact">Contact</a>
-              </dialog>
-              <div className="nav-button-wrapper">
-                <button
-                  className="nav-button"
-                  onClick={() => setOpenNav(!openNav)}
-                  type="button"
-                >
-                  <Hamburger />
-                </button>
-              </div>
-            </>
-          )}
-          <div className="header-title">
-            <h1>Amy Frear</h1>
-            <h2>Web Developer</h2>
-          </div>
-        </HeaderContainer>
-      </HeaderWrapper>
-    );
-  }
 
   return (
     <HeaderWrapper>
-      {animation && (
+      {mounted && animation && (
         <AnimatedBackground
           key="animated"
           initial={{ y: -100 }}
@@ -87,7 +30,7 @@ export default function Header() {
           <Curve />
         </AnimatedBackground>
       )}
-      {!animation && (
+      {mounted && !animation && (
         <AnimatedBackground
           key="static"
           initial={false}

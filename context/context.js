@@ -46,6 +46,7 @@ export const ReducedMotionProvider = ({ children }) => {
       value={{
         animation,
         setAnimation: handleSetAnimation,
+        mounted,
       }}
     >
       {children}
