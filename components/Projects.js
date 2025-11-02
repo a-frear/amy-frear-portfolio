@@ -160,7 +160,7 @@ export default function Projects() {
 
 const ProjectsWrapper = styled.section`
   display: block;
-  background-color: ${darkBlue};
+  /* background-color: ${darkBlue}; */
   text-align: left;
   @media (min-width: 750px) {
     padding-left: 50px;

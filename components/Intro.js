@@ -33,7 +33,6 @@ export default function Intro() {
 }
 
 const IntroSection = styled.section`
-  background-color: ${gold};
   display: grid;
   align-items: center;
   justify-content: center;

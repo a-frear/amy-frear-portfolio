@@ -59,7 +59,6 @@ const AboutWrapper = styled.section`
   align-items: start;
   justify-content: center;
   grid-gap: 5%;
-  background-color: #ccd131;
   @media (min-width: 750px) {
     grid-template-columns: 1fr auto;
     padding-left: 50px;

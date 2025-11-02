@@ -96,7 +96,6 @@ export default function Projects() {
 
 const WorkWrapper = styled.section`
   display: block;
-  background-color: ${darkBlue};
   text-align: left;
   @media (min-width: 750px) {
     padding-left: 50px;

@@ -14,14 +14,12 @@ export default function FrontPage() {
 }
 
 const IntroSection = styled.section`
-  background: ${gold};
   height: 100vh;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   background-position-x: 70%;
-  /* z-index: -1; */
   @media (min-width: 750px) {
     background-position-x: unset;
   }
