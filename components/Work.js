@@ -8,7 +8,7 @@ import { breakpoints } from '../styles/breakpoints';
 
 export default function Projects() {
   const waveRef = useRef(null);
-  const waveY = useParallax(0.08, waveRef);
+  const waveY = useParallax(0.1, waveRef);
   const projects = [
     {
       client: 'National Gallery of Art',

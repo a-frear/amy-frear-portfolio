@@ -10,7 +10,7 @@ import { breakpoints } from '../styles/breakpoints';
 export default function Intro() {
   const headshotRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const headshotY = useParallax(isMobile ? 0.08 : 0.1, headshotRef);
+  const headshotY = useParallax(isMobile ? 0.08 : 0.18, headshotRef);
   const [showGritty, setShowGritty] = useState(false);
 
   useEffect(() => {
