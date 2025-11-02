@@ -33,14 +33,19 @@ const IntroSection = styled.section`
   align-items: center;
   justify-content: center;
   grid-gap: 5%;
-  padding-bottom: 200px;
   @media (min-width: 750px) {
     grid-template-columns: 1fr 2fr auto 1fr;
   }
 `;
 
 const Content = styled.div`
-  grid-column: 2 / 3;
+  order: 2;
+  text-align: center;
+  @media (min-width: 750px) {
+    text-align: left;
+    order: 1;
+    grid-column: 2 / 3;
+  }
 `;
 
 const Heading = styled.h2`
@@ -63,7 +68,7 @@ const Body = styled.p`
 const Headshot = styled.div`
   width: 300px;
   height: 300px;
-  margin: 0 auto;
+  margin: 0 auto 2rem auto;
   border: 10px solid ${green};
   border-radius: 50%;
   background-image: url('assets/amy-hs.jpeg');
@@ -71,12 +76,15 @@ const Headshot = styled.div`
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  order: 1;
   &:hover,
   &:focus-visible {
     background-image: url('assets/gritty.jpg');
   }
   @media (min-width: 750px) {
+    order: 2;
     grid-column: 3 / 4;
+    margin-bottom: 0;
     width: 400px;
     height: 400px;
   }
