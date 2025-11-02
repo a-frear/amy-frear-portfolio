@@ -33,46 +33,7 @@ This is a single-page portfolio application featuring:
 
 ### Performance
 
-- Static generation with Next.js
-- CSS-in-JS with proper server-side rendering
 - Feature flags to reduce bundle size
-
-## Project Structure
-
-```
-├── components/          # React components
-│   ├── icons/          # SVG icon components
-│   │   ├── Curve.js           # Animated wavy divider with drop shadow
-│   │   ├── ParallaxWave.js    # Hot pink parallax wave
-│   │   └── ...other icons
-│   ├── Header.js       # Desktop header
-│   ├── HeaderMobile.js # Mobile header
-│   ├── FrontPage.js    # Hero section with video background
-│   ├── Intro.js        # Introduction with parallax headshot
-│   ├── About.js        # About section
-│   ├── Work.js         # Professional work experience
-│   ├── VideoBG.js      # Vimeo video background with controls
-│   ├── SEO.js          # SEO meta tags component
-│   └── ...other components
-├── context/            # React Context providers
-│   └── context.js      # ReducedMotionContext with localStorage persistence
-├── hooks/              # Custom React hooks
-│   ├── useParallax.js  # Parallax scroll effect based on window position
-│   ├── useLenis.js     # Lenis smooth scrolling initialization
-│   └── useMobile.js    # Mobile detection (width < 750px)
-├── pages/              # Next.js pages
-│   ├── index.js        # Home page (main entry point)
-│   ├── _app.js         # App wrapper with Lenis initialization
-│   ├── _document.js    # Document setup with favicon
-│   └── api/            # API routes
-├── styles/             # Global styles and utilities
-│   ├── colors.js       # Color palette
-│   ├── typography.js   # Reusable SectionHeading styled component
-│   ├── breakpoints.js  # Responsive breakpoints
-│   └── globals.css     # Global styles and reset
-└── config/             # Configuration
-    └── featureFlags.js # Feature flag management
-```
 
 ## Getting Started
 
@@ -118,7 +79,6 @@ This project uses:
 
 - **ESLint** for code quality
 - **Prettier** for code formatting
-- Configured with Next.js recommended settings
 
 All code is automatically formatted on save. Run `npm run lint` to check for issues.
 
