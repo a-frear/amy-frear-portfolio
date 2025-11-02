@@ -53,6 +53,7 @@ export default class MyDocument extends Document {
           <link rel="preconnect" href="https://i.vimeocdn.com" />
           <link rel="dns-prefetch" href="https://player.vimeo.com" />
           <link rel="dns-prefetch" href="https://i.vimeocdn.com" />
+          <link rel="prefetch" href="https://player.vimeo.com/api/player.js" />
         </Head>
         <body>
           <Main />

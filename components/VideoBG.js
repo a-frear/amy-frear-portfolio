@@ -73,10 +73,12 @@ const VideoBGWrapper = styled.div`
   position: absolute;
   top: 30px;
   left: 0;
+  right: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  animation: fadeIn 2s ease-in;
+  z-index: 1;
+  animation: fadeIn 2s ease-in forwards;
 
   @keyframes fadeIn {
     from {
@@ -107,7 +109,7 @@ const Button = styled.button`
   right: 20px;
   bottom: 40px;
   cursor: pointer;
-  z-index: 2;
+  z-index: 10;
   background-color: transparent;
   border: none;
   padding: 0;
@@ -115,8 +117,12 @@ const Button = styled.button`
     width: 50px;
     height: 50px;
     display: block;
+    color: white;
   }
   &:hover {
-    background-color: green;
+    filter: brightness(0.8);
+  }
+  &:active {
+    transform: scale(0.97);
   }
 `;

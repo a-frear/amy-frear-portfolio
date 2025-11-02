@@ -1,10 +1,7 @@
-import React, { useContext } from 'react';
-import { animated, useSpring } from 'react-spring';
 import PropTypes from 'prop-types';
-import { ReducedMotionContext } from '../../context/context';
 import { green } from '../../styles/colors';
 
-export default function Curve2({ fill = green }) {
+export default function Curve({ fill = green }) {
   return (
     <div className="curve-2">
       <svg
@@ -22,3 +19,6 @@ export default function Curve2({ fill = green }) {
     </div>
   );
 }
+Curve.propTypes = {
+  fill: PropTypes.string,
+};

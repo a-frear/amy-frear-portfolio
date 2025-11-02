@@ -1,20 +1,12 @@
+import { useRef } from 'react';
 import styled from 'styled-components';
-import {
-  orange,
-  lightYellow,
-  lightGreen,
-  green,
-  pink,
-  hotPink,
-  red,
-  blue,
-  darkBlue,
-  chartreuse,
-  darkPurple,
-  purple,
-} from '../styles/colors';
+import { motion } from 'motion/react';
+import { green, hotPink } from '../styles/colors';
+import { useParallax } from '../hooks/useParallax';
 
 export default function Projects() {
+  const waveRef = useRef(null);
+  const waveY = useParallax(0.05, waveRef);
   const projects = [
     {
       client: 'National Gallery of Art',
@@ -72,7 +64,7 @@ export default function Projects() {
         ))}
       </ProjectsList>
       <ClientWork>
-        <div className="wave" />
+        <ParallaxWave ref={waveRef} className="wave" style={{ y: waveY }} />
         <p>More available on request.</p>
         <p id="contact">
           <a href="mailto:amy.frear@gmail.com">amy.frear@gmail.com</a>
@@ -179,6 +171,27 @@ const ProjectLink = styled.a`
   display: block;
 `;
 
+const ParallaxWave = styled(motion.div)`
+  background: ${hotPink};
+  height: 200px;
+  --mask: radial-gradient(
+        38.99px at 50% calc(100% + 18px),
+        #0000 calc(99% - 8px),
+        #000 calc(101% - 8px) 99%,
+        #0000 101%
+      )
+      calc(50% - 60px) calc(50% - 19px + 0.5px) / 120px 38px repeat-x,
+    radial-gradient(
+        38.99px at 50% -18px,
+        #0000 calc(99% - 8px),
+        #000 calc(101% - 8px) 99%,
+        #0000 101%
+      )
+      50% calc(50% + 19px) / 120px 38px repeat-x;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+`;
+
 const ClientWork = styled.div`
   text-align: center;
   margin: 0 auto;
@@ -197,26 +210,5 @@ const ClientWork = styled.div`
   @media (min-width: 750px) {
     margin-top: 60px;
     max-width: 50%;
-  }
-
-  .wave {
-    background: ${hotPink};
-    height: 200px;
-    --mask: radial-gradient(
-          38.99px at 50% calc(100% + 18px),
-          #0000 calc(99% - 8px),
-          #000 calc(101% - 8px) 99%,
-          #0000 101%
-        )
-        calc(50% - 60px) calc(50% - 19px + 0.5px) / 120px 38px repeat-x,
-      radial-gradient(
-          38.99px at 50% -18px,
-          #0000 calc(99% - 8px),
-          #000 calc(101% - 8px) 99%,
-          #0000 101%
-        )
-        50% calc(50% + 19px) / 120px 38px repeat-x;
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
   }
 `;

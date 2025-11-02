@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { green, blue } from '../styles/colors';
 
@@ -49,7 +48,6 @@ const Content = styled.div`
 `;
 
 const Body = styled.p`
-  color: #fff;
   color: black;
   line-height: 180%;
   a {

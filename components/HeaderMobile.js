@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { animated, useSpring } from 'react-spring';
+import { motion } from 'motion/react';
 import { ReducedMotionContext } from '../context/context.js';
 import ReducedMotionToggle from './ReducedMotionToggle.js';
 import Hamburger from './icons/Hamburger.js';
-import Curve2 from './icons/Curve2.js';
+import Curve from './icons/Curve.js';
 import { isFeatureEnabled } from '../config/featureFlags.js';
 import { red, lightYellow, green } from '../styles/colors';
 
@@ -12,16 +12,19 @@ export default function Header() {
   const { animation } = useContext(ReducedMotionContext);
   const [openNav, setOpenNav] = useState(false);
 
-  const springProps = useSpring({
-    config: { mass: 1, friction: 100 },
-    from: { y: animation ? -100 : -200 },
-    to: { y: 0 },
-  });
-
   return (
     <HeaderWrapper>
-      <AnimatedBackground style={springProps}>
-        <Curve2 />
+      <AnimatedBackground
+        initial={{ y: animation ? -100 : -200 }}
+        animate={{ y: 0 }}
+        transition={{
+          type: 'spring',
+          mass: 1,
+          damping: 19,
+          duration: 0.5,
+        }}
+      >
+        <Curve />
       </AnimatedBackground>
       <HeaderContainer openNav={openNav} animation={animation}>
         {isFeatureEnabled('SHOW_ANIMATION_TOGGLE') && (
@@ -76,7 +79,7 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const AnimatedBackground = animated(styled.div`
+const AnimatedBackground = styled(motion.div)`
   position: absolute;
   top: 0;
   left: 0;
@@ -85,7 +88,7 @@ const AnimatedBackground = animated(styled.div`
   pointer-events: none;
   background-color: ${green};
   height: 200px;
-`);
+`;
 
 const HeaderContainer = styled.div`
   position: relative;

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
+import { motion } from 'motion/react';
 import { green, gold, lightYellow, hotPink } from '../styles/colors';
 import VisuallyHiddenText from './VisuallyHiddenText';
+import { useParallax } from '../hooks/useParallax';
 
 export default function Intro() {
+  const headshotRef = useRef(null);
+  const headshotY = useParallax(0.2, headshotRef);
+
   return (
     <IntroSection className="full-section">
       <Content>
@@ -17,13 +22,13 @@ export default function Intro() {
           explore.
         </Body>
       </Content>
-      <Headshot tabIndex={0}>
+      <ParallaxHeadshot ref={headshotRef} tabIndex={0} style={{ y: headshotY }}>
         <VisuallyHiddenText>
           An image of Amy Frear, a woman with red hair in a bun, alternates
           between an image of Gritty, the loyal but mischievous mascot for the
           Philadelphia Flyers.{' '}
         </VisuallyHiddenText>
-      </Headshot>
+      </ParallaxHeadshot>
     </IntroSection>
   );
 }
@@ -65,7 +70,7 @@ const Body = styled.p`
   }
 `;
 
-const Headshot = styled.div`
+const ParallaxHeadshot = styled(motion.div)`
   width: 300px;
   height: 300px;
   margin: 0 auto 2rem auto;
