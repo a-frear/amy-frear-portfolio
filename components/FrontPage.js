@@ -14,7 +14,7 @@ export default function FrontPage() {
 }
 
 const IntroSection = styled.section`
-  height: 100vh;
+  height: 100dvh;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

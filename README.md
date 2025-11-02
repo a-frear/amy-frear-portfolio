@@ -16,8 +16,9 @@ This is a single-page portfolio application featuring:
 
 ## Tech Stack
 
-- **Framework**: Next.js 12
-- **Styling**: styled-components with SSR support
+- **Framework**: Next.js 16 (with Turbopack)
+- **React**: 19.2
+- **Styling**: styled-components with native Next.js compiler support
 - **State Management**: React Context API
 - **Animation**: react-spring & motion/react
 - **Deployment**: Vercel

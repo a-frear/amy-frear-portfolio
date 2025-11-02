@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import { motion } from 'motion/react';
 import { green, hotPink } from '../styles/colors';
+import { SectionHeading } from '../styles/typography';
 import { useParallax } from '../hooks/useParallax';
 import { breakpoints } from '../styles/breakpoints';
 
@@ -93,15 +94,12 @@ export default function Projects() {
 
 const WorkWrapper = styled.section`
   text-align: left;
+  padding-bottom: 100px;
 `;
 
 const Heading = styled.h2`
+  ${SectionHeading}
   text-align: center;
-  font-size: clamp(52px, 8vw, 76px);
-  font-family: 'Bowlby One SC';
-  color: ${green};
-  text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000,
-    -1px -1px 0 #000;
 
   @media (min-width: ${breakpoints.tablet}) {
     grid-column: 1 / -1;
