@@ -151,6 +151,10 @@ const PosterWrapper = styled.div`
   background-size: cover;
   background-position: center;
 
+  @media (max-width: ${breakpoints.tablet}) {
+    background-position: 73% 30%;
+  }
+
   iframe {
     opacity: ${(props) => (props.isPlaying ? 1 : 0)};
     transition: opacity 0.3s ease;
@@ -187,13 +191,13 @@ const Spinner = styled.div`
 
 const Button = styled.button`
   position: absolute;
-  right: 20px;
-  bottom: 40px;
+  right: 10px;
+  bottom: 10px;
   cursor: pointer;
   z-index: 10;
   background-color: transparent;
   border: none;
-  padding: 0;
+  padding: 10px;
   svg {
     width: 50px;
     height: 50px;
@@ -205,5 +209,9 @@ const Button = styled.button`
   }
   &:active {
     transform: scale(0.97);
+  }
+  @media (min-width: ${breakpoints.tablet}) {
+    right: 20px;
+    bottom: 20px;
   }
 `;
