@@ -78,15 +78,11 @@ const VideoBGWrapper = styled.div`
   height: 100%;
   overflow: hidden;
   z-index: 1;
-  animation: fadeIn 2s ease-in forwards;
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  @media (min-width: 750px) {
+    background-image: url('/assets/eyesite-demo-still.jpeg');
+    background-size: cover;
+    background-position: center;
   }
 
   iframe {
