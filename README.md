@@ -10,11 +10,10 @@ A portfolio website built with Next.js and React, with a focus on performance, a
 
 This is a single-page portfolio application featuring:
 
-- **Smooth animations** with reduced motion support for accessibility
-- **Responsive design** that works seamlessly on mobile and desktop
-- **Interactive video background** with Vimeo integration
+- **Animations** with reduced motion support for accessibility
+- **Ambient Video** with Vimeo integration
 - **Feature flags** for progressive feature rollout
-- **Custom parallax effects** for visual depth
+- **SEO optimization** with meta tags, Open Graph, and structured data
 
 ## Tech Stack
 
@@ -23,6 +22,7 @@ This is a single-page portfolio application featuring:
 - **Styling**: styled-components with native Next.js compiler support
 - **State Management**: React Context API
 - **Animation**: motion/react
+- **Smooth Scrolling**: Lenis
 - **Deployment**: Vercel
 
 ## Features
@@ -30,14 +30,10 @@ This is a single-page portfolio application featuring:
 ### Accessibility
 
 - **Reduced Motion Support**: Detects user's system preference and disables animations for users who prefer reduced motion. Reduced Motion toggle to control on site.
-- **Semantic HTML**: Proper heading hierarchy and ARIA labels
-- **Keyboard Navigation**: Full keyboard support throughout the site
-- **Screen Reader Friendly**: Hidden text labels for icon-only elements
 
 ### Performance
 
 - Static generation with Next.js
-- Optimized image loading
 - CSS-in-JS with proper server-side rendering
 - Feature flags to reduce bundle size
 
@@ -46,27 +42,34 @@ This is a single-page portfolio application featuring:
 ```
 ├── components/          # React components
 │   ├── icons/          # SVG icon components
+│   │   ├── Curve.js           # Animated wavy divider with drop shadow
+│   │   ├── ParallaxWave.js    # Hot pink parallax wave
+│   │   └── ...other icons
 │   ├── Header.js       # Desktop header
 │   ├── HeaderMobile.js # Mobile header
-│   ├── FrontPage.js    # Hero section
-│   ├── Intro.js        # Introduction with parallax
+│   ├── FrontPage.js    # Hero section with video background
+│   ├── Intro.js        # Introduction with parallax headshot
 │   ├── About.js        # About section
-│   ├── Projects.js     # Personal projects showcase
 │   ├── Work.js         # Professional work experience
-│   ├── Contact.js      # Contact information
-│   └── VideoBG.js      # Vimeo video background
+│   ├── VideoBG.js      # Vimeo video background with controls
+│   ├── SEO.js          # SEO meta tags component
+│   └── ...other components
 ├── context/            # React Context providers
-│   └── context.js      # ReducedMotionContext
+│   └── context.js      # ReducedMotionContext with localStorage persistence
 ├── hooks/              # Custom React hooks
-│   └── useParallax.js  # Parallax scroll effect hook
+│   ├── useParallax.js  # Parallax scroll effect based on window position
+│   ├── useLenis.js     # Lenis smooth scrolling initialization
+│   └── useMobile.js    # Mobile detection (width < 750px)
 ├── pages/              # Next.js pages
 │   ├── index.js        # Home page (main entry point)
-│   ├── _app.js         # App wrapper
+│   ├── _app.js         # App wrapper with Lenis initialization
+│   ├── _document.js    # Document setup with favicon
 │   └── api/            # API routes
 ├── styles/             # Global styles and utilities
 │   ├── colors.js       # Color palette
-│   ├── typography.js   # Reusable typography styles
-│   └── breakpoints.js  # Responsive breakpoints
+│   ├── typography.js   # Reusable SectionHeading styled component
+│   ├── breakpoints.js  # Responsive breakpoints
+│   └── globals.css     # Global styles and reset
 └── config/             # Configuration
     └── featureFlags.js # Feature flag management
 ```
@@ -81,8 +84,6 @@ This is a single-page portfolio application featuring:
 ### Installation
 
 ```bash
-# Clone the repository
-git clone <repository-url>
 
 # Install dependencies
 npm install
@@ -134,11 +135,22 @@ Chose styled-components for:
 - Scoped styling
 - Dynamic styles based on props
 - Server-side rendering support
-- Component-co-located styles
 
 ### Custom Hooks
 
-The `useParallax` hook encapsulates parallax scroll logic, making it reusable and testable.
+Three custom hooks provide reusable logic throughout the application:
+
+#### `useParallax(intensity, ref)`
+
+Applies a parallax scroll effect to an element based on the window scroll position. The `intensity` parameter controls how much the element moves (0 = no movement, 0.2 = slow movement). Automatically disabled on mobile and when reduced motion is preferred.
+
+#### `useLenis()`
+
+Initializes Lenis smooth scrolling on app mount with a 1.2s duration and easeOut easing. Called once in `_app.js` to enable smooth scrolling across the entire site.
+
+#### `useMobile()`
+
+Returns a boolean indicating if the viewport width is less than 750px (tablet breakpoint). Used to conditionally disable parallax and other features on mobile devices. Includes a resize listener to update on window resize.
 
 ### Feature Flags
 
@@ -146,29 +158,6 @@ Implemented feature flags for progressive feature rollout without deployments:
 
 - `SHOW_ANIMATION_TOGGLE` - Toggle animation preference UI
 - `SHOW_SIDENAV` - Show/hide side navigation menu
-
-## Accessibility
-
-### Reduced Motion Support
-
-The entire site respects the user's system preference for `prefers-reduced-motion`. When enabled major animations are disabled, parallax is disabled, and autoplay is turned off for video.
-
-### Implementation
-
-```javascript
-// Uses Context API to provide animation state globally
-const { animation } = useContext(ReducedMotionContext);
-
-// Components conditionally render animations based on preference
-{
-  animation && <AnimatedComponent />;
-}
-```
-
-## Performance Optimizations
-
-- **CSS-in-JS SSR**: Styled-components configured for server-side rendering
-- **Feature Flags**: Unused features can be disabled to reduce code
 
 ## Video Credit
 
