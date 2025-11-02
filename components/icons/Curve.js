@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { green } from '../../styles/colors';
+import { breakpoints } from '../../styles/breakpoints';
 
 export default function Curve({ fill = green }) {
   return (
-    <div className="curve-2">
+    <CurveWrapper>
       <svg
         data-name="Layer 1"
         xmlns="http://www.w3.org/2000/svg"
@@ -16,9 +18,31 @@ export default function Curve({ fill = green }) {
           fill={fill}
         />
       </svg>
-    </div>
+    </CurveWrapper>
   );
 }
+
+const CurveWrapper = styled.div`
+  position: absolute;
+  top: 179px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 5;
+
+  @media (min-width: ${breakpoints.tablet}) {
+    top: 159px;
+  }
+
+  svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    transform: rotateY(180deg);
+  }
+`;
+
 Curve.propTypes = {
   fill: PropTypes.string,
 };

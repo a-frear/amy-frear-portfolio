@@ -47,7 +47,7 @@ export default function Header() {
         )}
         <div className="header-title">
           <h1>Amy Frear</h1>
-          <h2>Web Developer</h2>
+          <p>Web Developer</p>
         </div>
         {isFeatureEnabled('SHOW_SIDENAV') && (
           <>
@@ -133,7 +133,7 @@ const HeaderContainer = styled.div`
       -4px -4px 0 #000;
   }
 
-  h2 {
+  p {
     font-family: 'Bowlby One SC';
     font-size: clamp(14px, 4vw, 34px);
     color: ${lightYellow};

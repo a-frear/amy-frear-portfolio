@@ -1,14 +1,10 @@
-import { useRef } from 'react';
 import styled from 'styled-components';
-import { motion } from 'motion/react';
-import { green, hotPink } from '../styles/colors';
+import { hotPink } from '../styles/colors';
 import { SectionHeading } from '../styles/typography';
-import { useParallax } from '../hooks/useParallax';
+import ParallaxWave from './icons/ParallaxWave';
 import { breakpoints } from '../styles/breakpoints';
 
 export default function Projects() {
-  const waveRef = useRef(null);
-  const waveY = useParallax(0.1, waveRef);
   const projects = [
     {
       client: 'National Gallery of Art',
@@ -56,7 +52,8 @@ export default function Projects() {
             <ProjectLink href={project.link} target="_blank" rel="noreferrer">
               <ProjectText>
                 <span className="client-role">
-                  {project.client}, {project.role}
+                  <span className="client">{project.client}</span>,{' '}
+                  {project.role}
                 </span>
                 <span className="dots" />
                 <span className="year">{project.year}</span>
@@ -66,7 +63,7 @@ export default function Projects() {
         ))}
       </ProjectsList>
       <ClientWork>
-        <ParallaxWave ref={waveRef} className="wave" style={{ y: waveY }} />
+        <ParallaxWave />
         <p>More available on request.</p>
         <p id="contact">
           <a href="mailto:amy.frear@gmail.com">amy.frear@gmail.com</a>
@@ -111,7 +108,7 @@ const Heading = styled.h2`
 
 const ProjectsList = styled.ul`
   margin-top: 40px;
-  margin-bottom: 80px;
+  margin-bottom: 50px;
   list-style: none;
   padding: 0;
   display: grid;
@@ -132,6 +129,10 @@ const ProjectItem = styled.li`
     margin-bottom: 12px;
   }
 
+  .client {
+    text-decoration: underline;
+  }
+
   & a:hover .client-role,
   & a:focus-visible .client-role {
     color: ${hotPink};
@@ -145,7 +146,7 @@ const ProjectText = styled.div`
   font-size: 18px;
   line-height: 1.4;
   @media (min-width: ${breakpoints.tablet}) {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .client-role {
@@ -175,31 +176,6 @@ const ProjectLink = styled.a`
   text-decoration: none;
   color: inherit;
   display: block;
-`;
-
-const ParallaxWave = styled(motion.div)`
-  background: ${hotPink};
-  height: 100px;
-  margin-bottom: 50px;
-  --mask: radial-gradient(
-        38.99px at 50% calc(100% + 18px),
-        #0000 calc(99% - 8px),
-        #000 calc(101% - 8px) 99%,
-        #0000 101%
-      )
-      calc(50% - 60px) calc(50% - 19px + 0.5px) / 120px 38px repeat-x,
-    radial-gradient(
-        38.99px at 50% -18px,
-        #0000 calc(99% - 8px),
-        #000 calc(101% - 8px) 99%,
-        #0000 101%
-      )
-      50% calc(50% + 19px) / 120px 38px repeat-x;
-  -webkit-mask: var(--mask);
-  mask: var(--mask);
-  @media (min-width: ${breakpoints.tablet}) {
-    height: 200px;
-  }
 `;
 
 const ClientWork = styled.div`

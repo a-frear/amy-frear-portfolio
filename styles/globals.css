@@ -174,7 +174,7 @@ section {
 }
 
 .full-section {
-  margin: 150px 0;
+  margin: 100px 0;
   padding: 0 20px;
   @media (min-width: 750px) {
     margin: 200px 0;
@@ -185,37 +185,7 @@ section {
   }
 }
 
-.half-section {
-  padding: 100px 0 100px 20px;
-  @media (min-width: 750px) {
-    padding: 100px 0 100px 10vw;
-  }
-}
-
 p {
-  font-size: clamp(22px, 2vw, 32px);
+  font-size: clamp(20px, 2vw, 32px);
   line-height: 146%;
-}
-
-.curve-2 {
-  position: absolute;
-  top: 199px;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  z-index: 5;
-}
-
-@media only screen and (min-width: 750px) {
-  .curve-2 {
-    top: 159px;
-  }
-}
-
-.curve-2 svg {
-  position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  transform: rotateY(180deg);
 }

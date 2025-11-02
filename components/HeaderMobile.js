@@ -74,7 +74,7 @@ export default function Header() {
         )}
         <div className="header-title">
           <h1>Amy Frear</h1>
-          <h2>Web Developer</h2>
+          <p>Web Developer</p>
         </div>
       </HeaderContainer>
     </HeaderWrapper>
@@ -101,7 +101,7 @@ const AnimatedBackground = styled(motion.div)`
   z-index: 1;
   pointer-events: none;
   background-color: ${green};
-  height: 200px;
+  height: 180px;
 `;
 
 const HeaderContainer = styled.div`
@@ -112,12 +112,12 @@ const HeaderContainer = styled.div`
   width: 100%;
   grid-template-columns: 1fr 1fr;
   background-color: transparent;
-  height: 200px;
+  height: 180px;
   @media (min-width: ${breakpoints.tablet}) {
     display: none;
   }
   .toggle-wrapper {
-    margin: 1rem 0 0 1rem;
+    margin: 1.5rem 0 0 1rem;
     height: 20px;
   }
   .header-title {
@@ -126,18 +126,19 @@ const HeaderContainer = styled.div`
   }
   h1 {
     font-family: 'Bowlby One SC';
-    font-size: clamp(50px, 10vw, 98px);
+    font-size: 58px;
     color: ${lightYellow};
-    text-shadow: -3px 3px 0 #000, 3px 3px 0 #000, 3px -3px 0 #000,
-      -3px -3px 0 #000;
+    text-shadow: -2px 2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000,
+      -2px -2px 0 #000;
+    padding: 0 10px;
   }
 
-  h2 {
+  p {
     font-family: 'Bowlby One SC';
     font-size: clamp(24px, 4vw, 42px);
     color: ${lightYellow};
-    text-shadow: -3px 3px 0 #000, 3px 3px 0 #000, 3px -3px 0 #000,
-      -3px -3px 0 #000;
+    text-shadow: -2px 2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000,
+      -2px -2px 0 #000;
   }
 
   .nav-button-wrapper {
