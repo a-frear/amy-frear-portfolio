@@ -13,6 +13,8 @@ import {
   darkPurple,
   purple,
 } from '../styles/colors';
+import { HeadingBase } from '../styles/typography';
+import { breakpoints } from '../styles/breakpoints';
 import VisuallyHiddenText from './VisuallyHiddenText';
 
 export default function Projects() {
@@ -159,7 +161,7 @@ const ProjectsWrapper = styled.section`
   display: block;
   background-color: ${darkBlue};
   text-align: left;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     padding-left: 50px;
     padding-right: 50px;
   }
@@ -167,7 +169,7 @@ const ProjectsWrapper = styled.section`
 
 const ProjectsGrid = styled.div`
   margin-top: 40px;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: flex-start;
@@ -177,13 +179,10 @@ const ProjectsGrid = styled.div`
 `;
 
 const Heading = styled.h2`
-  font-size: clamp(52px, 8vw, 76px);
-  font-family: 'Bowlby One SC';
+  ${HeadingBase}
   color: ${lightYellow};
-  text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000,
-    -1px -1px 0 #000;
 
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     grid-column: 1 / -1;
   }
 `;
@@ -194,7 +193,7 @@ const Project = styled.div`
   &:last-of-type {
     margin-bottom: 0;
   }
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     margin-bottom: 0;
   }
   img {
@@ -254,7 +253,7 @@ const ClientWork = styled.div`
       color: ${hotPink};
     }
   }
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     margin-top: 60px;
     max-width: 50%;
   }

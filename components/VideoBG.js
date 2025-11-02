@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ReducedMotionContext } from '../context/context.js';
 import Play from './icons/Play';
 import Pause from './icons/Pause';
+import { breakpoints } from '../styles/breakpoints';
 
 export default function VideoBG() {
   const { animation } = useContext(ReducedMotionContext);
@@ -148,7 +149,7 @@ const VideoBGWrapper = styled.div`
     top: 50%;
     left: 1%;
     transform: translate(-50%, -50%);
-    @media (min-width: 750px) {
+    @media (min-width: ${breakpoints.tablet}) {
       left: 50%;
     }
   }

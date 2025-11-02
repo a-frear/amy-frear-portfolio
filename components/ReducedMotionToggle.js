@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { ReducedMotionContext } from '../context/context.js';
+import { breakpoints } from '../styles/breakpoints';
 
 export default function ReducedMotionToggle() {
   const { setAnimation, animation } = useContext(ReducedMotionContext);
@@ -37,7 +38,7 @@ const ReducedMotionToggleWrapper = styled.div`
   /* height: 300px; */
   width: 100%;
   height: 100%;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     height: 300px;
   }
   &:hover {
@@ -53,7 +54,7 @@ const ReducedMotionToggleWrapper = styled.div`
     height: 100%;
     width: 100%;
     pointer-events: auto;
-    @media (min-width: 750px) {
+    @media (min-width: ${breakpoints.tablet}) {
       height: auto;
       display: inline-block;
     }
@@ -67,7 +68,7 @@ const ReducedMotionToggleWrapper = styled.div`
     text-transform: uppercase;
     font-size: 18px;
     color: black;
-    @media (min-width: 750px) {
+    @media (min-width: ${breakpoints.tablet}) {
       font-size: 22px;
     }
   }

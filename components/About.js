@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { green, blue } from '../styles/colors';
+import { SectionHeading } from '../styles/typography';
+import { breakpoints } from '../styles/breakpoints';
 
 export default function About() {
   return (
@@ -25,7 +27,7 @@ const AboutWrapper = styled.section`
   display: block;
   margin-left: auto;
   margin-right: auto;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     max-width: 70%;
   }
 `;
@@ -33,15 +35,11 @@ const AboutWrapper = styled.section`
 const Heading = styled.h2`
   text-align: center;
   margin-bottom: 2rem;
-  font-size: clamp(52px, 8vw, 76px);
-  font-family: 'Bowlby One SC';
-  color: ${green};
-  text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000,
-    -1px -1px 0 #000;
+  ${SectionHeading}
 `;
 
 const Content = styled.div`
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     grid-column: 2 / 3;
     order: 1;
   }

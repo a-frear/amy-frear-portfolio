@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 import VideoBG from './VideoBG';
 import { ReducedMotionContext } from '../context/context';
+import { breakpoints } from '../styles/breakpoints';
 
 export default function FrontPage() {
   const { animation } = useContext(ReducedMotionContext);
@@ -19,7 +20,7 @@ const IntroSection = styled.section`
   -o-background-size: cover;
   background-size: cover;
   background-position-x: 70%;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     background-position-x: unset;
   }
 `;

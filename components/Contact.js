@@ -13,6 +13,7 @@ import {
   darkPurple,
   purple,
 } from '../styles/colors';
+import { breakpoints } from '../styles/breakpoints';
 import VisuallyHiddenText from './VisuallyHiddenText';
 
 export default function Contact() {
@@ -48,7 +49,7 @@ const ContactSection = styled.section`
   background-color: ${gold};
   text-align: left;
   align-items: start;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     padding-left: 50px;
     padding-right: 50px;
   }

@@ -7,6 +7,7 @@ import Hamburger from './icons/Hamburger.js';
 import Curve from './icons/Curve.js';
 import { isFeatureEnabled } from '../config/featureFlags.js';
 import { red, lightYellow, green, yellow } from '../styles/colors';
+import { breakpoints } from '../styles/breakpoints';
 
 export default function Header() {
   const { animation } = useContext(ReducedMotionContext);
@@ -155,7 +156,7 @@ const AnimatedBackground = styled(motion.div)`
   width: 100%;
   z-index: 1;
   pointer-events: none;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     background-color: ${green};
     height: 160px;
   }
@@ -166,7 +167,7 @@ const HeaderContainer = styled.div`
   z-index: 10;
   display: none;
   width: 100%;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     display: grid;
     background-color: transparent;
     justify-content: space-between;

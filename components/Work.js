@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { motion } from 'motion/react';
 import { green, hotPink } from '../styles/colors';
 import { useParallax } from '../hooks/useParallax';
+import { breakpoints } from '../styles/breakpoints';
 
 export default function Projects() {
   const waveRef = useRef(null);
-  const waveY = useParallax(0.05, waveRef);
+  const waveY = useParallax(0.08, waveRef);
   const projects = [
     {
       client: 'National Gallery of Art',
@@ -102,7 +103,7 @@ const Heading = styled.h2`
   text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000,
     -1px -1px 0 #000;
 
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     grid-column: 1 / -1;
   }
 `;
@@ -113,7 +114,7 @@ const ProjectsList = styled.ul`
   padding: 0;
   display: grid;
 
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     margin-top: 60px;
     max-width: 80%;
     margin-left: auto;
@@ -124,7 +125,7 @@ const ProjectsList = styled.ul`
 const ProjectItem = styled.li`
   margin-bottom: 18px;
 
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     margin-bottom: 12px;
   }
 
@@ -141,7 +142,7 @@ const ProjectText = styled.div`
   font-family: 'Share', sans-serif;
   font-size: 18px;
   line-height: 1.4;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     font-size: 20px;
   }
 
@@ -157,7 +158,7 @@ const ProjectText = styled.div`
     height: 1px;
     margin-bottom: 4px;
     opacity: 0;
-    @media (min-width: 750px) {
+    @media (min-width: ${breakpoints.tablet}) {
       opacity: 1;
     }
   }
@@ -176,7 +177,8 @@ const ProjectLink = styled.a`
 
 const ParallaxWave = styled(motion.div)`
   background: ${hotPink};
-  height: 200px;
+  height: 100px;
+  margin-bottom: 50px;
   --mask: radial-gradient(
         38.99px at 50% calc(100% + 18px),
         #0000 calc(99% - 8px),
@@ -193,6 +195,9 @@ const ParallaxWave = styled(motion.div)`
       50% calc(50% + 19px) / 120px 38px repeat-x;
   -webkit-mask: var(--mask);
   mask: var(--mask);
+  @media (min-width: ${breakpoints.tablet}) {
+    height: 200px;
+  }
 `;
 
 const ClientWork = styled.div`
@@ -210,8 +215,7 @@ const ClientWork = styled.div`
       color: ${green};
     }
   }
-  @media (min-width: 750px) {
-    margin-top: 60px;
+  @media (min-width: ${breakpoints.tablet}) {
     max-width: 50%;
   }
 `;

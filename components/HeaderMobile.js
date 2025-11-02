@@ -7,6 +7,7 @@ import Hamburger from './icons/Hamburger.js';
 import Curve from './icons/Curve.js';
 import { isFeatureEnabled } from '../config/featureFlags.js';
 import { red, lightYellow, green } from '../styles/colors';
+import { breakpoints } from '../styles/breakpoints';
 
 export default function Header() {
   const { animation } = useContext(ReducedMotionContext);
@@ -144,7 +145,7 @@ const HeaderWrapper = styled.div`
   right: 0;
   z-index: 100;
   width: 100%;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     display: none;
   }
 `;
@@ -169,7 +170,7 @@ const HeaderContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   background-color: transparent;
   height: 200px;
-  @media (min-width: 750px) {
+  @media (min-width: ${breakpoints.tablet}) {
     display: none;
   }
   .toggle-wrapper {
