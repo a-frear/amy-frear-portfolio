@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'motion/react';
 import { green } from '../styles/colors';
@@ -9,20 +9,38 @@ import { breakpoints } from '../styles/breakpoints';
 
 export default function Intro() {
   const headshotRef = useRef(null);
-  const headshotY = useParallax(0.1, headshotRef);
+  const [isMobile, setIsMobile] = useState(false);
+  const headshotY = useParallax(isMobile ? 0.08 : 0.1, headshotRef);
   const [showGritty, setShowGritty] = useState(false);
 
   useEffect(() => {
-    // Only run animation on mobile (screen width < tablet breakpoint)
-    const checkMobile = () => window.innerWidth < parseInt(breakpoints.tablet);
+    // Check if mobile and set up resize listener
+    const checkMobile = () => {
+      const mobile = window.innerWidth < parseInt(breakpoints.tablet);
+      setIsMobile(mobile);
+      return mobile;
+    };
 
-    if (!checkMobile()) return;
+    // Initial check
+    checkMobile();
 
-    const interval = setInterval(() => {
-      setShowGritty((prev) => !prev);
-    }, 5000);
+    // Add resize listener
+    const handleResize = () => checkMobile();
+    window.addEventListener('resize', handleResize);
 
-    return () => clearInterval(interval);
+    // Only run animation on mobile
+    if (checkMobile()) {
+      const interval = setInterval(() => {
+        setShowGritty((prev) => !prev);
+      }, 5000);
+
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (

@@ -111,13 +111,14 @@ const Heading = styled.h2`
 
 const ProjectsList = styled.ul`
   margin-top: 40px;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
   list-style: none;
   padding: 0;
   display: grid;
 
   @media (min-width: ${breakpoints.tablet}) {
     margin-top: 60px;
+    margin-bottom: 100px;
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
