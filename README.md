@@ -1,8 +1,10 @@
 # Amy Frear's Portfolio
 
-A portfolio website built with Next.js and React, with a focus on performance, accessibility, and fun user experience.
+A portfolio website built with Next.js and React, with a focus on performance, accessibility, and a fun user experience.
 
-**Live Site**: [amy-frear-portfolio.vercel.app](https://amy-frear-portfolio.vercel.app) _(update with your actual URL)_
+![Portfolio Screenshot](public/assets/portfolio-screenshot.png)
+
+**Live Site**: [frear-projects.com](https://www.frear-projects.com/)
 
 ## Overview
 
@@ -20,37 +22,24 @@ This is a single-page portfolio application featuring:
 - **React**: 19.2
 - **Styling**: styled-components with native Next.js compiler support
 - **State Management**: React Context API
-- **Animation**: react-spring & motion/react
+- **Animation**: motion/react
 - **Deployment**: Vercel
 
 ## Features
 
-### Accessibility First 🎯
+### Accessibility
 
-- **Reduced Motion Support**: Detects user's system preference and disables animations for users who prefer reduced motion
+- **Reduced Motion Support**: Detects user's system preference and disables animations for users who prefer reduced motion. Reduced Motion toggle to control on site.
 - **Semantic HTML**: Proper heading hierarchy and ARIA labels
 - **Keyboard Navigation**: Full keyboard support throughout the site
 - **Screen Reader Friendly**: Hidden text labels for icon-only elements
 
-### Responsive Design 📱
-
-- Mobile-first approach with breakpoints at 750px
-- Optimized for all device sizes
-- Touch-friendly navigation on mobile
-
-### Performance ⚡
+### Performance
 
 - Static generation with Next.js
 - Optimized image loading
 - CSS-in-JS with proper server-side rendering
 - Feature flags to reduce bundle size
-
-### Interactive Elements 🎬
-
-- Custom parallax scroll effect on headshot
-- Video background with play/pause controls
-- Animated page transitions
-- Loading spinner for video buffering
 
 ## Project Structure
 
@@ -136,13 +125,13 @@ All code is automatically formatted on save. Run `npm run lint` to check for iss
 
 ### State Management: React Context
 
-Used Context API for global animation preference rather than Redux to keep bundle size small for a portfolio site. The `ReducedMotionContext` manages animation preferences globally.
+The `ReducedMotionContext` manages animation preferences globally.
 
 ### Styling: styled-components
 
 Chose styled-components for:
 
-- Scoped styling (no CSS class conflicts)
+- Scoped styling
 - Dynamic styles based on props
 - Server-side rendering support
 - Component-co-located styles
@@ -162,11 +151,7 @@ Implemented feature flags for progressive feature rollout without deployments:
 
 ### Reduced Motion Support
 
-The entire site respects the user's system preference for `prefers-reduced-motion`. When enabled:
-
-- All animations are disabled
-- Video background becomes a static poster image
-- Page transitions are instant instead of animated
+The entire site respects the user's system preference for `prefers-reduced-motion`. When enabled major animations are disabled, parallax is disabled, and autoplay is turned off for video.
 
 ### Implementation
 
@@ -182,55 +167,12 @@ const { animation } = useContext(ReducedMotionContext);
 
 ## Performance Optimizations
 
-- **Code Splitting**: Next.js automatically splits code per route
-- **Image Optimization**: Background images use CSS with proper sizing
 - **CSS-in-JS SSR**: Styled-components configured for server-side rendering
 - **Feature Flags**: Unused features can be disabled to reduce code
 
-## Browser Support
+## Video Credit
 
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## Deployment
-
-### Vercel (Recommended)
-
-This project is optimized for Vercel deployment:
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-```
-
-Vercel automatically:
-
-- Builds and optimizes the site
-- Deploys to global CDN
-- Provides automatic SSL certificates
-- Enables continuous deployment from Git
-
-### Other Platforms
-
-The site can be deployed to any platform supporting Node.js:
-
-```bash
-npm run build
-npm start
-```
-
-## Contributing
-
-This is a personal portfolio site, but feedback and suggestions are welcome! Feel free to [open an issue](https://github.com/a-frear/amy-frear-portfolio/issues) or reach out.
-
-## License
-
-This project is open source and available under the MIT License.
+The video used in the ambient header was made by me in homage to the experimental videos [Les Mains by Geta Brătescu](https://vimeo.com/132207733) and [I'm too sad to tell you by Bas Jan Ader](https://www.youtube.com/watch?v=zAsRpwsQqYQ)... and a very fun project I made when I first learned to code called EYE SITE. You can see more of my video work on [Vimeo](https://vimeo.com/amyfrear).
 
 ## Contact
 
@@ -240,4 +182,4 @@ This project is open source and available under the MIT License.
 
 ---
 
-Built with ❤️ by Amy Frear
+Thanks for checking out my portfolio! 👽 Amy
