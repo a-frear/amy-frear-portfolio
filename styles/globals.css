@@ -1,6 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Fjalla+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Share:wght@400;700&display=swap");
+/* Local font declarations */
+@font-face {
+  font-family: "Bowlby One SC";
+  src: url("/assets/fonts/BowlbyOneSC-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fjalla One";
+  src: url("/assets/fonts/FjallaOne-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import VideoBG from './VideoBG';
 import { ReducedMotionContext } from '../context/context';
-import { red } from '../styles/colors';
+import { gold } from '../styles/colors';
 
 export default function FrontPage() {
   const { animation } = useContext(ReducedMotionContext);
@@ -14,14 +14,13 @@ export default function FrontPage() {
 }
 
 const IntroSection = styled.section`
-  background: red;
+  background: ${gold};
   height: 100vh;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   background-position-x: 70%;
-  margin-top: -50px;
   /* z-index: -1; */
   @media (min-width: 750px) {
     background-position-x: unset;

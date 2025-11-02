@@ -68,8 +68,12 @@ export default function Header() {
 }
 
 const HeaderWrapper = styled.div`
-  position: relative;
-  background-color: ${red};
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
 `;
 
 const AnimatedBackground = animated(styled.div`

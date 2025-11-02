@@ -3,6 +3,7 @@ export const lightGreen = '#F0F2C4';
 export const red = '#F72C25';
 export const purple = '#DAB6FC';
 export const blue = '#3a86ff';
+export const darkBlue = '#334147';
 export const hotPink = '#F73BB2';
 export const orange = '#FFB86F';
 export const lightYellow = '#fcf6b1';

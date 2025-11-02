@@ -9,6 +9,7 @@ import {
   green,
   pink,
   hotPink,
+  darkBlue,
   red,
   blue,
   chartreuse,
@@ -159,7 +160,7 @@ export default function Projects() {
 
 const ProjectsWrapper = styled.section`
   display: block;
-  background-color: #334147;
+  background-color: ${darkBlue};
   text-align: left;
   @media (min-width: 750px) {
     padding-left: 50px;

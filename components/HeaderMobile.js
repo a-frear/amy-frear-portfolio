@@ -58,8 +58,13 @@ export default function Header() {
 }
 
 const HeaderWrapper = styled.div`
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   background-color: ${red};
+  width: 100%;
   @media (min-width: 750px) {
     display: none;
   }

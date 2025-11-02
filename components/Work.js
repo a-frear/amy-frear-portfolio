@@ -8,6 +8,7 @@ import {
   hotPink,
   red,
   blue,
+  darkBlue,
   chartreuse,
   darkPurple,
   purple,
@@ -95,7 +96,7 @@ export default function Projects() {
 
 const WorkWrapper = styled.section`
   display: block;
-  background-color: #334147;
+  background-color: ${darkBlue};
   text-align: left;
   @media (min-width: 750px) {
     padding-left: 50px;

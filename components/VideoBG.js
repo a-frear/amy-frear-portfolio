@@ -8,28 +8,29 @@ export default function VideoBG() {
   const [player, setPlayer] = useState(null);
   const iframe = useRef(null);
 
+  const initializePlayer = () => {
+    if (window.Vimeo && iframe.current) {
+      const vimeoPlayer = new window.Vimeo.Player(iframe.current);
+      setPlayer(vimeoPlayer);
+
+      // Listen to play/pause events
+      vimeoPlayer.on('play', () => setIsPlaying(true));
+      vimeoPlayer.on('pause', () => setIsPlaying(false));
+    }
+  };
+
   useEffect(() => {
-    // Load Vimeo Player API
-    const script = document.createElement('script');
-    script.src = 'https://player.vimeo.com/api/player.js';
-    script.async = true;
-    script.onload = () => {
-      if (window.Vimeo && iframe.current) {
-        const vimeoPlayer = new window.Vimeo.Player(iframe.current);
-        setPlayer(vimeoPlayer);
-
-        // Listen to play/pause events
-        vimeoPlayer.on('play', () => setIsPlaying(true));
-        vimeoPlayer.on('pause', () => setIsPlaying(false));
-      }
-    };
-    document.body.appendChild(script);
-
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
+    // Check if Vimeo API is already loaded
+    if (window.Vimeo) {
+      initializePlayer();
+    } else {
+      // Load Vimeo Player API only once
+      const script = document.createElement('script');
+      script.src = 'https://player.vimeo.com/api/player.js';
+      script.async = true;
+      script.onload = initializePlayer;
+      document.head.appendChild(script);
+    }
   }, []);
 
   const togglePlayPause = async () => {
@@ -54,7 +55,7 @@ export default function VideoBG() {
       <iframe
         ref={iframe}
         title="bg-video"
-        src="https://player.vimeo.com/video/547280824?h=050797c24d&autoplay=1&loop=1&background=1&autopause=0"
+        src="https://player.vimeo.com/video/547280824?h=050797c24d&autoplay=1&loop=1&background=1&autopause=0&muted=1"
         width="100%"
         height="100%"
         frameBorder="0"
@@ -75,6 +76,17 @@ const VideoBGWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  animation: fadeIn 2s ease-in;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   iframe {
     width: 100vw;
     height: 56.25vw; /* Given a 16:9 aspect ratio, 9/16*100 = 56.25 */

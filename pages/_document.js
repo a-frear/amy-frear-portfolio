@@ -1,4 +1,4 @@
-import Document from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
@@ -26,5 +26,39 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+
+  render() {
+    return (
+      <Html>
+        <Head>
+          {/* Preload local fonts for faster rendering */}
+          <link
+            rel="preload"
+            href="/assets/fonts/BowlbyOneSC-Regular.ttf"
+            as="font"
+            type="font/ttf"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="preload"
+            href="/assets/fonts/FjallaOne-Regular.ttf"
+            as="font"
+            type="font/ttf"
+            crossOrigin="anonymous"
+          />
+
+          {/* Preconnect to Vimeo for faster video loading */}
+          <link rel="preconnect" href="https://player.vimeo.com" />
+          <link rel="preconnect" href="https://i.vimeocdn.com" />
+          <link rel="dns-prefetch" href="https://player.vimeo.com" />
+          <link rel="dns-prefetch" href="https://i.vimeocdn.com" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
   }
 }
