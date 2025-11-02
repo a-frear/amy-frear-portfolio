@@ -22,4 +22,5 @@ export default function Home() {
 
 const HomeWrapper = styled.div`
   position: relative;
+  background-color: white;
 `;

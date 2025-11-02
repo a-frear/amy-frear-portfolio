@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { green, gold, lightYellow } from '../styles/colors';
+import { green, gold, lightYellow, hotPink } from '../styles/colors';
 import VisuallyHiddenText from './VisuallyHiddenText';
 
 export default function Intro() {
@@ -14,11 +14,7 @@ export default function Intro() {
             Philly
           </a>
           . I love solving problems and creating websites that are fun to
-          explore. Currently a developer with the amazing team at{' '}
-          <a href="https://www.bluecadet.com/" target="_blank" rel="noreferrer">
-            Bluecadet
-          </a>
-          .
+          explore.
         </Body>
       </Content>
       <Headshot tabIndex={0}>
@@ -33,25 +29,24 @@ export default function Intro() {
 }
 
 const IntroSection = styled.section`
-  background-color: ${gold};
   display: grid;
   align-items: center;
   justify-content: center;
-  grid-gap: 10%;
+  grid-gap: 5%;
   padding-bottom: 200px;
   @media (min-width: 750px) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr auto 1fr;
   }
 `;
 
 const Content = styled.div`
-  grid-column: 1 / 2;
+  grid-column: 2 / 3;
 `;
 
 const Heading = styled.h2`
   font-size: clamp(52px, 8vw, 76px);
   font-family: 'Bowlby One SC';
-  color: ${lightYellow};
+  color: ${green};
   text-shadow: -2px 2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000,
     -2px -2px 0 #000;
 `;
@@ -70,6 +65,7 @@ const Headshot = styled.div`
   height: 300px;
   margin: 0 auto;
   border: 10px solid ${green};
+  border-radius: 50%;
   background-image: url('assets/amy-hs.jpeg');
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -80,7 +76,7 @@ const Headshot = styled.div`
     background-image: url('assets/gritty.jpg');
   }
   @media (min-width: 750px) {
-    grid-column: 2 / -1;
+    grid-column: 3 / 4;
     width: 400px;
     height: 400px;
   }

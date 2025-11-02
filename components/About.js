@@ -59,9 +59,8 @@ const AboutWrapper = styled.section`
   align-items: start;
   justify-content: center;
   grid-gap: 5%;
-  background-color: #ccd131;
   @media (min-width: 750px) {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 5fr 1fr;
     padding-left: 50px;
     padding-right: 50px;
   }
@@ -71,17 +70,17 @@ const AboutWrapper = styled.section`
 `;
 
 const Heading = styled.h2`
-  grid-column: 1 / -1;
+  grid-column: 2 / 3;
   font-size: clamp(52px, 8vw, 76px);
   font-family: 'Bowlby One SC';
-  color: ${lightYellow};
+  color: ${green};
   text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000,
     -1px -1px 0 #000;
 `;
 
 const Content = styled.div`
   @media (min-width: 750px) {
-    grid-column: 1 / 2;
+    grid-column: 2 / 3;
     order: 1;
   }
 `;

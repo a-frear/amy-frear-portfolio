@@ -96,7 +96,6 @@ export default function Projects() {
 
 const WorkWrapper = styled.section`
   display: block;
-  background-color: ${darkBlue};
   text-align: left;
   @media (min-width: 750px) {
     padding-left: 50px;
@@ -107,7 +106,7 @@ const WorkWrapper = styled.section`
 const Heading = styled.h2`
   font-size: clamp(52px, 8vw, 76px);
   font-family: 'Bowlby One SC';
-  color: ${lightYellow};
+  color: ${green};
   text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000,
     -1px -1px 0 #000;
 
@@ -116,7 +115,7 @@ const Heading = styled.h2`
   }
 `;
 
-const ProjectsGrid = styled.div`
+const ProjectsGrid = styled.ul`
   margin-top: 40px;
   display: grid;
   grid-template-columns: 1fr;
@@ -129,9 +128,9 @@ const ProjectsGrid = styled.div`
   }
 `;
 
-const Project = styled.div`
+const Project = styled.li`
   position: relative;
-  color: ${lightYellow};
+  color: black;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
@@ -250,14 +249,14 @@ const ProjectLink = styled.a`
 const ProjectTitle = styled.h3`
   margin: 0;
   font-size: 24px;
-  color: ${lightYellow};
+  color: black;
   transition: color 0.3s ease;
 `;
 
 const ProjectSubtitle = styled.p`
   font-size: 18px !important;
   margin: 8px 0 0 0;
-  color: ${orange};
+  color: black;
   font-family: 'Share', sans-serif;
 `;
 
@@ -265,12 +264,12 @@ const ClientWork = styled.div`
   text-align: center;
   margin: 0 auto;
   padding-bottom: 50px;
-  color: ${lightYellow};
+  color: black;
   p {
     margin-bottom: 20px;
   }
   a {
-    color: ${lightYellow};
+    color: black;
     transition: color 0.3s ease;
     &:hover {
       color: ${green};
