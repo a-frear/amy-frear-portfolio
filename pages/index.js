@@ -1,5 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
+import SEO from '../components/SEO';
 import Header from '../components/Header';
 import HeaderMobile from '../components/HeaderMobile';
 import Intro from '../components/Intro';
@@ -9,14 +9,17 @@ import Work from '../components/Work';
 
 export default function Home() {
   return (
-    <HomeWrapper>
-      <Header />
-      <HeaderMobile />
-      <FrontPage />
-      <Intro />
-      <About />
-      <Work />
-    </HomeWrapper>
+    <>
+      <SEO />
+      <HomeWrapper>
+        <Header />
+        <HeaderMobile />
+        <FrontPage />
+        <Intro />
+        <About />
+        <Work />
+      </HomeWrapper>
+    </>
   );
 }
 
