@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import styled from 'styled-components';
+import { ReducedMotionContext } from '../context/context.js';
 import Play from './icons/Play';
 import Pause from './icons/Pause';
 
 export default function VideoBG() {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const { animation } = useContext(ReducedMotionContext);
+  const [isPlaying, setIsPlaying] = useState(() => animation);
   const [player, setPlayer] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const iframe = useRef(null);
 
   const initializePlayer = () => {
@@ -13,9 +17,20 @@ export default function VideoBG() {
       const vimeoPlayer = new window.Vimeo.Player(iframe.current);
       setPlayer(vimeoPlayer);
 
-      // Listen to play/pause events
-      vimeoPlayer.on('play', () => setIsPlaying(true));
-      vimeoPlayer.on('pause', () => setIsPlaying(false));
+      // Listen for the 'loadstart' event to detect when video starts loading
+      // Listen for 'canplay' event to know when it's ready to play
+      vimeoPlayer.on('canplay', () => {
+        console.log('Video can play');
+        setIsVideoReady(true);
+      });
+
+      // Also mark as ready after a short delay to ensure it's initialized
+      setTimeout(() => {
+        console.log(
+          'Video initialization timeout reached, setting isVideoReady to true'
+        );
+        setIsVideoReady(true);
+      }, 2000);
     }
   };
 
@@ -33,35 +48,80 @@ export default function VideoBG() {
     }
   }, []);
 
+  // Update isPlaying when animation setting changes
+  useEffect(() => {
+    if (player) {
+      if (animation) {
+        player.play().catch(() => {
+          // Autoplay might be blocked, that's ok
+        });
+        setIsPlaying(true);
+      } else {
+        player.pause().catch(() => {
+          // Pause might fail, that's ok
+        });
+        setIsPlaying(false);
+        setIsLoading(false);
+      }
+    }
+  }, [animation, player]);
+
   const togglePlayPause = async () => {
     if (!player) return;
 
     try {
       const paused = await player.getPaused();
+      console.log(
+        'Play button clicked. Paused?',
+        paused,
+        'isVideoReady?',
+        isVideoReady
+      );
       if (paused) {
+        // Only show loading spinner if video hasn't been fully loaded yet
+        if (!isVideoReady) {
+          setIsLoading(true);
+          console.log('Showing loading spinner because video not ready');
+        } else {
+          console.log('NOT showing spinner because video is already ready');
+        }
+
         await player.play();
         setIsPlaying(true);
+
+        // Hide spinner after video plays
+        setIsLoading(false);
       } else {
         await player.pause();
         setIsPlaying(false);
       }
     } catch (error) {
       console.error('Error controlling video:', error);
+      setIsLoading(false);
     }
   };
 
   return (
     <VideoBGWrapper>
-      <iframe
-        ref={iframe}
-        title="bg-video"
-        src="https://player.vimeo.com/video/547280824?h=050797c24d&autoplay=1&loop=1&background=1&autopause=0&muted=1"
-        width="100%"
-        height="100%"
-        frameBorder="0"
-        allow="autoplay; fullscreen"
-        allowFullScreen
-      />
+      <PosterWrapper isPlaying={isPlaying}>
+        <iframe
+          ref={iframe}
+          title="bg-video"
+          src={`https://player.vimeo.com/video/547280824?h=050797c24d&autoplay=${
+            animation ? 1 : 0
+          }&loop=1&background=1&autopause=0&muted=1`}
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+        />
+      </PosterWrapper>
+      {isLoading && (
+        <LoadingSpinner>
+          <Spinner />
+        </LoadingSpinner>
+      )}
       <Button type="button" onClick={togglePlayPause}>
         {isPlaying ? <Pause /> : <Play />}
       </Button>
@@ -79,12 +139,6 @@ const VideoBGWrapper = styled.div`
   overflow: hidden;
   z-index: 1;
 
-  @media (min-width: 750px) {
-    background-image: url('/assets/eyesite-demo-still.jpeg');
-    background-size: cover;
-    background-position: center;
-  }
-
   iframe {
     width: 100vw;
     height: 56.25vw; /* Given a 16:9 aspect ratio, 9/16*100 = 56.25 */
@@ -96,6 +150,50 @@ const VideoBGWrapper = styled.div`
     transform: translate(-50%, -50%);
     @media (min-width: 750px) {
       left: 50%;
+    }
+  }
+`;
+
+const PosterWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/eyesite-demo-still.jpeg');
+  background-size: cover;
+  background-position: center;
+
+  iframe {
+    opacity: ${(props) => (props.isPlaying ? 1 : 0)};
+    transition: opacity 0.3s ease;
+  }
+`;
+
+const LoadingSpinner = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Spinner = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(204, 209, 49, 0.4);
+  border-top-color: #ccd131;
+  border-right-color: #ccd131;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  box-shadow: 0 0 10px rgba(204, 209, 49, 0.5);
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
     }
   }
 `;
@@ -116,7 +214,7 @@ const Button = styled.button`
     color: white;
   }
   &:hover {
-    filter: brightness(0.8);
+    opacity: 0.8;
   }
   &:active {
     transform: scale(0.97);

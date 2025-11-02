@@ -141,6 +141,9 @@ const ProjectText = styled.div`
   font-family: 'Share', sans-serif;
   font-size: 18px;
   line-height: 1.4;
+  @media (min-width: 750px) {
+    font-size: 20px;
+  }
 
   .client-role {
     color: black;

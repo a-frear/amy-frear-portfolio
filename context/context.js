@@ -6,14 +6,29 @@ export const ReducedMotionContext = createContext();
 
 export const ReducedMotionProvider = ({ children }) => {
   const [animation, setAnimation] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
-  // check users settings
+  // Initialize animation preference on client side only
   useEffect(() => {
+    // Check if user has saved a preference in localStorage
+    const savedPreference = localStorage.getItem('animationPreference');
+    if (savedPreference !== null) {
+      setAnimation(savedPreference === 'true');
+    } else {
+      // Fall back to system preference if no saved preference
+      const QUERY = '(prefers-reduced-motion: no-preference)';
+      setAnimation(window.matchMedia(QUERY).matches);
+    }
+    setMounted(true);
+
+    // Listen for system preference changes
     const QUERY = '(prefers-reduced-motion: no-preference)';
-    setAnimation(window.matchMedia(QUERY).matches);
     const mediaQueryList = window.matchMedia(QUERY);
     const listener = (event) => {
-      setAnimation(event.matches);
+      // Only update if user hasn't set a preference
+      if (localStorage.getItem('animationPreference') === null) {
+        setAnimation(event.matches);
+      }
     };
     mediaQueryList.addEventListener('change', listener);
     return () => {
@@ -21,11 +36,16 @@ export const ReducedMotionProvider = ({ children }) => {
     };
   }, []);
 
+  const handleSetAnimation = (value) => {
+    setAnimation(value);
+    localStorage.setItem('animationPreference', String(value));
+  };
+
   return (
     <ReducedMotionContext.Provider
       value={{
         animation,
-        setAnimation,
+        setAnimation: handleSetAnimation,
       }}
     >
       {children}

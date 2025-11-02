@@ -1,7 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import eyesiteImg from '../public/assets/eyesite-example.png';
-import shakesNyTimes from '../public/assets/submit-screenshot.png';
 import {
   orange,
   lightYellow,
@@ -29,12 +26,12 @@ export default function Projects() {
             target="_blank"
             rel="noreferrer"
           >
-            <img
+            {/* <img
               src={eyesiteImg.src}
               alt="Eye Site Home Page"
               className="portfolio-img"
               id="eye-site-home-page"
-            />
+            /> */}
             <ProjectTitle>EYE SITE</ProjectTitle>
           </ProjectLink>
           <ProjectSubtitle>A SITE FOR SORE EYES</ProjectSubtitle>
@@ -80,12 +77,12 @@ export default function Projects() {
             target="_blank"
             rel="noreferrer"
           >
-            <img
+            {/* <img
               src={shakesNyTimes.src}
               alt="Shakespeare in the New York Times"
               className="portfolio-img"
               id="nyt-shakes-img"
-            />
+            /> */}
             <ProjectTitle>Shakespeare in the NYT</ProjectTitle>
           </ProjectLink>
           <ProjectSubtitle>

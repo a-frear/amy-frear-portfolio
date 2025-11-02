@@ -7,7 +7,7 @@ import { useParallax } from '../hooks/useParallax';
 
 export default function Intro() {
   const headshotRef = useRef(null);
-  const headshotY = useParallax(0.2, headshotRef);
+  const headshotY = useParallax(0.15, headshotRef);
 
   return (
     <IntroSection className="full-section">
@@ -73,7 +73,7 @@ const Body = styled.p`
 const ParallaxHeadshot = styled(motion.div)`
   width: 300px;
   height: 300px;
-  margin: 0 auto 2rem auto;
+  margin: 0 auto 3rem auto;
   border: 10px solid ${green};
   border-radius: 50%;
   background-image: url('assets/amy-hs.jpeg');
