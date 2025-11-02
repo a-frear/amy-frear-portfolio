@@ -10,24 +10,14 @@ export default function VideoBG() {
   const [isPlaying, setIsPlaying] = useState(() => animation);
   const [player, setPlayer] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isVideoReady, setIsVideoReady] = useState(false);
   const iframe = useRef(null);
+  const hasPlayedBeforeRef = useRef(false);
+  const initialMountRef = useRef(true);
 
   const initializePlayer = () => {
     if (window.Vimeo && iframe.current) {
       const vimeoPlayer = new window.Vimeo.Player(iframe.current);
       setPlayer(vimeoPlayer);
-
-      // Listen for the 'loadstart' event to detect when video starts loading
-      // Listen for 'canplay' event to know when it's ready to play
-      vimeoPlayer.on('canplay', () => {
-        setIsVideoReady(true);
-      });
-
-      // Also mark as ready after a short delay to ensure it's initialized
-      setTimeout(() => {
-        setIsVideoReady(true);
-      }, 2000);
     }
   };
 
@@ -45,39 +35,42 @@ export default function VideoBG() {
     }
   }, []);
 
-  // Update isPlaying when animation setting changes
+  // Only handle autoplay on initial mount based on animation setting
   useEffect(() => {
-    if (player) {
+    if (player && initialMountRef.current) {
       if (animation) {
         player.play().catch(() => {
           // Autoplay might be blocked, that's ok
         });
         setIsPlaying(true);
+        hasPlayedBeforeRef.current = true;
       } else {
-        player.pause().catch(() => {
-          // Pause might fail, that's ok
-        });
+        // If animation is off on mount, make sure button shows Play icon
         setIsPlaying(false);
-        setIsLoading(false);
       }
+      initialMountRef.current = false;
     }
-  }, [animation, player]);
+  }, [player]);
 
   const togglePlayPause = async () => {
     if (!player) return;
 
     try {
       const paused = await player.getPaused();
+
       if (paused) {
-        // Only show loading spinner if video hasn't been fully loaded yet
-        if (!isVideoReady) {
+        // Show spinner on first play
+        if (!hasPlayedBeforeRef.current) {
           setIsLoading(true);
+          hasPlayedBeforeRef.current = true;
         }
         await player.play();
         setIsPlaying(true);
 
-        // Hide spinner after video plays
-        setIsLoading(false);
+        // Hide spinner after 2 seconds (covers most buffering)
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
       } else {
         await player.pause();
         setIsPlaying(false);
@@ -94,9 +87,7 @@ export default function VideoBG() {
         <iframe
           ref={iframe}
           title="bg-video"
-          src={`https://player.vimeo.com/video/547280824?h=050797c24d&autoplay=${
-            animation ? 1 : 0
-          }&loop=1&background=1&autopause=0&muted=1`}
+          src="https://player.vimeo.com/video/547280824?h=050797c24d&autoplay=0&loop=1&background=1&autopause=0&muted=1"
           width="100%"
           height="100%"
           frameBorder="0"
@@ -173,14 +164,14 @@ const LoadingSpinner = styled.div`
 `;
 
 const Spinner = styled.div`
-  width: 50px;
-  height: 50px;
-  border: 5px solid rgba(204, 209, 49, 0.4);
+  width: 80px;
+  height: 80px;
+  border: 6px solid rgba(204, 209, 49, 0.4);
   border-top-color: #ccd131;
   border-right-color: #ccd131;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  box-shadow: 0 0 10px rgba(204, 209, 49, 0.5);
+  box-shadow: 0 0 20px rgba(204, 209, 49, 0.5);
 
   @keyframes spin {
     to {
