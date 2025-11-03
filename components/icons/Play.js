@@ -14,7 +14,20 @@ export default function Play({ color = green }) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
     >
-      <g>
+      <defs>
+        <filter id="slimeShadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+          <feOffset dx="0" dy="3" result="offsetblur" />
+          <feComponentTransfer>
+            <feFuncA type="linear" slope="0.3" />
+          </feComponentTransfer>
+          <feMerge>
+            <feMergeNode />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <g filter="url(#slimeShadow)">
         <g>
           <path
             d="M256,0C114.511,0,0,114.497,0,256c0,141.49,114.495,256,256,256c141.49,0,256-114.497,256-256C512,114.51,397.503,0,256,0
