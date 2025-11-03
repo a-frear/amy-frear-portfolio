@@ -143,7 +143,7 @@ const ProjectText = styled.div`
   display: flex;
   align-items: baseline;
   font-family: 'Share', sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.4;
   @media (min-width: ${breakpoints.tablet}) {
     font-size: 22px;

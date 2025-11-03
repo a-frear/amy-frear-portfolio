@@ -39,7 +39,9 @@ const Heading = styled.h2`
 `;
 
 const Content = styled.div`
+  text-align: center;
   @media (min-width: ${breakpoints.tablet}) {
+    text-align: left;
     grid-column: 2 / 3;
     order: 1;
   }
