@@ -58,7 +58,7 @@ export default function VideoBG() {
       }
       initialMountRef.current = false;
     }
-  }, [player]);
+  }, [player, animation]);
 
   // Set up video event listeners for duration and progress tracking
   useEffect(() => {
@@ -149,7 +149,10 @@ export default function VideoBG() {
 
     const scrubberRect = scrubberRef.current.getBoundingClientRect();
     const clickPosition = clientX - scrubberRect.left;
-    const percentage = Math.max(0, Math.min(1, clickPosition / scrubberRect.width));
+    const percentage = Math.max(
+      0,
+      Math.min(1, clickPosition / scrubberRect.width)
+    );
     const newTime = percentage * duration;
 
     setCurrentTime(newTime);
@@ -177,7 +180,7 @@ export default function VideoBG() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [duration, player]);
+  }, [duration, player, handleScrubberInteraction]);
 
   const handleScrubberClick = async (e) => {
     isDraggingRef.current = true;
@@ -217,7 +220,9 @@ export default function VideoBG() {
         aria-valuemax={Math.round(duration)}
         aria-valuenow={Math.round(currentTime)}
       >
-        <ScrubberBar progress={(duration > 0 ? currentTime / duration : 0) * 100} />
+        <ScrubberBar
+          progress={(duration > 0 ? currentTime / duration : 0) * 100}
+        />
       </ScrubberContainer>
       <Button type="button" onClick={togglePlayPause}>
         {isPlaying ? <Pause /> : <Play />}
@@ -308,21 +313,16 @@ const ScrubberContainer = styled.div`
   left: 0;
   right: 0;
   width: 100%;
-  height: 4px;
-  background-color: rgba(255, 255, 255, 0.2);
+  height: 20px;
+  background-color: transparent;
   cursor: pointer;
   z-index: 12;
   display: flex;
-  align-items: center;
-  transition: height 0.2s ease;
-
-  &:hover {
-    height: 6px;
-  }
+  align-items: flex-end;
 `;
 
 const ScrubberBar = styled.div`
-  height: 100%;
+  height: 6px;
   background-color: #ccd131;
   width: ${(props) => props.progress}%;
   transition: width 0.1s linear;
