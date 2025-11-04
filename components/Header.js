@@ -100,7 +100,7 @@ const AnimatedBackground = styled(motion.div)`
   pointer-events: none;
   @media (min-width: ${breakpoints.tablet}) {
     background-color: ${green};
-    height: 160px;
+    height: 140px;
   }
 `;
 
@@ -115,10 +115,10 @@ const HeaderContainer = styled.div`
     justify-content: space-between;
     width: 100%;
     grid-template-columns: 1fr 2fr 1fr;
-    height: 160px;
+    height: 140px;
   }
   .toggle-wrapper {
-    margin: 2rem 0 0 2rem;
+    margin: 1.2rem 0 0 2rem;
   }
   .header-title {
     text-align: center;

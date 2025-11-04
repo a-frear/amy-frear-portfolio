@@ -22,9 +22,8 @@ export default function Header() {
           animate={{ y: 0 }}
           transition={{
             type: 'spring',
-            mass: 1,
-            damping: 19,
-            duration: 0.5,
+            mass: 2,
+            damping: 50,
           }}
         >
           <Curve />
@@ -101,7 +100,7 @@ const AnimatedBackground = styled(motion.div)`
   z-index: 1;
   pointer-events: none;
   background-color: ${green};
-  height: 180px;
+  height: 160px;
 `;
 
 const HeaderContainer = styled.div`
@@ -112,12 +111,12 @@ const HeaderContainer = styled.div`
   width: 100%;
   grid-template-columns: 1fr 1fr;
   background-color: transparent;
-  height: 180px;
+  height: 160px;
   @media (min-width: ${breakpoints.tablet}) {
     display: none;
   }
   .toggle-wrapper {
-    margin: 1.5rem 0 0 1rem;
+    margin: 1.5rem 0 0.5rem 1rem;
     height: 20px;
   }
   .header-title {

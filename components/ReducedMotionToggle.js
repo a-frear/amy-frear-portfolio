@@ -35,7 +35,6 @@ export default function ReducedMotionToggle() {
 }
 
 const ReducedMotionToggleWrapper = styled.div`
-  /* height: 300px; */
   width: 100%;
   height: 100%;
   @media (min-width: ${breakpoints.tablet}) {
@@ -51,13 +50,9 @@ const ReducedMotionToggleWrapper = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    height: 100%;
+    height: 20px;
     width: 100%;
     pointer-events: auto;
-    @media (min-width: ${breakpoints.tablet}) {
-      height: auto;
-      display: inline-block;
-    }
   }
 
   .label-text {
@@ -66,10 +61,10 @@ const ReducedMotionToggleWrapper = styled.div`
 
     font-family: 'Fjalla One', sans-serif;
     text-transform: uppercase;
-    font-size: 18px;
+    font-size: 14px;
     color: black;
     @media (min-width: ${breakpoints.tablet}) {
-      font-size: 22px;
+      font-size: 16px;
     }
   }
 

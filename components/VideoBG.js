@@ -4,6 +4,7 @@ import { ReducedMotionContext } from '../context/context.js';
 import Play from './icons/Play';
 import Pause from './icons/Pause';
 import { breakpoints } from '../styles/breakpoints';
+import VisuallyHiddenText from './VisuallyHiddenText';
 
 export default function VideoBG() {
   const { animation } = useContext(ReducedMotionContext);
@@ -105,6 +106,9 @@ export default function VideoBG() {
       )}
       <Button type="button" onClick={togglePlayPause}>
         {isPlaying ? <Pause /> : <Play />}
+        <VisuallyHiddenText>
+          {isPlaying ? 'Pause background video' : 'Play background video'}
+        </VisuallyHiddenText>
       </Button>
     </VideoBGWrapper>
   );
