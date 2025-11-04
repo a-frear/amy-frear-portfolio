@@ -17,9 +17,9 @@ export default function VideoBG() {
   const iframe = useRef(null);
   const hasPlayedBeforeRef = useRef(false);
   const initialMountRef = useRef(true);
-  const scrubberRef = useRef(null);
   const playerStateRef = useRef({ isPlaying: false });
-  const isDraggingRef = useRef(false);
+  const isSeekingRef = useRef(false);
+  const targetTimeRef = useRef(0);
 
   const initializePlayer = () => {
     if (window.Vimeo && iframe.current) {
@@ -70,10 +70,20 @@ export default function VideoBG() {
       playerStateRef.current.isPlaying = true;
       // Start polling time when video plays
       const updateTime = async () => {
-        if (playerStateRef.current.isPlaying && !isDraggingRef.current) {
+        if (playerStateRef.current.isPlaying) {
           try {
             const time = await player.getCurrentTime();
-            setCurrentTime(time);
+
+            // If we're seeking, wait until player reaches target time
+            if (isSeekingRef.current) {
+              if (Math.abs(time - targetTimeRef.current) < 0.5) {
+                // Player has reached target time, resume normal updates
+                isSeekingRef.current = false;
+              }
+              // Don't update state while seeking
+            } else {
+              setCurrentTime(time);
+            }
           } catch (e) {
             // Silently fail if player is no longer available
           }
@@ -143,52 +153,18 @@ export default function VideoBG() {
     }
   };
 
-  // Handle scrubber interaction
-  const handleScrubberInteraction = async (clientX) => {
-    if (!scrubberRef.current || !player) return;
-
-    const scrubberRect = scrubberRef.current.getBoundingClientRect();
-    const clickPosition = clientX - scrubberRect.left;
-    const percentage = Math.max(
-      0,
-      Math.min(1, clickPosition / scrubberRect.width)
-    );
-    const newTime = percentage * duration;
-
+  // Handle scrubber change - seek video when user interacts with range input
+  const handleTimelineChange = async (e) => {
+    const newTime = parseFloat(e.target.value);
     setCurrentTime(newTime);
-    await player.setCurrentTime(newTime);
-  };
-
-  const handleScrubberMouseDown = () => {
-    isDraggingRef.current = true;
-  };
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!isDraggingRef.current) return;
-      handleScrubberInteraction(e.clientX);
-    };
-
-    const handleMouseUp = () => {
-      isDraggingRef.current = false;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [duration, player, handleScrubberInteraction]);
-
-  const handleScrubberClick = async (e) => {
-    isDraggingRef.current = true;
-    await handleScrubberInteraction(e.clientX);
-    // Small delay to let the seek complete before resuming progress updates
-    setTimeout(() => {
-      isDraggingRef.current = false;
-    }, 100);
+    targetTimeRef.current = newTime;
+    isSeekingRef.current = true;
+    try {
+      await player.setCurrentTime(newTime);
+    } catch (error) {
+      console.error('Error seeking video:', error);
+      isSeekingRef.current = false;
+    }
   };
 
   return (
@@ -210,20 +186,15 @@ export default function VideoBG() {
           <Spinner />
         </LoadingSpinner>
       )}
-      <ScrubberContainer
-        ref={scrubberRef}
-        onClick={handleScrubberClick}
-        onMouseDown={handleScrubberMouseDown}
-        role="slider"
+      <TimelineInput
+        type="range"
+        min="0"
+        max={duration || 0}
+        value={currentTime}
+        onChange={handleTimelineChange}
+        step="0.1"
         aria-label="Video progress"
-        aria-valuemin="0"
-        aria-valuemax={Math.round(duration)}
-        aria-valuenow={Math.round(currentTime)}
-      >
-        <ScrubberBar
-          progress={(duration > 0 ? currentTime / duration : 0) * 100}
-        />
-      </ScrubberContainer>
+      />
       <Button type="button" onClick={togglePlayPause}>
         {isPlaying ? <Pause /> : <Play />}
         <VisuallyHiddenText>
@@ -307,26 +278,70 @@ const Spinner = styled.div`
   }
 `;
 
-const ScrubberContainer = styled.div`
+const TimelineInput = styled.input`
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
-  height: 20px;
-  background-color: transparent;
-  cursor: pointer;
-  z-index: 12;
-  display: flex;
-  align-items: flex-end;
-`;
-
-const ScrubberBar = styled.div`
   height: 6px;
-  background-color: #ccd131;
-  width: ${(props) => props.progress}%;
-  transition: width 0.1s linear;
-  border-radius: 2px;
+  z-index: 12;
+  margin: 0;
+  padding: 20px 0 0 0;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+
+  /* Track styling */
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 12px;
+    background: linear-gradient(
+      to right,
+      #ccd131 0%,
+      #ccd131
+        ${(props) => (props.max > 0 ? (props.value / props.max) * 100 : 0)}%,
+      rgba(255, 255, 255, 0.2)
+        ${(props) => (props.max > 0 ? (props.value / props.max) * 100 : 0)}%,
+      rgba(255, 255, 255, 0.2) 100%
+    );
+    border-radius: 2px;
+  }
+
+  &::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    border: none;
+  }
+
+  &::-moz-range-progress {
+    background-color: #ccd131;
+    border-radius: 2px;
+    height: 6px;
+  }
+
+  /* Hide thumb/slider */
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0;
+    height: 0;
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: 0;
+    height: 0;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+  }
 `;
 
 const Button = styled.button`
