@@ -1,7 +1,7 @@
 /**
  * Feature Flags Configuration
  *
- * This file controls which features are visible in the application.
+ * This file controls which features are visible.
  * Set to true to enable, false to hide for now.
  */
 
@@ -11,6 +11,9 @@ export const featureFlags = {
 
   // Show/hide the side navigation menu
   SHOW_SIDENAV: false,
+
+  // Enable/disable Lenis smooth scrolling
+  ENABLE_LENIS: false,
 };
 
 /**

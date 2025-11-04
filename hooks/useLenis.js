@@ -1,8 +1,14 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
+import { isFeatureEnabled } from '../config/featureFlags';
 
 export function useLenis() {
   useEffect(() => {
+    // Check if Lenis is enabled via feature flag
+    if (!isFeatureEnabled('ENABLE_LENIS')) {
+      return;
+    }
+
     // Initialize Lenis for smooth scrolling
     const lenis = new Lenis({
       duration: 1.2,
