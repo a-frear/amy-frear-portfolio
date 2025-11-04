@@ -22,7 +22,6 @@ This is a single-page portfolio application featuring:
 - **Styling**: styled-components with native Next.js compiler support
 - **State Management**: React Context API
 - **Animation**: motion/react
-- **Smooth Scrolling**: Lenis
 - **Deployment**: Vercel
 
 ## Features
@@ -103,10 +102,6 @@ Three custom hooks provide reusable logic throughout the application:
 #### `useParallax(intensity, ref)`
 
 Applies a parallax scroll effect to an element based on the window scroll position. The `intensity` parameter controls how much the element moves (0 = no movement, 0.2 = slow movement). Automatically disabled on mobile and when reduced motion is preferred.
-
-#### `useLenis()`
-
-Initializes Lenis smooth scrolling on app mount with a 1.2s duration and easeOut easing. Called once in `_app.js` to enable smooth scrolling across the entire site.
 
 #### `useMobile()`
 
