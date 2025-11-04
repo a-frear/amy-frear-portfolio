@@ -12,9 +12,14 @@ export default function VideoBG() {
   const [player, setPlayer] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [videoHasStarted, setVideoHasStarted] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const iframe = useRef(null);
   const hasPlayedBeforeRef = useRef(false);
   const initialMountRef = useRef(true);
+  const scrubberRef = useRef(null);
+  const playerStateRef = useRef({ isPlaying: false });
+  const isDraggingRef = useRef(false);
 
   const initializePlayer = () => {
     if (window.Vimeo && iframe.current) {
@@ -55,6 +60,59 @@ export default function VideoBG() {
     }
   }, [player]);
 
+  // Set up video event listeners for duration and progress tracking
+  useEffect(() => {
+    if (!player) return;
+
+    let animationFrameId;
+
+    const handlePlay = () => {
+      playerStateRef.current.isPlaying = true;
+      // Start polling time when video plays
+      const updateTime = async () => {
+        if (playerStateRef.current.isPlaying && !isDraggingRef.current) {
+          try {
+            const time = await player.getCurrentTime();
+            setCurrentTime(time);
+          } catch (e) {
+            // Silently fail if player is no longer available
+          }
+        }
+        animationFrameId = requestAnimationFrame(updateTime);
+      };
+      updateTime();
+    };
+
+    const handlePause = () => {
+      playerStateRef.current.isPlaying = false;
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+
+    const handleDurationChange = (event) => {
+      setDuration(event.duration);
+    };
+
+    player.on('play', handlePlay);
+    player.on('pause', handlePause);
+    player.on('loadedmetadata', handleDurationChange);
+
+    // Get initial duration
+    player.getDuration().then((dur) => {
+      setDuration(dur);
+    });
+
+    return () => {
+      player.off('play', handlePlay);
+      player.off('pause', handlePause);
+      player.off('loadedmetadata', handleDurationChange);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [player]);
+
   const togglePlayPause = async () => {
     if (!player) return;
 
@@ -85,6 +143,51 @@ export default function VideoBG() {
     }
   };
 
+  // Handle scrubber interaction
+  const handleScrubberInteraction = async (clientX) => {
+    if (!scrubberRef.current || !player) return;
+
+    const scrubberRect = scrubberRef.current.getBoundingClientRect();
+    const clickPosition = clientX - scrubberRect.left;
+    const percentage = Math.max(0, Math.min(1, clickPosition / scrubberRect.width));
+    const newTime = percentage * duration;
+
+    setCurrentTime(newTime);
+    await player.setCurrentTime(newTime);
+  };
+
+  const handleScrubberMouseDown = () => {
+    isDraggingRef.current = true;
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!isDraggingRef.current) return;
+      handleScrubberInteraction(e.clientX);
+    };
+
+    const handleMouseUp = () => {
+      isDraggingRef.current = false;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [duration, player]);
+
+  const handleScrubberClick = async (e) => {
+    isDraggingRef.current = true;
+    await handleScrubberInteraction(e.clientX);
+    // Small delay to let the seek complete before resuming progress updates
+    setTimeout(() => {
+      isDraggingRef.current = false;
+    }, 100);
+  };
+
   return (
     <VideoBGWrapper>
       <PosterWrapper isPlaying={videoHasStarted}>
@@ -104,6 +207,18 @@ export default function VideoBG() {
           <Spinner />
         </LoadingSpinner>
       )}
+      <ScrubberContainer
+        ref={scrubberRef}
+        onClick={handleScrubberClick}
+        onMouseDown={handleScrubberMouseDown}
+        role="slider"
+        aria-label="Video progress"
+        aria-valuemin="0"
+        aria-valuemax={Math.round(duration)}
+        aria-valuenow={Math.round(currentTime)}
+      >
+        <ScrubberBar progress={(duration > 0 ? currentTime / duration : 0) * 100} />
+      </ScrubberContainer>
       <Button type="button" onClick={togglePlayPause}>
         {isPlaying ? <Pause /> : <Play />}
         <VisuallyHiddenText>
@@ -185,6 +300,33 @@ const Spinner = styled.div`
       transform: rotate(360deg);
     }
   }
+`;
+
+const ScrubberContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  transition: height 0.2s ease;
+
+  &:hover {
+    height: 6px;
+  }
+`;
+
+const ScrubberBar = styled.div`
+  height: 100%;
+  background-color: #ccd131;
+  width: ${(props) => props.progress}%;
+  transition: width 0.1s linear;
+  border-radius: 2px;
 `;
 
 const Button = styled.button`
