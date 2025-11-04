@@ -19,7 +19,6 @@ export default function VideoBG() {
   const initialMountRef = useRef(true);
   const playerStateRef = useRef({ isPlaying: false });
   const isSeekingRef = useRef(false);
-  const targetTimeRef = useRef(0);
   const lastStateUpdateRef = useRef(0);
 
   const initializePlayer = () => {
@@ -65,54 +64,48 @@ export default function VideoBG() {
   useEffect(() => {
     if (!player) return;
 
-    let animationFrameId;
-
     const handlePlay = () => {
       playerStateRef.current.isPlaying = true;
-      // Start polling time when video plays
-      const updateTime = async () => {
-        if (playerStateRef.current.isPlaying) {
-          try {
-            const time = await player.getCurrentTime();
-
-            // If we're seeking, wait until player reaches target time
-            if (isSeekingRef.current) {
-              if (Math.abs(time - targetTimeRef.current) < 0.5) {
-                // Player has reached target time, resume normal updates
-                isSeekingRef.current = false;
-              }
-              // Don't update state while seeking
-            } else {
-              // Throttle state updates to 100ms to avoid performance issues
-              const now = Date.now();
-              if (now - lastStateUpdateRef.current > 100) {
-                setCurrentTime(time);
-                lastStateUpdateRef.current = now;
-              }
-            }
-          } catch (e) {
-            // Silently fail if player is no longer available
-          }
-        }
-        animationFrameId = requestAnimationFrame(updateTime);
-      };
-      updateTime();
     };
 
     const handlePause = () => {
       playerStateRef.current.isPlaying = false;
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
     };
 
     const handleDurationChange = (event) => {
       setDuration(event.duration);
     };
 
+    // Handle time updates from Vimeo player with throttling
+    const handleTimeUpdate = (event) => {
+      const time = event.seconds;
+
+      // Skip state updates while seeking - we'll update in handleSeeked instead
+      if (isSeekingRef.current) {
+        return;
+      }
+
+      // Throttle state updates to 100ms to avoid performance issues
+      const now = Date.now();
+      if (now - lastStateUpdateRef.current > 100) {
+        setCurrentTime(time);
+        lastStateUpdateRef.current = now;
+      }
+    };
+
+    // Handle seek completion
+    const handleSeeked = (event) => {
+      isSeekingRef.current = false;
+      const time = event.seconds;
+      setCurrentTime(time);
+      lastStateUpdateRef.current = Date.now();
+    };
+
     player.on('play', handlePlay);
     player.on('pause', handlePause);
     player.on('loadedmetadata', handleDurationChange);
+    player.on('timeupdate', handleTimeUpdate);
+    player.on('seeked', handleSeeked);
 
     // Get initial duration
     player.getDuration().then((dur) => {
@@ -123,9 +116,8 @@ export default function VideoBG() {
       player.off('play', handlePlay);
       player.off('pause', handlePause);
       player.off('loadedmetadata', handleDurationChange);
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
+      player.off('timeupdate', handleTimeUpdate);
+      player.off('seeked', handleSeeked);
     };
   }, [player]);
 
@@ -163,10 +155,11 @@ export default function VideoBG() {
   const handleTimelineChange = async (e) => {
     const newTime = parseFloat(e.target.value);
     setCurrentTime(newTime);
-    targetTimeRef.current = newTime;
     isSeekingRef.current = true;
+
     try {
       await player.setCurrentTime(newTime);
+      // The 'seeked' event will fire when seek completes and clear isSeekingRef
     } catch (error) {
       console.error('Error seeking video:', error);
       isSeekingRef.current = false;
