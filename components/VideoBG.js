@@ -20,6 +20,7 @@ export default function VideoBG() {
   const playerStateRef = useRef({ isPlaying: false });
   const isSeekingRef = useRef(false);
   const targetTimeRef = useRef(0);
+  const lastStateUpdateRef = useRef(0);
 
   const initializePlayer = () => {
     if (window.Vimeo && iframe.current) {
@@ -82,7 +83,12 @@ export default function VideoBG() {
               }
               // Don't update state while seeking
             } else {
-              setCurrentTime(time);
+              // Throttle state updates to 100ms to avoid performance issues
+              const now = Date.now();
+              if (now - lastStateUpdateRef.current > 100) {
+                setCurrentTime(time);
+                lastStateUpdateRef.current = now;
+              }
             }
           } catch (e) {
             // Silently fail if player is no longer available
