@@ -199,7 +199,7 @@ export default function VideoBG() {
 
   return (
     <VideoBGWrapper>
-      <PosterWrapper isPlaying={videoHasStarted} isIframeReady={isIframeReady} isVideoActuallyPlaying={isVideoActuallyPlaying}>
+      <PosterWrapper isPlaying={videoHasStarted || isVideoActuallyPlaying} isIframeReady={isIframeReady} isVideoActuallyPlaying={isVideoActuallyPlaying}>
         <iframe
           ref={iframe}
           title="bg-video"
