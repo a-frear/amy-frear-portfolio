@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ReducedMotionContext } from '../context/context.js';
 import Play from './icons/Play';
 import Pause from './icons/Pause';
+import BlobSpinner from './icons/BlobSpinner';
 import { breakpoints } from '../styles/breakpoints';
 import VisuallyHiddenText from './VisuallyHiddenText';
 
@@ -206,7 +207,7 @@ export default function VideoBG() {
       </PosterWrapper>
       {isLoading && (
         <LoadingSpinner>
-          <Spinner />
+          <BlobSpinner />
         </LoadingSpinner>
       )}
       <TimelineInput
@@ -285,22 +286,6 @@ const LoadingSpinner = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const Spinner = styled.div`
-  width: 80px;
-  height: 80px;
-  border: 6px solid rgba(204, 209, 49, 0.4);
-  border-top-color: #ccd131;
-  border-right-color: #ccd131;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
 `;
 
 const TimelineInput = styled.input`
