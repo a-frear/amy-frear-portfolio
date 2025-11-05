@@ -199,7 +199,7 @@ export default function VideoBG() {
 
   return (
     <VideoBGWrapper>
-      <PosterWrapper isPlaying={videoHasStarted || isVideoActuallyPlaying} isIframeReady={isIframeReady} isVideoActuallyPlaying={isVideoActuallyPlaying}>
+      <PosterWrapper isPlaying={isPlaying} isIframeReady={isIframeReady} isVideoActuallyPlaying={isVideoActuallyPlaying} videoHasStarted={videoHasStarted}>
         <iframe
           ref={iframe}
           title="bg-video"
@@ -278,7 +278,7 @@ const PosterWrapper = styled.div`
   }
 
   iframe {
-    display: ${(props) => (props.isIframeReady && (props.isVideoActuallyPlaying || props.isPlaying) ? 'block' : 'none')};
+    display: ${(props) => (props.isPlaying || props.videoHasStarted ? 'block' : 'none')};
   }
 `;
 
