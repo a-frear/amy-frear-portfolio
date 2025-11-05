@@ -14,6 +14,7 @@ export default function VideoBG() {
   const [videoHasStarted, setVideoHasStarted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isIframeReady, setIsIframeReady] = useState(false);
   const iframe = useRef(null);
   const hasPlayedBeforeRef = useRef(false);
   const initialMountRef = useRef(true);
@@ -25,6 +26,8 @@ export default function VideoBG() {
     if (window.Vimeo && iframe.current) {
       const vimeoPlayer = new window.Vimeo.Player(iframe.current);
       setPlayer(vimeoPlayer);
+      // Mark iframe as ready once Vimeo player is initialized
+      setIsIframeReady(true);
     }
   };
 
@@ -168,7 +171,7 @@ export default function VideoBG() {
 
   return (
     <VideoBGWrapper>
-      <PosterWrapper isPlaying={videoHasStarted}>
+      <PosterWrapper isPlaying={videoHasStarted} isIframeReady={isIframeReady}>
         <iframe
           ref={iframe}
           title="bg-video"
@@ -222,7 +225,11 @@ const VideoBGWrapper = styled.div`
     position: absolute;
     top: 50%;
     left: 1%;
-    transform: translate(-50%, -50%);
+    transform: translate3d(-50%, -50%, 0);
+    will-change: opacity;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    background-color: #000;
     @media (min-width: ${breakpoints.tablet}) {
       left: 50%;
     }
@@ -244,7 +251,7 @@ const PosterWrapper = styled.div`
   }
 
   iframe {
-    opacity: ${(props) => (props.isPlaying ? 1 : 0)};
+    opacity: ${(props) => (props.isPlaying && props.isIframeReady ? 1 : 0)};
   }
 `;
 
