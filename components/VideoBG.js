@@ -70,8 +70,12 @@ export default function VideoBG() {
 
     const handlePlay = () => {
       playerStateRef.current.isPlaying = true;
-      setIsVideoActuallyPlaying(true);
-      setIsLoading(false);
+      // Delay revealing iframe by 300ms to ensure Vimeo player is fully rendered
+      // This prevents blur artifacts on initial load
+      setTimeout(() => {
+        setIsVideoActuallyPlaying(true);
+        setIsLoading(false);
+      }, 300);
     };
 
     const handlePause = () => {
@@ -274,7 +278,7 @@ const PosterWrapper = styled.div`
   }
 
   iframe {
-    opacity: ${(props) => (props.isIframeReady && (props.isVideoActuallyPlaying || props.isPlaying) ? 1 : 0)};
+    display: ${(props) => (props.isIframeReady && (props.isVideoActuallyPlaying || props.isPlaying) ? 'block' : 'none')};
   }
 `;
 
