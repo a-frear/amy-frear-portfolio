@@ -8,7 +8,7 @@ import VisuallyHiddenText from './VisuallyHiddenText';
 
 export default function VideoBG() {
   const { animation } = useContext(ReducedMotionContext);
-  const [isPlaying, setIsPlaying] = useState(() => animation);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [player, setPlayer] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [videoHasStarted, setVideoHasStarted] = useState(false);
@@ -46,23 +46,14 @@ export default function VideoBG() {
     }
   }, []);
 
-  // Only handle autoplay on initial mount based on animation setting
+  // Initialize video state on mount - no autoplay
   useEffect(() => {
-    if (player && initialMountRef.current) {
-      if (animation) {
-        player.play().catch(() => {
-          // Autoplay might be blocked, that's ok
-        });
-        setIsPlaying(true);
-        setVideoHasStarted(true);
-        hasPlayedBeforeRef.current = true;
-      } else {
-        // If animation is off on mount, make sure button shows Play icon
-        setIsPlaying(false);
-      }
+    if (initialMountRef.current) {
+      // Always start paused, user must click play
+      setIsPlaying(false);
       initialMountRef.current = false;
     }
-  }, [player, animation]);
+  }, []);
 
   // Set up video event listeners for duration and progress tracking
   useEffect(() => {
@@ -278,7 +269,7 @@ const PosterWrapper = styled.div`
   }
 
   iframe {
-    display: ${(props) => (props.isPlaying || props.videoHasStarted ? 'block' : 'none')};
+    display: ${(props) => (props.isVideoActuallyPlaying || props.videoHasStarted ? 'block' : 'none')};
   }
 `;
 
