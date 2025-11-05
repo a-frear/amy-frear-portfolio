@@ -11,7 +11,7 @@ import { breakpoints } from '../styles/breakpoints';
 export default function Intro() {
   const headshotRef = useRef(null);
   const isMobile = useMobile();
-  const headshotY = useParallax(isMobile ? 0 : 0.2, headshotRef);
+  const headshotY = useParallax(isMobile ? 0.05 : 0.2, headshotRef);
 
   return (
     <IntroSection className="full-section">

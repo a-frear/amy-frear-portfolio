@@ -11,8 +11,8 @@ export default function ParallaxWave() {
   const waveRef = useRef(null);
   const isMobile = useMobile();
   const { animation } = useContext(ReducedMotionContext);
-  // Disable parallax if on mobile or if reduced motion is enabled
-  const waveY = useParallax(isMobile || !animation ? 0 : 0.1, waveRef);
+  // Subtle parallax on mobile, standard on desktop (respects reduced motion)
+  const waveY = useParallax(!animation ? 0 : isMobile ? 0.05 : 0.1, waveRef);
 
   return <Wave ref={waveRef} style={{ y: waveY }} />;
 }
