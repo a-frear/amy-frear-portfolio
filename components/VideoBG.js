@@ -251,7 +251,6 @@ const VideoBGWrapper = styled.div`
     will-change: opacity;
     backface-visibility: hidden;
     perspective: 1000px;
-    background-color: #000;
     @media (min-width: ${breakpoints.tablet}) {
       left: 50%;
     }
