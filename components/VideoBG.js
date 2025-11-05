@@ -47,13 +47,13 @@ export default function VideoBG() {
   }, []);
 
   // Initialize video state on mount - no autoplay
-  useEffect(() => {
-    if (initialMountRef.current) {
-      // Always start paused, user must click play
-      setIsPlaying(false);
-      initialMountRef.current = false;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (initialMountRef.current) {
+  //     // Always start paused, user must click play
+  //     setIsPlaying(false);
+  //     initialMountRef.current = false;
+  //   }
+  // }, []);
 
   // Set up video event listeners for duration and progress tracking
   useEffect(() => {
@@ -164,7 +164,7 @@ export default function VideoBG() {
 
     try {
       // Check if video was playing before seek
-      const wasPlaying = await player.getPaused().then(paused => !paused);
+      const wasPlaying = await player.getPaused().then((paused) => !paused);
 
       await player.setCurrentTime(newTime);
 
@@ -190,7 +190,12 @@ export default function VideoBG() {
 
   return (
     <VideoBGWrapper>
-      <PosterWrapper isPlaying={isPlaying} isIframeReady={isIframeReady} isVideoActuallyPlaying={isVideoActuallyPlaying} videoHasStarted={videoHasStarted}>
+      <PosterWrapper
+        isPlaying={isPlaying}
+        isIframeReady={isIframeReady}
+        isVideoActuallyPlaying={isVideoActuallyPlaying}
+        videoHasStarted={videoHasStarted}
+      >
         <iframe
           ref={iframe}
           title="bg-video"
@@ -269,7 +274,8 @@ const PosterWrapper = styled.div`
   }
 
   iframe {
-    display: ${(props) => (props.isVideoActuallyPlaying || props.videoHasStarted ? 'block' : 'none')};
+    display: ${(props) =>
+      props.isVideoActuallyPlaying || props.videoHasStarted ? 'block' : 'none'};
   }
 `;
 

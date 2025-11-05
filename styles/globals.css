@@ -1,7 +1,7 @@
-/* Local font declarations */
+/* Local font declarations - using WOFF2 for better performance */
 @font-face {
   font-family: "Bowlby One SC";
-  src: url("/assets/fonts/BowlbyOneSC-Regular.ttf") format("truetype");
+  src: url("/assets/fonts/BowlbyOneSC-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -9,7 +9,7 @@
 
 @font-face {
   font-family: "Fjalla One";
-  src: url("/assets/fonts/FjallaOne-Regular.ttf") format("truetype");
+  src: url("/assets/fonts/FjallaOne-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;

@@ -50,16 +50,16 @@ export default class MyDocument extends Document {
           {/* Preload local fonts for faster rendering */}
           <link
             rel="preload"
-            href="/assets/fonts/BowlbyOneSC-Regular.ttf"
+            href="/assets/fonts/BowlbyOneSC-Regular.woff2"
             as="font"
-            type="font/ttf"
+            type="font/woff2"
             crossOrigin="anonymous"
           />
           <link
             rel="preload"
-            href="/assets/fonts/FjallaOne-Regular.ttf"
+            href="/assets/fonts/FjallaOne-Regular.woff2"
             as="font"
-            type="font/ttf"
+            type="font/woff2"
             crossOrigin="anonymous"
           />
 
