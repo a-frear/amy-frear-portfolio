@@ -245,7 +245,6 @@ const PosterWrapper = styled.div`
 
   iframe {
     opacity: ${(props) => (props.isPlaying ? 1 : 0)};
-    transition: opacity 0.3s ease;
   }
 `;
 
