@@ -53,8 +53,12 @@ const Body = styled.p`
   a {
     color: black;
   }
-  a:hover,
-  a:focus-visible {
-    color: ${blue};
+  @media (pointer: fine) {
+    a:hover {
+      color: ${blue};
+    }
+    a:focus-visible {
+      color: ${blue};
+    }
   }
 `;

@@ -133,9 +133,11 @@ const ProjectItem = styled.li`
     text-decoration: underline;
   }
 
-  & a:hover .client-role,
-  & a:focus-visible .client-role {
-    color: ${hotPink};
+  @media (pointer: fine) {
+    & a:hover .client-role,
+    & a:focus-visible .client-role {
+      color: ${hotPink};
+    }
   }
 `;
 
@@ -189,7 +191,11 @@ const ClientWork = styled.div`
   a {
     color: black;
     transition: color 0.3s ease;
-    &:hover,
+    @media (pointer: fine) {
+      &:hover {
+        color: ${hotPink};
+      }
+    }
     &:focus-visible {
       color: ${hotPink};
     }
