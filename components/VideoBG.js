@@ -15,6 +15,7 @@ export default function VideoBG() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isIframeReady, setIsIframeReady] = useState(false);
+  const [isVideoActuallyPlaying, setIsVideoActuallyPlaying] = useState(false);
   const iframe = useRef(null);
   const hasPlayedBeforeRef = useRef(false);
   const initialMountRef = useRef(true);
@@ -69,10 +70,12 @@ export default function VideoBG() {
 
     const handlePlay = () => {
       playerStateRef.current.isPlaying = true;
+      setIsVideoActuallyPlaying(true);
     };
 
     const handlePause = () => {
       playerStateRef.current.isPlaying = false;
+      setIsVideoActuallyPlaying(false);
     };
 
     const handleDurationChange = (event) => {
@@ -190,7 +193,7 @@ export default function VideoBG() {
 
   return (
     <VideoBGWrapper>
-      <PosterWrapper isPlaying={videoHasStarted} isIframeReady={isIframeReady}>
+      <PosterWrapper isPlaying={videoHasStarted} isIframeReady={isIframeReady} isVideoActuallyPlaying={isVideoActuallyPlaying}>
         <iframe
           ref={iframe}
           title="bg-video"
@@ -270,7 +273,7 @@ const PosterWrapper = styled.div`
   }
 
   iframe {
-    opacity: ${(props) => (props.isPlaying && props.isIframeReady ? 1 : 0)};
+    opacity: ${(props) => (props.isIframeReady && (props.isVideoActuallyPlaying || props.isPlaying) ? 1 : 0)};
   }
 `;
 
