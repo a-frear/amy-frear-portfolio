@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import HeaderMobile from '../components/HeaderMobile';
 import Intro from '../components/Intro';
 import About from '../components/About';
-import FrontPage from '../components/FrontPage';
+import HeaderMedia from '../components/HeaderMedia';
 import Work from '../components/Work';
 
 export default function Home() {
@@ -12,12 +12,16 @@ export default function Home() {
     <>
       <SEO />
       <HomeWrapper>
-        <Header />
-        <HeaderMobile />
-        <FrontPage />
-        <Intro />
-        <About />
-        <Work />
+        <HeaderWrapper>
+          <Header />
+          <HeaderMobile />
+          <HeaderMedia />
+        </HeaderWrapper>
+        <MainContent>
+          <Intro />
+          <About />
+          <Work />
+        </MainContent>
       </HomeWrapper>
     </>
   );
@@ -26,4 +30,12 @@ export default function Home() {
 const HomeWrapper = styled.div`
   position: relative;
   background-color: white;
+`;
+
+const HeaderWrapper = styled.header`
+  position: relative;
+`;
+
+const MainContent = styled.main`
+  position: relative;
 `;

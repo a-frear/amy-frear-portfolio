@@ -4,7 +4,7 @@ import VideoBG from './VideoBG';
 import { ReducedMotionContext } from '../context/context';
 import { breakpoints } from '../styles/breakpoints';
 
-export default function FrontPage() {
+export default function HeaderMedia() {
   const { animation } = useContext(ReducedMotionContext);
   return (
     <IntroSection isAnimation={animation}>

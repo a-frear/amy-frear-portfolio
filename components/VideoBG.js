@@ -9,59 +9,23 @@ import VisuallyHiddenText from './VisuallyHiddenText';
 export default function VideoBG() {
   const { animation } = useContext(ReducedMotionContext);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [player, setPlayer] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [videoHasStarted, setVideoHasStarted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isIframeReady, setIsIframeReady] = useState(false);
   const [isVideoActuallyPlaying, setIsVideoActuallyPlaying] = useState(false);
-  const iframe = useRef(null);
+  const videoRef = useRef(null);
   const hasPlayedBeforeRef = useRef(false);
-  const initialMountRef = useRef(true);
-  const playerStateRef = useRef({ isPlaying: false });
   const isSeekingRef = useRef(false);
   const lastStateUpdateRef = useRef(0);
 
-  const initializePlayer = () => {
-    if (window.Vimeo && iframe.current) {
-      const vimeoPlayer = new window.Vimeo.Player(iframe.current);
-      setPlayer(vimeoPlayer);
-      // Mark iframe as ready once Vimeo player is initialized
-      setIsIframeReady(true);
-    }
-  };
-
-  useEffect(() => {
-    // Check if Vimeo API is already loaded
-    if (window.Vimeo) {
-      initializePlayer();
-    } else {
-      // Load Vimeo Player API only once
-      const script = document.createElement('script');
-      script.src = 'https://player.vimeo.com/api/player.js';
-      script.async = true;
-      script.onload = initializePlayer;
-      document.head.appendChild(script);
-    }
-  }, []);
-
-  // Initialize video state on mount - no autoplay
-  // useEffect(() => {
-  //   if (initialMountRef.current) {
-  //     // Always start paused, user must click play
-  //     setIsPlaying(false);
-  //     initialMountRef.current = false;
-  //   }
-  // }, []);
-
   // Set up video event listeners for duration and progress tracking
   useEffect(() => {
-    if (!player) return;
+    const video = videoRef.current;
+    if (!video) return;
 
     const handlePlay = () => {
-      playerStateRef.current.isPlaying = true;
-      // Delay revealing iframe by 300ms to ensure Vimeo player is fully rendered
+      // Delay revealing video by 300ms to ensure it's rendered smoothly
       // This prevents blur artifacts on initial load
       setTimeout(() => {
         setIsVideoActuallyPlaying(true);
@@ -70,18 +34,15 @@ export default function VideoBG() {
     };
 
     const handlePause = () => {
-      playerStateRef.current.isPlaying = false;
       setIsVideoActuallyPlaying(false);
     };
 
-    const handleDurationChange = (event) => {
-      setDuration(event.duration);
+    const handleLoadedMetadata = () => {
+      setDuration(video.duration);
     };
 
-    // Handle time updates from Vimeo player with throttling
-    const handleTimeUpdate = (event) => {
-      const time = event.seconds;
-
+    // Handle time updates with throttling
+    const handleTimeUpdate = () => {
       // Skip state updates while seeking - we'll update in handleSeeked instead
       if (isSeekingRef.current) {
         return;
@@ -90,52 +51,45 @@ export default function VideoBG() {
       // Throttle state updates to 100ms to avoid performance issues
       const now = Date.now();
       if (now - lastStateUpdateRef.current > 100) {
-        setCurrentTime(time);
+        setCurrentTime(video.currentTime);
         lastStateUpdateRef.current = now;
       }
     };
 
     // Handle seek completion
-    const handleSeeked = (event) => {
+    const handleSeeked = () => {
       isSeekingRef.current = false;
-      const time = event.seconds;
-      setCurrentTime(time);
+      setCurrentTime(video.currentTime);
       lastStateUpdateRef.current = Date.now();
     };
 
-    player.on('play', handlePlay);
-    player.on('pause', handlePause);
-    player.on('loadedmetadata', handleDurationChange);
-    player.on('timeupdate', handleTimeUpdate);
-    player.on('seeked', handleSeeked);
-
-    // Get initial duration
-    player.getDuration().then((dur) => {
-      setDuration(dur);
-    });
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('seeked', handleSeeked);
 
     return () => {
-      player.off('play', handlePlay);
-      player.off('pause', handlePause);
-      player.off('loadedmetadata', handleDurationChange);
-      player.off('timeupdate', handleTimeUpdate);
-      player.off('seeked', handleSeeked);
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('seeked', handleSeeked);
     };
-  }, [player]);
+  }, []);
 
-  const togglePlayPause = async () => {
-    if (!player) return;
+  const togglePlayPause = () => {
+    const video = videoRef.current;
+    if (!video) return;
 
     try {
-      const paused = await player.getPaused();
-
-      if (paused) {
+      if (video.paused) {
         // Show spinner on first play
         if (!hasPlayedBeforeRef.current) {
           setIsLoading(true);
           hasPlayedBeforeRef.current = true;
         }
-        await player.play();
+        video.play();
         setIsPlaying(true);
         setVideoHasStarted(true);
 
@@ -145,7 +99,7 @@ export default function VideoBG() {
           setIsLoading(false);
         }, 2000);
       } else {
-        await player.pause();
+        video.pause();
         setIsPlaying(false);
       }
     } catch (error) {
@@ -155,30 +109,29 @@ export default function VideoBG() {
   };
 
   // Handle scrubber change - seek video when user interacts with range input
-  const handleTimelineChange = async (e) => {
-    if (!player) return;
+  const handleTimelineChange = (e) => {
+    const video = videoRef.current;
+    if (!video) return;
 
     const newTime = parseFloat(e.target.value);
     setCurrentTime(newTime);
     isSeekingRef.current = true;
 
     try {
-      // Check if video was playing before seek
-      const wasPlaying = await player.getPaused().then((paused) => !paused);
-
-      await player.setCurrentTime(newTime);
+      const wasPlaying = !video.paused;
+      video.currentTime = newTime;
 
       // Resume playback if video was playing before seek
       // This handles mobile where video may pause after seeking
       if (wasPlaying) {
-        await player.play();
+        video.play();
       }
 
       // Fallback: clear seeking flag after 500ms if seeked event doesn't fire
       setTimeout(() => {
         if (isSeekingRef.current) {
           isSeekingRef.current = false;
-          setCurrentTime(newTime);
+          setCurrentTime(video.currentTime);
           lastStateUpdateRef.current = Date.now();
         }
       }, 500);
@@ -192,20 +145,21 @@ export default function VideoBG() {
     <VideoBGWrapper>
       <PosterWrapper
         isPlaying={isPlaying}
-        isIframeReady={isIframeReady}
         isVideoActuallyPlaying={isVideoActuallyPlaying}
         videoHasStarted={videoHasStarted}
       >
-        <iframe
-          ref={iframe}
+        <video
+          ref={videoRef}
           title="bg-video"
-          src="https://player.vimeo.com/video/547280824?h=050797c24d&autoplay=0&loop=1&background=1&autopause=0&muted=1"
           width="100%"
           height="100%"
-          frameBorder="0"
-          allow="autoplay; fullscreen"
-          allowFullScreen
-        />
+          loop
+          muted
+          playsInline
+        >
+          <source src="/assets/eye_site___les_mains___i'm_too_sad_to_tell_you_homage_v1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </PosterWrapper>
       {isLoading && (
         <LoadingSpinner>
@@ -241,7 +195,7 @@ const VideoBGWrapper = styled.div`
   overflow: hidden;
   z-index: 1;
 
-  iframe {
+  video {
     width: 100vw;
     height: 56.25vw; /* Given a 16:9 aspect ratio, 9/16*100 = 56.25 */
     min-height: 100vh;
@@ -253,6 +207,7 @@ const VideoBGWrapper = styled.div`
     will-change: opacity;
     backface-visibility: hidden;
     perspective: 1000px;
+    object-fit: cover;
     @media (min-width: ${breakpoints.tablet}) {
       left: 50%;
     }
@@ -273,7 +228,7 @@ const PosterWrapper = styled.div`
     background-position: 73% 30%;
   }
 
-  iframe {
+  video {
     display: ${(props) =>
       props.isVideoActuallyPlaying || props.videoHasStarted ? 'block' : 'none'};
   }
