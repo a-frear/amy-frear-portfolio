@@ -156,13 +156,32 @@ export default function VideoBG() {
 
   // Handle scrubber change - seek video when user interacts with range input
   const handleTimelineChange = async (e) => {
+    if (!player) return;
+
     const newTime = parseFloat(e.target.value);
     setCurrentTime(newTime);
     isSeekingRef.current = true;
 
     try {
+      // Check if video was playing before seek
+      const wasPlaying = await player.getPaused().then(paused => !paused);
+
       await player.setCurrentTime(newTime);
-      // The 'seeked' event will fire when seek completes and clear isSeekingRef
+
+      // Resume playback if video was playing before seek
+      // This handles mobile where video may pause after seeking
+      if (wasPlaying) {
+        await player.play();
+      }
+
+      // Fallback: clear seeking flag after 500ms if seeked event doesn't fire
+      setTimeout(() => {
+        if (isSeekingRef.current) {
+          isSeekingRef.current = false;
+          setCurrentTime(newTime);
+          lastStateUpdateRef.current = Date.now();
+        }
+      }, 500);
     } catch (error) {
       console.error('Error seeking video:', error);
       isSeekingRef.current = false;
