@@ -71,6 +71,7 @@ export default function VideoBG() {
     const handlePlay = () => {
       playerStateRef.current.isPlaying = true;
       setIsVideoActuallyPlaying(true);
+      setIsLoading(false);
     };
 
     const handlePause = () => {
@@ -143,7 +144,8 @@ export default function VideoBG() {
         setIsPlaying(true);
         setVideoHasStarted(true);
 
-        // Hide spinner after 2 seconds (covers most buffering)
+        // Fallback: hide spinner after 2 seconds if play event didn't fire
+        // (The play event handler will also call setIsLoading(false) when video starts)
         setTimeout(() => {
           setIsLoading(false);
         }, 2000);
