@@ -199,12 +199,9 @@ export default function VideoBG() {
         <iframe
           ref={iframe}
           title="bg-video"
-          src="https://player.vimeo.com/video/547280824?h=050797c24d&autoplay=0&loop=1&background=1&autopause=0&muted=1"
+          src="https://player.vimeo.com/video/547280824?h=050797c24d&autoplay=0&loop=1&background=1&autopause=0&muted=1&quality=1080p"
           width="100%"
           height="100%"
-          frameBorder="0"
-          allow="autoplay; fullscreen"
-          allowFullScreen
         />
       </PosterWrapper>
       {isLoading && (
