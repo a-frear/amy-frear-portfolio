@@ -295,7 +295,6 @@ const Spinner = styled.div`
   border-right-color: #ccd131;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  box-shadow: 0 0 20px rgba(204, 209, 49, 0.5);
 
   @keyframes spin {
     to {
