@@ -80,7 +80,6 @@ const ParallaxHeadshot = styled(motion.div)`
   -o-background-size: cover;
   background-size: cover;
   order: 1;
-  transition: background-image 0.3s ease-out;
   @media (min-width: ${breakpoints.tablet}) {
     order: 2;
     grid-column: 3 / 4;
