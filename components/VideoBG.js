@@ -265,6 +265,18 @@ const VideoBGWrapper = styled.div`
   overflow: hidden;
   z-index: 1;
 
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+    z-index: 5;
+    pointer-events: none;
+  }
+
   iframe {
     width: 100vw;
     height: 56.25vw; /* Given a 16:9 aspect ratio, 9/16*100 = 56.25 */
@@ -388,7 +400,7 @@ const MuteButton = styled.button`
   z-index: 10;
   background-color: transparent;
   border: none;
-  padding: 10px;
+  padding: 10px 10px 7px 10px;
   svg {
     width: 50px;
     height: 50px;
