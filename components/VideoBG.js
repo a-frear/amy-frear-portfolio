@@ -272,7 +272,11 @@ const VideoBGWrapper = styled.div`
     left: 0;
     right: 0;
     height: 200px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.3)
+    );
     z-index: 5;
     pointer-events: none;
   }
@@ -395,12 +399,11 @@ const TimelineInput = styled.input`
 const MuteButton = styled.button`
   position: absolute;
   left: 10px;
-  bottom: 10px;
+  bottom: 16px;
   cursor: pointer;
   z-index: 10;
   background-color: transparent;
   border: none;
-  padding: 10px 10px 7px 10px;
   svg {
     width: 50px;
     height: 50px;
@@ -416,7 +419,7 @@ const MuteButton = styled.button`
   }
   @media (min-width: ${breakpoints.tablet}) {
     left: 20px;
-    bottom: 20px;
+    bottom: 25px;
   }
 `;
 
