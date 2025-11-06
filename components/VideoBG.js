@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ReducedMotionContext } from '../context/context.js';
 import Play from './icons/Play';
 import Pause from './icons/Pause';
+import Mute from './icons/Mute';
 import BlobSpinner from './icons/BlobSpinner';
 import { breakpoints } from '../styles/breakpoints';
 import VisuallyHiddenText from './VisuallyHiddenText';
@@ -10,6 +11,7 @@ import VisuallyHiddenText from './VisuallyHiddenText';
 export default function VideoBG() {
   const { animation } = useContext(ReducedMotionContext);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [player, setPlayer] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [videoHasStarted, setVideoHasStarted] = useState(false);
@@ -155,6 +157,24 @@ export default function VideoBG() {
     }
   };
 
+  const toggleMute = async () => {
+    if (!player) return;
+
+    try {
+      if (isMuted) {
+        // Unmute
+        await player.setVolume(1);
+        setIsMuted(false);
+      } else {
+        // Mute
+        await player.setVolume(0);
+        setIsMuted(true);
+      }
+    } catch (error) {
+      console.error('Error controlling volume:', error);
+    }
+  };
+
   // Handle scrubber change - seek video when user interacts with range input
   const handleTimelineChange = async (e) => {
     if (!player) return;
@@ -219,6 +239,12 @@ export default function VideoBG() {
         step="0.1"
         aria-label="Video progress"
       />
+      <MuteButton type="button" onClick={toggleMute}>
+        <Mute isMuted={isMuted} />
+        <VisuallyHiddenText>
+          {isMuted ? 'Unmute background video' : 'Mute background video'}
+        </VisuallyHiddenText>
+      </MuteButton>
       <Button type="button" onClick={togglePlayPause}>
         {isPlaying ? <Pause /> : <Play />}
         <VisuallyHiddenText>
@@ -351,6 +377,34 @@ const TimelineInput = styled.input`
     cursor: pointer;
     border: none;
     background: transparent;
+  }
+`;
+
+const MuteButton = styled.button`
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  cursor: pointer;
+  z-index: 10;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  svg {
+    width: 50px;
+    height: 50px;
+    display: block;
+    color: white;
+  }
+  &:hover,
+  &:focus-visible {
+    opacity: 0.8;
+  }
+  &:active {
+    transform: scale(0.97);
+  }
+  @media (min-width: ${breakpoints.tablet}) {
+    left: 20px;
+    bottom: 20px;
   }
 `;
 
