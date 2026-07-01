@@ -223,6 +223,7 @@ export default function VideoBG() {
           src="https://player.vimeo.com/video/1134232578?h=c72e2e0a73&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;muted=1&amp;loop=1&amp;background=1&amp;autoplay=0&amp;quality=1080p"
           width="100%"
           height="100%"
+          allow="autoplay; fullscreen; picture-in-picture"
         />
       </PosterWrapper>
       {isLoading && (
