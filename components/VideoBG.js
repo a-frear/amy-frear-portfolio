@@ -25,6 +25,8 @@ export default function VideoBG() {
   const playerStateRef = useRef({ isPlaying: false });
   const isSeekingRef = useRef(false);
   const lastStateUpdateRef = useRef(0);
+  // User clicked play before the Vimeo player finished initializing
+  const pendingPlayRef = useRef(false);
 
   const initializePlayer = () => {
     if (window.Vimeo && iframe.current) {
@@ -39,14 +41,20 @@ export default function VideoBG() {
     // Check if Vimeo API is already loaded
     if (window.Vimeo) {
       initializePlayer();
-    } else {
-      // Load Vimeo Player API only once
-      const script = document.createElement('script');
+      return;
+    }
+    // Reuse the script tag if it was already added (e.g. after client-side navigation)
+    let script = document.querySelector(
+      'script[src="https://player.vimeo.com/api/player.js"]'
+    );
+    if (!script) {
+      script = document.createElement('script');
       script.src = 'https://player.vimeo.com/api/player.js';
       script.async = true;
-      script.onload = initializePlayer;
       document.head.appendChild(script);
     }
+    script.addEventListener('load', initializePlayer);
+    return () => script.removeEventListener('load', initializePlayer);
   }, []);
 
   // Initialize video state on mount - no autoplay
@@ -126,8 +134,29 @@ export default function VideoBG() {
     };
   }, [player]);
 
+  // Start playback queued from a click that happened before the player was ready
+  useEffect(() => {
+    if (!player || !pendingPlayRef.current) return;
+    pendingPlayRef.current = false;
+    player
+      .play()
+      .then(() => setVideoHasStarted(true))
+      .catch((error) => {
+        console.error('Error controlling video:', error);
+        setIsPlaying(false);
+        setIsLoading(false);
+      });
+  }, [player]);
+
   const togglePlayPause = async () => {
-    if (!player) return;
+    if (!player) {
+      // Player API still loading: queue play (or cancel a queued play)
+      pendingPlayRef.current = !pendingPlayRef.current;
+      hasPlayedBeforeRef.current = pendingPlayRef.current;
+      setIsPlaying(pendingPlayRef.current);
+      setIsLoading(pendingPlayRef.current);
+      return;
+    }
 
     try {
       const paused = await player.getPaused();
@@ -314,9 +343,12 @@ const PosterWrapper = styled.div`
     background-position: 73% 30%;
   }
 
+  /* Hide with opacity rather than display: none — browsers throttle or block
+     playback inside display: none iframes, which made play() silently hang */
   iframe {
-    display: ${(props) =>
-      props.isVideoActuallyPlaying || props.videoHasStarted ? 'block' : 'none'};
+    opacity: ${(props) =>
+      props.isVideoActuallyPlaying || props.videoHasStarted ? 1 : 0};
+    pointer-events: none;
   }
 `;
 
