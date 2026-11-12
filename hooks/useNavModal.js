@@ -8,7 +8,8 @@ import { useEffect } from 'react';
  *   screen readers.
  * - Scrolling the page closes the menu.
  * - Tab only moves between the Animate toggle, the menu links, and the
- *   close button.
+ *   close button. (On mobile the Animate toggle is inside the menu, so
+ *   no toggleRef is passed.)
  * - Escape closes the menu.
  * - If resizing hides this header (the site swaps between its desktop and
  *   mobile headers), the menu closes, so the other header isn't left locked.
@@ -65,7 +66,8 @@ export function useNavModal({
     // 4. Keyboard: Escape closes, Tab loops inside the menu
     const toggleButton = toggleWrap?.querySelector('button');
     const focusables = () =>
-      [toggleButton, ...nav.querySelectorAll('a[href]'), button].filter(
+      // Links, plus any button inside the menu (the mobile Animate button)
+      [toggleButton, ...nav.querySelectorAll('a[href], button'), button].filter(
         Boolean
       );
     const onKeyDown = (event) => {

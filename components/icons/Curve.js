@@ -60,8 +60,9 @@ const AnimatedSvg = motion.svg;
 
 const CurveWrapper = styled.div`
   position: absolute;
-  /* Just below the green header (176px tall on mobile) */
-  top: 175px;
+  /* Just below the green header. The mobile header sets --curve-top,
+     since its height grows with the title. */
+  top: var(--curve-top, 175px);
   left: 0;
   width: 100%;
   overflow: hidden;

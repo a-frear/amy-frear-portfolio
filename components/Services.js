@@ -14,7 +14,7 @@ const services = [
   {
     name: "CMS builds",
     description:
-      "Drupal and WordPress theming and implementation, from component libraries to editor-friendly content models and launch.",
+      "Drupal and WordPress theming, plus headless builds with Sanity. From component libraries to editor-friendly content models and launch.",
   },
   {
     name: "Modern front ends",

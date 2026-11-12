@@ -9,6 +9,7 @@ import { useScrollToSection } from '../hooks/useScrollToSection';
 import { useNavModal } from '../hooks/useNavModal';
 import Curve from './icons/Curve.js';
 import { isFeatureEnabled } from '../config/featureFlags.js';
+import { SquiggleUnderline } from '../styles/squiggle';
 import { red, lightYellow, green, yellow, black } from '../styles/colors';
 import { breakpoints } from '../styles/breakpoints';
 import OutlinedText from './OutlinedText';
@@ -302,8 +303,9 @@ const HeaderContainer = styled.div`
         : '0s'};
   }
 
-  .sidenav a:hover {
-    color: #c8140e;
+  /* Wavy underline on hover, like the menu button's wiggles */
+  .sidenav a {
+    ${SquiggleUnderline}
   }
 
   #main {

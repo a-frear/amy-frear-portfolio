@@ -9,6 +9,7 @@ import { useScrollToSection } from '../hooks/useScrollToSection';
 import { useNavModal } from '../hooks/useNavModal';
 import Curve from './icons/Curve.js';
 import { isFeatureEnabled } from '../config/featureFlags.js';
+import { SquiggleUnderline } from '../styles/squiggle';
 import { red, lightYellow, green, black, yellow } from '../styles/colors';
 import { breakpoints } from '../styles/breakpoints';
 import OutlinedText from './OutlinedText';
@@ -29,17 +30,19 @@ export default function Header() {
   const navRef = useRef(null);
   const navButtonRef = useRef(null);
   const overlayRef = useRef(null);
-  const toggleRef = useRef(null);
-  // Subtitle, Animate toggle, and menu button fade in together after the
-  // slime drops (once per visit)
+  // Subtitle and menu button fade in together after the slime drops
+  // (once per visit)
   const introClass = useHeroIntro();
+  // On mobile the Animate button lives inside the menu, below the links.
+  // If the menu is switched off, it stays in the header instead.
+  const showNav = isFeatureEnabled('SHOW_SIDENAV');
+  const showToggle = isFeatureEnabled('SHOW_ANIMATION_TOGGLE');
   useNavModal({
     open: openNav,
     setOpen: setOpenNav,
     navRef,
     buttonRef: navButtonRef,
     overlayRef,
-    toggleRef,
   });
 
   return (
@@ -69,15 +72,14 @@ export default function Header() {
         </AnimatedBackground>
       )}
       <HeaderContainer openNav={openNav} animation={animation}>
-        {isFeatureEnabled('SHOW_ANIMATION_TOGGLE') && (
+        {showToggle && !showNav && (
           <div
             className={['toggle-wrapper', introClass].filter(Boolean).join(' ')}
-            ref={toggleRef}
           >
             <ReducedMotionToggle />
           </div>
         )}
-        {isFeatureEnabled('SHOW_SIDENAV') && (
+        {showNav && (
           <>
             {/* Dark tint over the page while the menu is open; clicking it
                 closes the menu (Escape does too, for keyboard users) */}
@@ -112,6 +114,11 @@ export default function Header() {
                   {link.label}
                 </a>
               ))}
+              {showToggle && (
+                <div className="nav-toggle" style={{ '--i': NAV_LINKS.length }}>
+                  <ReducedMotionToggle />
+                </div>
+              )}
             </dialog>
             {/* Morphs into the X that closes the menu */}
             <div
@@ -147,6 +154,13 @@ const HeaderWrapper = styled.div`
   right: 0;
   z-index: 100;
   width: 100%;
+  /* The title is two big lines ("Frear" / "Projects") that grow with the
+     screen, so the green header's height follows the title size:
+     top space + two title lines + subtitle + bottom space */
+  --title-size: min(88px, 16.5vw);
+  --header-height: calc(18px + var(--title-size) * 1.9 + 8px + 24px + 18px);
+  /* The drippy curve hangs just below the green header */
+  --curve-top: calc(var(--header-height) - 1px);
   @media (min-width: ${breakpoints.desktop}) {
     display: none;
   }
@@ -160,54 +174,55 @@ const AnimatedBackground = styled(motion.div)`
   z-index: 1;
   pointer-events: none;
   background-color: ${green};
-  height: 176px;
+  height: var(--header-height);
 `;
 
 const HeaderContainer = styled.div`
   position: relative;
   z-index: 10;
-  display: grid;
-  justify-content: space-between;
   width: 100%;
-  grid-template-columns: 1fr 1fr;
   background-color: transparent;
-  height: 176px;
+  height: var(--header-height);
   @media (min-width: ${breakpoints.desktop}) {
     display: none;
   }
-  /* Extra room below the Animate and menu buttons before the title */
-  /* Animate button stays on top of (and usable in) the open menu */
+  /* Only used when the menu is switched off: the Animate button takes the
+     menu button's spot in the top-right corner */
   .toggle-wrapper {
     ${SubtitleIntro}
-    position: relative;
+    position: absolute;
     z-index: 2;
-    margin: 1.5rem 0 1.5rem 1rem;
+    top: 1.5rem;
+    right: 1rem;
     @media (min-width: ${breakpoints.tablet}) {
-      margin-left: 2rem;
+      right: 2rem;
     }
-    height: 20px;
   }
-  /* Sits above the menu, so the menu drops in behind the title */
+  /* Left-aligned, beside the menu button. Sits above the menu, so the
+     menu drops in behind the title. */
   .header-title {
     position: relative;
     z-index: 2;
-    text-align: center;
-    grid-column: 1 / -1;
+    padding: 18px 1rem 0;
+    @media (min-width: ${breakpoints.tablet}) {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
   }
   h1 {
     font-family: 'Bowlby One SC';
-    /* Sized so "Frear Projects" always fits on one line */
-    font-size: min(58px, 9.6vw);
-    line-height: 1;
-    white-space: nowrap;
+    /* Two lines, "Frear" over "Projects", sized so "Projects" fills
+       most of the width */
+    font-size: var(--title-size);
+    line-height: 0.95;
+    /* One word per line */
+    width: min-content;
     color: ${lightYellow};
-    padding: 0 10px;
   }
 
   p {
     ${SubtitleIntro}
     margin-top: 8px;
-    padding: 0 10px;
     font-family: 'Fjalla One', sans-serif;
     font-size: clamp(17px, 2.8vw, 20px);
     line-height: 1.2;
@@ -220,7 +235,8 @@ const HeaderContainer = styled.div`
   .nav-button {
     ${SubtitleIntro}
     position: ${(props) => (props.openNav ? 'fixed' : 'absolute')};
-    z-index: 2;
+    /* Above the title, which spans the full width beside it */
+    z-index: 3;
     top: 1rem;
     right: 1rem;
     @media (min-width: ${breakpoints.tablet}) {
@@ -260,7 +276,7 @@ const HeaderContainer = styled.div`
     max-height: none;
     margin: 0;
     /* Links start below the site title and subtitle */
-    padding: 200px 20px 24px;
+    padding: calc(var(--header-height) + 12px) 20px 24px;
     border: none;
     background: transparent;
     color: black;
@@ -289,6 +305,22 @@ const HeaderContainer = styled.div`
     font-size: 28px;
     color: black;
     text-align: center;
+  }
+
+  /* The Animate button, below the links, lined up with the title on the
+     left (the menu has 20px side padding; the title 1rem, or 2rem on
+     tablet) */
+  .sidenav .nav-toggle {
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px 0 0 calc(1rem - 20px);
+    @media (min-width: ${breakpoints.tablet}) {
+      margin-left: calc(2rem - 20px);
+    }
+  }
+
+  .sidenav a,
+  .sidenav .nav-toggle {
     /* Fade down into place one after another while the menu drops,
        all in by the time it lands (~0.6s). Quick fade out on close. */
     opacity: ${(props) => (props.openNav ? 1 : 0)};
@@ -306,8 +338,9 @@ const HeaderContainer = styled.div`
         : '0s'};
   }
 
-  .sidenav a:hover {
-    color: #c8140e;
+  /* Wavy underline on hover, like the menu button's wiggles */
+  .sidenav a {
+    ${SquiggleUnderline}
   }
 
   #main {
