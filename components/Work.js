@@ -9,37 +9,37 @@ export default function Projects() {
     {
       client: 'National Gallery of Art',
       link: 'https://www.nga.gov/',
-      role: 'Developer',
+      role: 'Frontend Developer',
       year: '2025',
     },
     {
       client: 'Clark Foundation',
       link: 'https://clarkfoundationdc.org/overview',
-      role: 'Developer',
+      role: 'Frontend Developer',
       year: '2025',
     },
     {
       client: 'Princeton Campus Life Resources',
       link: 'https://tigerlife.princeton.edu/',
-      role: 'Lead Developer',
+      role: 'Frontend and Backend Developer',
       year: '2024',
     },
     {
       client: 'Harvard Graduate School of Education',
       link: 'https://www.gse.harvard.edu/',
-      role: 'Developer',
+      role: 'Frontend Developer',
       year: '2023',
     },
     {
       client: 'Capabilities: W.L Gore and Associates',
       link: 'https://capabilities.gore.com/',
-      role: 'Developer',
+      role: 'Frontend Developer',
       year: '2022',
     },
     {
       client: 'Mütter Museum',
       link: 'https://muttermuseum.org/',
-      role: 'Developer',
+      role: 'Frontend Developer',
       year: '2021',
     },
   ];
@@ -54,7 +54,7 @@ export default function Projects() {
             <ProjectLink href={project.link} target="_blank" rel="noreferrer">
               <ProjectText>
                 <span className="client-role">
-                  <span className="client">{project.client}</span>,{' '}
+                  <span className="client">{project.client},</span>{' '}
                   {project.role}
                 </span>
                 <span className="dots" />
@@ -123,8 +123,8 @@ const ProjectItem = styled.li`
   }
 
   @media (pointer: fine) {
-    & a:hover .client-role,
-    & a:focus-visible .client-role {
+    & a:hover .client,
+    & a:focus-visible .client {
       color: ${hotPink};
     }
   }

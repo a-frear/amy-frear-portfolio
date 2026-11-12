@@ -10,7 +10,7 @@ export const featureFlags = {
   SHOW_ANIMATION_TOGGLE: true,
 
   // Show/hide the side navigation menu
-  SHOW_SIDENAV: false,
+  SHOW_SIDENAV: true,
 
   // Enable/disable Lenis smooth scrolling
   ENABLE_LENIS: false,

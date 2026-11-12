@@ -1,140 +1,110 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import { ReducedMotionContext } from '../context/context.js';
+import { black, lightYellow } from '../styles/colors';
 import { breakpoints } from '../styles/breakpoints';
+
+/*
+ * Turns the site's animations on or off.
+ *
+ * Styled like the video player's round icons (play/pause, mute):
+ * - On: a black-outlined circle filled with the site-title yellow.
+ * - Off: the same outlined circle with no fill.
+ * The words "on" / "off" are shown too, so the state never relies on the
+ * icon alone. Screen readers hear "Animate, toggle button, pressed"
+ * (or "not pressed").
+ */
+const SQUIGGLE = 'M13 24q2.75-6 5.5 0t5.5 0t5.5 0t5.5 0';
 
 export default function ReducedMotionToggle() {
   const { setAnimation, animation } = useContext(ReducedMotionContext);
 
   return (
-    <ReducedMotionToggleWrapper animation={animation}>
-      <label className="switch">
-        <input
-          type="checkbox"
-          checked={animation}
-          onChange={(e) => setAnimation(e.target.checked)}
-          id="animation"
-          name="animation"
+    <AnimateButton
+      type="button"
+      aria-pressed={animation}
+      onClick={() => setAnimation(!animation)}
+    >
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+        {/* Same black outline and squiggle in both states;
+            filled with the site-title yellow when animations are on */}
+        <circle
+          cx="24"
+          cy="24"
+          r="20.5"
+          fill={animation ? lightYellow : 'none'}
+          stroke="currentColor"
+          strokeWidth="3"
         />
-        <span className="slider round" />
-        <span className="label-text">
-          Animate
-          <span aria-hidden>
-            : {animation ? 'on' : 'off'}{' '}
-            {/* <WhatsThisLink
-              href="https://medium.com/@afrear/reduced-motion-toggle-using-react-context-4683a9047593"
-              target="blank"
-            >
-              What's this?
-            </WhatsThisLink> */}
-          </span>
-        </span>
-      </label>
-    </ReducedMotionToggleWrapper>
+        <path
+          d={SQUIGGLE}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3.5"
+          strokeLinecap="round"
+        />
+      </svg>
+      <span className="label">
+        Animate<span aria-hidden="true">: {animation ? 'on' : 'off'}</span>
+      </span>
+    </AnimateButton>
   );
 }
 
-const ReducedMotionToggleWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  @media (min-width: ${breakpoints.tablet}) {
-    height: 300px;
-  }
-  &:hover {
-    a {
-      display: block;
-    }
+const AnimateButton = styled.button`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: ${black};
+  cursor: pointer;
+  pointer-events: auto;
+
+  svg {
+    display: block;
+    width: 30px;
+    height: 30px;
+    /* Same soft shadow as the video player icons */
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+    transition: transform 0.2s ease;
   }
 
-  .switch {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 20px;
-    width: 100%;
-    pointer-events: auto;
-  }
-
-  .label-text {
-    position: absolute;
-    left: 52px;
-
+  .label {
     font-family: 'Fjalla One', sans-serif;
+    font-size: 12px;
+    line-height: 1;
     text-transform: uppercase;
-    font-size: 14px;
-    color: black;
+    white-space: nowrap;
     @media (min-width: ${breakpoints.tablet}) {
-      font-size: 16px;
+      font-size: 13px;
     }
   }
 
-  /* Hide default HTML checkbox */
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  @media (pointer: fine) {
+    &:hover svg {
+      opacity: 0.8;
+    }
+  }
+  &:active svg {
+    transform: scale(0.97);
   }
 
-  /* The slider */
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border: 1px solid black;
-    background-color: ${(props) => (props.animation ? `#F72C25;` : `#FCF6B1`)};
-  }
-
-  .slider:before {
-    position: absolute;
+  /* Invisible tap area, at least 44px tall, so it's easy to hit on a phone */
+  &::before {
     content: '';
-    height: 14px;
-    width: 14px;
-    left: 3px;
-    bottom: 2px;
-    background-color: ${(props) => (props.animation ? `#FCF6B1;` : '#F72C25')};
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border: 1px solid black;
-  }
-  input:focus + .slider {
-    box-shadow: 0 0 1px ${(props) => props.color};
+    position: absolute;
+    top: 50%;
+    left: -7px;
+    right: -7px;
+    height: 44px;
+    transform: translateY(-50%);
   }
 
-  input:checked + .slider:before {
-    -webkit-transform: translateX(18px);
-    -ms-transform: translateX(18px);
-    transform: translateX(18px);
-  }
-
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-    width: 40px;
-    height: 20px;
-  }
-
-  .slider.round:before {
-    border-radius: 50%;
-  }
-  input:focus + span {
-    outline: 5px auto Highlight;
-    outline: 5px auto -webkit-focus-ring-color;
-  }
-`;
-
-const WhatsThisLink = styled.a`
-  display: none;
-  margin-top: 3px;
-  color: black;
-  text-decoration: none;
-  font-size: 14px;
-  font-style: italic;
-  &:hover {
-    text-decoration: underline;
+  &:focus-visible {
+    outline: 2px solid ${black};
+    outline-offset: 4px;
   }
 `;

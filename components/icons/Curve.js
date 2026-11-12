@@ -60,14 +60,16 @@ const AnimatedSvg = motion.svg;
 
 const CurveWrapper = styled.div`
   position: absolute;
-  top: 159px;
+  /* Just below the green header (176px tall on mobile) */
+  top: 175px;
   left: 0;
   width: 100%;
   overflow: hidden;
   line-height: 0;
   z-index: 5;
 
-  @media (min-width: ${breakpoints.tablet}) {
+  /* Desktop header is shorter */
+  @media (min-width: ${breakpoints.desktop}) {
     top: 129px;
   }
 

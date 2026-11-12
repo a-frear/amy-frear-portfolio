@@ -8,6 +8,7 @@ import HeaderMedia from '../components/HeaderMedia';
 import Work from '../components/Work';
 import Services from '../components/Services';
 import Contact from '../components/Contact';
+import FadeInSection from '../components/FadeInSection';
 
 export default function Home() {
   return (
@@ -20,12 +21,23 @@ export default function Home() {
           <HeaderMedia />
         </HeaderWrapper>
         <MainContent>
-          <Intro />
-          <About />
-          <Work />
-          <Services />
+          {/* Each section fades up as you scroll to it (Animate on only) */}
+          <FadeInSection>
+            <Intro />
+          </FadeInSection>
+          <FadeInSection>
+            <About />
+          </FadeInSection>
+          <FadeInSection>
+            <Work />
+          </FadeInSection>
+          <FadeInSection>
+            <Services />
+          </FadeInSection>
         </MainContent>
-        <Contact />
+        <FadeInSection>
+          <Contact />
+        </FadeInSection>
       </HomeWrapper>
     </>
   );

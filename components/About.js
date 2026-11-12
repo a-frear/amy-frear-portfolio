@@ -16,7 +16,7 @@ export default function About() {
           <a href="https://www.bluecadet.com/" target="_blank" rel="noreferrer">
             Bluecadet
           </a>
-          , where I spent five and a half years working alongside an incredibly
+          , where I spent 5+ years working alongside an incredibly
           talented team to create thoughtful, engaging digital experiences. I'm
           now bringing that experience to freelance work, partnering with
           agencies and creative teams to bring ideas to life.
