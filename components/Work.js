@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { hotPink } from '../styles/colors';
 import { SectionHeading } from '../styles/typography';
-import ParallaxWave from './icons/ParallaxWave';
 import { breakpoints } from '../styles/breakpoints';
 import OutlinedText from './OutlinedText';
 
@@ -66,19 +65,12 @@ export default function Projects() {
         ))}
       </ProjectsList>
       <MoreNote>More available on request.</MoreNote>
-      <ClientWork>
-        <ParallaxWave />
-      </ClientWork>
     </WorkWrapper>
   );
 }
 
 const WorkWrapper = styled.section`
   text-align: left;
-  /* Sit the contact section right under the wave */
-  &.full-section {
-    margin-bottom: 0;
-  }
 `;
 
 const MoreNote = styled.p`
@@ -87,13 +79,11 @@ const MoreNote = styled.p`
   color: black;
   text-align: center;
   margin-top: 32px;
-  margin-bottom: 50px;
   @media (min-width: ${breakpoints.tablet}) {
     font-size: 22px;
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 100px;
   }
 `;
 
@@ -177,28 +167,4 @@ const ProjectLink = styled.a`
   text-decoration: none;
   color: inherit;
   display: block;
-`;
-
-const ClientWork = styled.div`
-  text-align: center;
-  margin: 0 auto;
-  color: black;
-  p {
-    margin-bottom: 20px;
-  }
-  a {
-    color: black;
-    transition: color 0.3s ease;
-    @media (pointer: fine) {
-      &:hover {
-        color: ${hotPink};
-      }
-    }
-    &:focus-visible {
-      color: ${hotPink};
-    }
-  }
-  @media (min-width: ${breakpoints.tablet}) {
-    max-width: 50%;
-  }
 `;

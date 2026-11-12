@@ -53,7 +53,7 @@ export default function Header() {
           </h1>
           {/* Fades up once the slime has dropped in */}
           <p className={animation ? 'animate-in' : undefined}>
-            Independent web development for creative teams
+            Independent web development for creative teams.
           </p>
         </div>
         {isFeatureEnabled('SHOW_SIDENAV') && (
@@ -148,6 +148,7 @@ const HeaderContainer = styled.div`
     font-size: clamp(18px, 1.7vw, 24px);
     line-height: 1.2;
     color: ${black};
+    text-transform: lowercase;
   }
 
   .nav-button-wrapper {

@@ -13,15 +13,18 @@ export default function Contact() {
         <OutlinedText>Contact</OutlinedText>
       </Heading>
       <Content>
-        <Body>
-          Frear Projects is booking freelance and agency work. Have a project in
-          mind, or need an extra set of hands on your team? I'd love to hear
-          about it. Email me at{' '}
-          <a href={`mailto:${EMAIL}?subject=Hello%20Frear%20Projects`}>
-            {EMAIL}
-          </a>
-          .
-        </Body>
+        <Columns>
+          <Body>
+            Frear Projects is booking freelance and agency work. Have a project
+            in mind, or need an extra set of hands on your team? I'd love to
+            hear about it.
+            Email me at{' '}
+            <a href={`mailto:${EMAIL}?subject=Hello%20Frear%20Projects`}>
+              {EMAIL}
+            </a>
+            .
+          </Body>
+        </Columns>
         <Body className="centered">
           <a
             href="https://www.linkedin.com/in/amy-frear"
@@ -89,13 +92,20 @@ const Content = styled.div`
   }
 `;
 
+// Two paragraphs stacked on mobile, side by side on desktop
+const Columns = styled.div`
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  @media (min-width: ${breakpoints.tablet}) {
+    margin-bottom: 3.5rem;
+  }
+`;
+
 const Body = styled.p`
   ${BodyTextSize}
   color: black;
   line-height: 165%;
-  & + & {
-    margin-top: 1.5rem;
-  }
   a {
     color: black;
     transition: color 0.3s ease;

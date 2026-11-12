@@ -22,8 +22,8 @@ export default function Home() {
         <MainContent>
           <Intro />
           <About />
-          <Services />
           <Work />
+          <Services />
         </MainContent>
         <Contact />
       </HomeWrapper>

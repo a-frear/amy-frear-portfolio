@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { SectionHeading } from '../styles/typography';
 import { breakpoints } from '../styles/breakpoints';
 import FPLogo from './icons/FPLogo';
+import ParallaxWave from './icons/ParallaxWave';
 import OutlinedText from './OutlinedText';
 
 const services = [
@@ -39,12 +40,27 @@ export default function Services() {
         </ServicesList>
         <Logo />
       </Layout>
+      <WaveWrapper>
+        <ParallaxWave />
+      </WaveWrapper>
     </ServicesWrapper>
   );
 }
 
 const ServicesWrapper = styled.section`
   text-align: left;
+  /* Sit the contact section right under the wave */
+  &.full-section {
+    margin-bottom: 0;
+  }
+`;
+
+const WaveWrapper = styled.div`
+  margin: 50px auto 0;
+  @media (min-width: ${breakpoints.tablet}) {
+    max-width: 50%;
+    margin-top: 100px;
+  }
 `;
 
 const Heading = styled.h2`
