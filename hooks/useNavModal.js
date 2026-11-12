@@ -1,5 +1,24 @@
 import { useEffect } from 'react';
 
+// Whether the menu was last opened by touch/mouse or by keyboard
+let lastInput = 'keyboard';
+if (typeof window !== 'undefined') {
+  window.addEventListener(
+    'pointerdown',
+    () => {
+      lastInput = 'pointer';
+    },
+    true
+  );
+  window.addEventListener(
+    'keydown',
+    () => {
+      lastInput = 'keyboard';
+    },
+    true
+  );
+}
+
 /*
  * While the site menu is open, the rest of the page is off limits:
  *
@@ -14,8 +33,9 @@ import { useEffect } from 'react';
  * - If resizing hides this header (the site swaps between its desktop and
  *   mobile headers), the menu closes, so the other header isn't left locked.
  *
- * Opening moves focus to the first link; closing with Escape puts focus
- * back on the menu button.
+ * Opening with the keyboard moves focus to the first link (a tap or click
+ * leaves it on the menu button); closing with Escape puts focus back on
+ * the menu button.
  */
 export function useNavModal({
   open,
@@ -94,8 +114,12 @@ export function useNavModal({
     };
     document.addEventListener('keydown', onKeyDown);
 
-    // Start keyboard users on the first link
-    nav.querySelector('a[href]')?.focus({ preventScroll: true });
+    // Start keyboard users on the first link. A tap or click leaves focus on
+    // the menu button instead, so phones don't show a focus ring on the
+    // first link (Tab still goes straight into the menu from there).
+    if (lastInput !== 'pointer') {
+      nav.querySelector('a[href]')?.focus({ preventScroll: true });
+    }
 
     return () => {
       madeInert.forEach((el) => {
