@@ -127,9 +127,26 @@ const ParallaxHeadshot = styled(motion.div)`
     margin-bottom: 0;
     width: 400px;
     height: 400px;
-    &:hover,
-    &:focus-visible {
+
+    /* Gritty sits on top, invisible (and already loaded), and fades in on
+       hover or keyboard focus. Fading in waits a beat, so a mouse that just
+       passes over while scrolling doesn't set it off. */
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
       background-image: url('assets/gritty.jpg');
+      background-size: cover;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+    &:hover::after,
+    &:focus-visible::after {
+      opacity: 1;
+      transition: opacity 0.6s ease 0.25s;
     }
   }
 `;
