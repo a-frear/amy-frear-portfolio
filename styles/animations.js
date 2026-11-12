@@ -11,13 +11,15 @@ const fadeUp = keyframes`
   }
 `;
 
-// Hero subtitle: fades up once the slime has dropped in (~1s).
+// Hero intro: the title, subtitle, and Animate toggle fade up one after
+// another once the slime has dropped in (~1s). Each element sets its own
+// start time with --intro-delay.
 // Pure CSS so it still shows if JavaScript is slow or off.
 // Skipped for "reduce motion" users and when the Animate toggle is off
-// (the component drops the .animate-in class).
-export const SubtitleIntro = css`
+// (useHeroIntro drops the .animate-in class).
+export const HeroIntro = css`
   &.animate-in {
-    animation: ${fadeUp} 0.6s ease-out 1s both;
+    animation: ${fadeUp} 0.6s ease-out var(--intro-delay, 1s) both;
   }
   @media (prefers-reduced-motion: reduce) {
     &.animate-in {
@@ -25,3 +27,6 @@ export const SubtitleIntro = css`
     }
   }
 `;
+
+// When the last piece (the toggle, at 1.4s) has finished fading in
+export const HERO_INTRO_END_MS = 2100;

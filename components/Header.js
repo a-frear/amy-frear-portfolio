@@ -6,14 +6,15 @@ import ReducedMotionToggle from './ReducedMotionToggle.js';
 import Hamburger from './icons/Hamburger.js';
 import Curve from './icons/Curve.js';
 import { isFeatureEnabled } from '../config/featureFlags.js';
-import { red, lightYellow, green, yellow, black } from '../styles/colors';
+import { red, green, yellow, black } from '../styles/colors';
 import { breakpoints } from '../styles/breakpoints';
-import OutlinedText from './OutlinedText';
-import { SubtitleIntro } from '../styles/animations';
+import { HeroIntro } from '../styles/animations';
+import { useHeroIntro } from '../hooks/useHeroIntro';
 
 export default function Header() {
   const { animation, mounted } = useContext(ReducedMotionContext);
   const [openNav, setOpenNav] = useState(false);
+  const introClass = useHeroIntro();
 
   return (
     <HeaderWrapper>
@@ -43,16 +44,16 @@ export default function Header() {
       )}
       <HeaderContainer openNav={openNav} animation={animation}>
         {isFeatureEnabled('SHOW_ANIMATION_TOGGLE') && (
-          <div className="toggle-wrapper">
+          <div
+            className={['toggle-wrapper', introClass].filter(Boolean).join(' ')}
+          >
             <ReducedMotionToggle />
           </div>
         )}
         <div className="header-title">
-          <h1>
-            <OutlinedText outline={3.5}>Frear Projects</OutlinedText>
-          </h1>
-          {/* Fades up once the slime has dropped in */}
-          <p className={animation ? 'animate-in' : undefined}>
+          <h1 className={introClass}>Frear Projects</h1>
+          {/* Title, subtitle, then toggle fade up once the slime has dropped in */}
+          <p className={introClass}>
             Independent web development for creative teams.
           </p>
         </div>
@@ -125,6 +126,8 @@ const HeaderContainer = styled.div`
     height: 140px;
   }
   .toggle-wrapper {
+    ${HeroIntro}
+    --intro-delay: 1.4s;
     margin: 1.2rem 0 0 2rem;
   }
   .header-title {
@@ -132,17 +135,20 @@ const HeaderContainer = styled.div`
     grid-column: 2 / 3;
   }
   h1 {
+    ${HeroIntro}
+    --intro-delay: 1s;
     margin-top: 1rem;
     font-family: 'Bowlby One SC';
     /* Sized so "Frear Projects" always fits on one line */
     font-size: clamp(40px, 5.2vw, 80px);
     line-height: 1;
     white-space: nowrap;
-    color: ${lightYellow};
+    color: ${black};
   }
 
   p {
-    ${SubtitleIntro}
+    ${HeroIntro}
+    --intro-delay: 1.2s;
     margin-top: 10px;
     font-family: 'Fjalla One', sans-serif;
     font-size: clamp(18px, 1.7vw, 24px);
