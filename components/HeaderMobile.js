@@ -13,6 +13,7 @@ import { red, lightYellow, green, black, yellow } from '../styles/colors';
 import { breakpoints } from '../styles/breakpoints';
 import OutlinedText from './OutlinedText';
 import { SubtitleIntro } from '../styles/animations';
+import { useHeroIntro } from '../hooks/useHeroIntro';
 
 const NAV_LINKS = [
   { href: '#about', label: 'About' },
@@ -29,6 +30,9 @@ export default function Header() {
   const navButtonRef = useRef(null);
   const overlayRef = useRef(null);
   const toggleRef = useRef(null);
+  // Subtitle, Animate toggle, and menu button fade in together after the
+  // slime drops (once per visit)
+  const introClass = useHeroIntro();
   useNavModal({
     open: openNav,
     setOpen: setOpenNav,
@@ -66,7 +70,10 @@ export default function Header() {
       )}
       <HeaderContainer openNav={openNav} animation={animation}>
         {isFeatureEnabled('SHOW_ANIMATION_TOGGLE') && (
-          <div className="toggle-wrapper" ref={toggleRef}>
+          <div
+            className={['toggle-wrapper', introClass].filter(Boolean).join(' ')}
+            ref={toggleRef}
+          >
             <ReducedMotionToggle />
           </div>
         )}
@@ -107,7 +114,10 @@ export default function Header() {
               ))}
             </dialog>
             {/* Morphs into the X that closes the menu */}
-            <div className="nav-button" ref={navButtonRef}>
+            <div
+              className={['nav-button', introClass].filter(Boolean).join(' ')}
+              ref={navButtonRef}
+            >
               <MenuButton
                 open={openNav}
                 onClick={() => setOpenNav(!openNav)}
@@ -121,7 +131,7 @@ export default function Header() {
             <OutlinedText outline={2.5}>Frear Projects</OutlinedText>
           </h1>
           {/* Fades up once the slime has dropped in */}
-          <p className={animation ? 'animate-in' : undefined}>
+          <p className={introClass}>
             Independent web development for creative teams.
           </p>
         </div>
@@ -168,6 +178,7 @@ const HeaderContainer = styled.div`
   /* Extra room below the Animate and menu buttons before the title */
   /* Animate button stays on top of (and usable in) the open menu */
   .toggle-wrapper {
+    ${SubtitleIntro}
     position: relative;
     z-index: 2;
     margin: 1.5rem 0 1.5rem 1rem;
@@ -207,6 +218,7 @@ const HeaderContainer = styled.div`
   /* Menu button in the top-right corner. While the menu is open it's
      pinned to the screen, so the X stays reachable if you scroll. */
   .nav-button {
+    ${SubtitleIntro}
     position: ${(props) => (props.openNav ? 'fixed' : 'absolute')};
     z-index: 2;
     top: 1rem;
@@ -248,7 +260,7 @@ const HeaderContainer = styled.div`
     max-height: none;
     margin: 0;
     /* Links start below the site title and subtitle */
-    padding: 220px 20px 24px;
+    padding: 200px 20px 24px;
     border: none;
     background: transparent;
     color: black;

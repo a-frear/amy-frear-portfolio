@@ -1,11 +1,18 @@
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 
+const SITE_URL = 'https://www.frear-projects.com/';
+// The round FP logo: a 1200x630 card for link previews (social media,
+// text messages, Slack, etc.) and a square version for search engines
+const SHARE_IMAGE = `${SITE_URL}og-image.png`;
+const LOGO = `${SITE_URL}icon-512.png`;
+const IMAGE_ALT = 'Frear Projects logo: FP. inside a green circle';
+
 export default function SEO({
   title = 'Frear Projects | Independent Web Development for Creative Teams',
   description = 'Frear Projects is the independent web development practice of Amy Frear in Philadelphia, partnering with agencies and creative teams on front-end development and creative digital experiences.',
-  image = 'https://www.frear-projects.com/assets/amy-hs.jpeg',
-  url = 'https://www.frear-projects.com/',
+  image = SHARE_IMAGE,
+  url = SITE_URL,
   keywords = 'freelance web developer, front-end development, agency subcontracting, Drupal, WordPress, React, Next.js, accessibility, Philadelphia',
 }) {
   const structuredData = {
@@ -13,13 +20,15 @@ export default function SEO({
     '@type': 'Person',
     name: 'Amy Frear',
     url,
-    image,
+    image: LOGO,
     description,
     jobTitle: 'Freelance Web Developer',
     worksFor: {
       '@type': 'Organization',
       name: 'Frear Projects',
       url,
+      logo: LOGO,
+      image: LOGO,
     },
     address: {
       '@type': 'PostalAddress',
@@ -51,15 +60,21 @@ export default function SEO({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:secure_url" content={image} />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={IMAGE_ALT} />
       <meta property="og:site_name" content="Frear Projects" />
       <meta property="og:locale" content="en_US" />
 
       {/* Twitter Card Meta Tags */}
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={url} />
-      <meta property="twitter:title" content={title} />
-      <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={image} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={url} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image:alt" content={IMAGE_ALT} />
 
       {/* Additional Meta Tags */}
       <meta name="robots" content="index, follow" />
