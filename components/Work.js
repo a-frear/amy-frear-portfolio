@@ -3,6 +3,7 @@ import { hotPink } from '../styles/colors';
 import { SectionHeading } from '../styles/typography';
 import ParallaxWave from './icons/ParallaxWave';
 import { breakpoints } from '../styles/breakpoints';
+import OutlinedText from './OutlinedText';
 
 export default function Projects() {
   const projects = [
@@ -45,7 +46,9 @@ export default function Projects() {
   ];
   return (
     <WorkWrapper id="work" className="full-section">
-      <Heading>Work</Heading>
+      <Heading>
+        <OutlinedText>Selected Work</OutlinedText>
+      </Heading>
       <ProjectsList>
         {projects.map((project) => (
           <ProjectItem key={project.client}>
@@ -62,28 +65,9 @@ export default function Projects() {
           </ProjectItem>
         ))}
       </ProjectsList>
+      <MoreNote>More available on request.</MoreNote>
       <ClientWork>
         <ParallaxWave />
-        <p>More available on request.</p>
-        <p id="contact">
-          <a href="mailto:amy.frear@gmail.com">amy.frear@gmail.com</a>
-          {' | '}
-          <a
-            href="https://www.linkedin.com/in/amy-frear"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
-          {' | '}
-          <a
-            href="https://github.com/a-frear"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-        </p>
       </ClientWork>
     </WorkWrapper>
   );
@@ -91,9 +75,25 @@ export default function Projects() {
 
 const WorkWrapper = styled.section`
   text-align: left;
-  padding-bottom: 50px;
+  /* Sit the contact section right under the wave */
+  &.full-section {
+    margin-bottom: 0;
+  }
+`;
+
+const MoreNote = styled.p`
+  font-size: 20px;
+  line-height: 1.4;
+  color: black;
+  text-align: center;
+  margin-top: 32px;
+  margin-bottom: 50px;
   @media (min-width: ${breakpoints.tablet}) {
-    padding-bottom: 100px;
+    font-size: 22px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
   }
 `;
 
@@ -108,14 +108,13 @@ const Heading = styled.h2`
 
 const ProjectsList = styled.ul`
   margin-top: 40px;
-  margin-bottom: 50px;
+  margin-bottom: 0;
   list-style: none;
   padding: 0;
   display: grid;
 
   @media (min-width: ${breakpoints.tablet}) {
     margin-top: 60px;
-    margin-bottom: 100px;
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -183,7 +182,6 @@ const ProjectLink = styled.a`
 const ClientWork = styled.div`
   text-align: center;
   margin: 0 auto;
-  padding-bottom: 50px;
   color: black;
   p {
     margin-bottom: 20px;

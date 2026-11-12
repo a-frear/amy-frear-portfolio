@@ -6,8 +6,10 @@ import ReducedMotionToggle from './ReducedMotionToggle.js';
 import Hamburger from './icons/Hamburger.js';
 import Curve from './icons/Curve.js';
 import { isFeatureEnabled } from '../config/featureFlags.js';
-import { red, lightYellow, green } from '../styles/colors';
+import { red, lightYellow, green, black } from '../styles/colors';
 import { breakpoints } from '../styles/breakpoints';
+import OutlinedText from './OutlinedText';
+import { SubtitleIntro } from '../styles/animations';
 
 export default function Header() {
   const { animation, mounted } = useContext(ReducedMotionContext);
@@ -72,8 +74,13 @@ export default function Header() {
           </>
         )}
         <div className="header-title">
-          <h1>Amy Frear</h1>
-          <p>Web Developer</p>
+          <h1>
+            <OutlinedText outline={2.5}>Frear Projects</OutlinedText>
+          </h1>
+          {/* Fades up once the slime has dropped in */}
+          <p className={animation ? 'animate-in' : undefined}>
+            Independent web development for creative teams
+          </p>
         </div>
       </HeaderContainer>
     </HeaderWrapper>
@@ -125,19 +132,22 @@ const HeaderContainer = styled.div`
   }
   h1 {
     font-family: 'Bowlby One SC';
-    font-size: 58px;
+    /* Sized so "Frear Projects" always fits on one line */
+    font-size: min(58px, 9.6vw);
+    line-height: 1;
+    white-space: nowrap;
     color: ${lightYellow};
-    text-shadow: -2px 2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000,
-      -2px -2px 0 #000;
     padding: 0 10px;
   }
 
   p {
-    font-family: 'Bowlby One SC';
-    font-size: clamp(24px, 4vw, 42px);
-    color: ${lightYellow};
-    text-shadow: -2px 2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000,
-      -2px -2px 0 #000;
+    ${SubtitleIntro}
+    margin-top: 8px;
+    padding: 0 10px;
+    font-family: 'Fjalla One', sans-serif;
+    font-size: clamp(17px, 2.8vw, 20px);
+    line-height: 1.2;
+    color: ${black};
   }
 
   .nav-button-wrapper {

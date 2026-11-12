@@ -6,6 +6,8 @@ import Intro from '../components/Intro';
 import About from '../components/About';
 import HeaderMedia from '../components/HeaderMedia';
 import Work from '../components/Work';
+import Services from '../components/Services';
+import Contact from '../components/Contact';
 
 export default function Home() {
   return (
@@ -20,8 +22,10 @@ export default function Home() {
         <MainContent>
           <Intro />
           <About />
+          <Services />
           <Work />
         </MainContent>
+        <Contact />
       </HomeWrapper>
     </>
   );

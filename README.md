@@ -120,7 +120,7 @@ The video used in the ambient header was made by me in homage to the experimenta
 
 ## Contact
 
-- **Email**: [amy.frear@gmail.com](mailto:amy.frear@gmail.com)
+- **Email**: [frearprojects@gmail.com](mailto:frearprojects@gmail.com)
 - **LinkedIn**: [linkedin.com/in/amy-frear](https://www.linkedin.com/in/amy-frear)
 - **GitHub**: [github.com/a-frear](https://github.com/a-frear)
 

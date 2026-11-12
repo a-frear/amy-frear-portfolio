@@ -2,11 +2,11 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 
 export default function SEO({
-  title = 'Amy Frear - Web Developer',
-  description = 'Portfolio of Amy Frear, a web developer specializing in interactive web experiences, animation, and video art.',
+  title = 'Frear Projects | Independent Web Development for Creative Teams',
+  description = 'Frear Projects is the independent web development practice of Amy Frear in Philadelphia, partnering with agencies and creative teams on front-end development and creative digital experiences.',
   image = 'https://www.frear-projects.com/assets/amy-hs.jpeg',
   url = 'https://www.frear-projects.com/',
-  keywords = 'developer, portfolio, react, next.js, video art, web design, animation',
+  keywords = 'freelance web developer, front-end development, agency subcontracting, Drupal, WordPress, React, Next.js, accessibility, Philadelphia',
 }) {
   const structuredData = {
     '@context': 'https://schema.org',
@@ -15,13 +15,24 @@ export default function SEO({
     url,
     image,
     description,
-    jobTitle: 'Web Developer',
+    jobTitle: 'Freelance Web Developer',
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Frear Projects',
+      url,
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Philadelphia',
+      addressRegion: 'PA',
+      addressCountry: 'US',
+    },
     sameAs: [
       'https://www.linkedin.com/in/amy-frear',
       'https://github.com/a-frear',
       'https://vimeo.com/amyfrear',
     ],
-    email: 'amy.frear@gmail.com',
+    email: 'frearprojects@gmail.com',
   };
 
   return (
@@ -40,7 +51,7 @@ export default function SEO({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
-      <meta property="og:site_name" content="Amy Frear Portfolio" />
+      <meta property="og:site_name" content="Frear Projects" />
       <meta property="og:locale" content="en_US" />
 
       {/* Twitter Card Meta Tags */}

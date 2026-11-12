@@ -6,8 +6,10 @@ import ReducedMotionToggle from './ReducedMotionToggle.js';
 import Hamburger from './icons/Hamburger.js';
 import Curve from './icons/Curve.js';
 import { isFeatureEnabled } from '../config/featureFlags.js';
-import { red, lightYellow, green, yellow } from '../styles/colors';
+import { red, lightYellow, green, yellow, black } from '../styles/colors';
 import { breakpoints } from '../styles/breakpoints';
+import OutlinedText from './OutlinedText';
+import { SubtitleIntro } from '../styles/animations';
 
 export default function Header() {
   const { animation, mounted } = useContext(ReducedMotionContext);
@@ -46,8 +48,13 @@ export default function Header() {
           </div>
         )}
         <div className="header-title">
-          <h1>Amy Frear</h1>
-          <p>Web Developer</p>
+          <h1>
+            <OutlinedText outline={3.5}>Frear Projects</OutlinedText>
+          </h1>
+          {/* Fades up once the slime has dropped in */}
+          <p className={animation ? 'animate-in' : undefined}>
+            Independent web development for creative teams
+          </p>
         </div>
         {isFeatureEnabled('SHOW_SIDENAV') && (
           <>
@@ -114,7 +121,7 @@ const HeaderContainer = styled.div`
     background-color: transparent;
     justify-content: space-between;
     width: 100%;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr auto 1fr;
     height: 140px;
   }
   .toggle-wrapper {
@@ -127,18 +134,20 @@ const HeaderContainer = styled.div`
   h1 {
     margin-top: 1rem;
     font-family: 'Bowlby One SC';
-    font-size: clamp(18px, 10vw, 86px);
+    /* Sized so "Frear Projects" always fits on one line */
+    font-size: clamp(40px, 5.2vw, 80px);
+    line-height: 1;
+    white-space: nowrap;
     color: ${lightYellow};
-    text-shadow: -3px 3px 0 #000, 3px 3px 0 #000, 3px -3px 0 #000,
-      -3px -3px 0 #000;
   }
 
   p {
-    font-family: 'Bowlby One SC';
-    font-size: clamp(14px, 4vw, 34px);
-    color: ${lightYellow};
-    text-shadow: -3px 3px 0 #000, 3px 3px 0 #000, 3px -3px 0 #000,
-      -3px -3px 0 #000;
+    ${SubtitleIntro}
+    margin-top: 10px;
+    font-family: 'Fjalla One', sans-serif;
+    font-size: clamp(18px, 1.7vw, 24px);
+    line-height: 1.2;
+    color: ${black};
   }
 
   .nav-button-wrapper {

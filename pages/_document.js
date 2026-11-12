@@ -33,7 +33,9 @@ export default class MyDocument extends Document {
       <Html>
         <Head>
           {/* Favicon */}
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <link
             rel="icon"
             type="image/png"

@@ -1,12 +1,13 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
 import { motion } from 'motion/react';
-import { green } from '../styles/colors';
+import { green, hotPink } from '../styles/colors';
 import VisuallyHiddenText from './VisuallyHiddenText';
 import { useParallax } from '../hooks/useParallax';
 import { useMobile } from '../hooks/useMobile';
-import { SectionHeading } from '../styles/typography';
+import { SectionHeading, BodyTextSize } from '../styles/typography';
 import { breakpoints } from '../styles/breakpoints';
+import OutlinedText from './OutlinedText';
 
 export default function Intro() {
   const headshotRef = useRef(null);
@@ -16,11 +17,22 @@ export default function Intro() {
   return (
     <IntroSection className="full-section">
       <Content>
-        <Heading>I'm Amy.</Heading>
+        <Heading>
+          <OutlinedText>I'm Amy.</OutlinedText>
+        </Heading>
         <Body>
-          I live in Philly. I love solving problems and creating websites that
-          are fun to explore.
+          I'm an independent web developer in Philly. Through Frear Projects, I
+          partner with agencies and creative teams to build websites that are
+          accessible, engaging, and fun to explore.
         </Body>
+        {/* <Actions>
+          <li>
+            <a href="#contact">Work with me</a>
+          </li>
+          <li>
+            <a href="#work">Selected work</a>
+          </li>
+        </Actions> */}
       </Content>
       <ParallaxHeadshot ref={headshotRef} tabIndex={0} style={{ y: headshotY }}>
         <VisuallyHiddenText>
@@ -59,7 +71,36 @@ const Heading = styled.h2`
   ${SectionHeading}
 `;
 
+const Actions = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 28px;
+  margin-top: 2rem;
+  @media (min-width: ${breakpoints.tablet}) {
+    justify-content: flex-start;
+  }
+  padding: 0;
+  list-style: none;
+  a {
+    ${BodyTextSize}
+    color: black;
+    text-underline-offset: 4px;
+    transition: color 0.3s ease;
+    @media (pointer: fine) {
+      &:hover {
+        color: ${hotPink};
+      }
+    }
+    &:focus-visible {
+      color: ${hotPink};
+    }
+  }
+`;
+
 const Body = styled.p`
+  ${BodyTextSize}
+  line-height: 140%;
   margin-top: 2rem;
   color: black;
   a {
