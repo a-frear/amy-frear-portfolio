@@ -1,11 +1,18 @@
 import styled from 'styled-components';
-import { hotPink } from '../styles/colors';
+import { hotPinkText } from '../styles/colors';
 import { SectionHeading } from '../styles/typography';
 import { breakpoints } from '../styles/breakpoints';
 import OutlinedText from './OutlinedText';
+import VisuallyHiddenText from './VisuallyHiddenText';
 
 export default function Projects() {
   const projects = [
+    {
+      client: 'Holt Street Baptist Church Civil Rights Museum',
+      link: 'https://holtstreetmuseum.org/',
+      role: 'Frontend Developer',
+      year: '2026',
+    },
     {
       client: 'National Gallery of Art',
       link: 'https://www.nga.gov/',
@@ -60,6 +67,7 @@ export default function Projects() {
                 <span className="dots" />
                 <span className="year">{project.year}</span>
               </ProjectText>
+              <VisuallyHiddenText>(opens in a new tab)</VisuallyHiddenText>
             </ProjectLink>
           </ProjectItem>
         ))}
@@ -125,7 +133,7 @@ const ProjectItem = styled.li`
   @media (pointer: fine) {
     & a:hover .client,
     & a:focus-visible .client {
-      color: ${hotPink};
+      color: ${hotPinkText};
     }
   }
 `;
@@ -158,7 +166,7 @@ const ProjectText = styled.div`
   }
 
   .year {
-    color: ${hotPink};
+    color: ${hotPinkText};
     font-weight: 500;
   }
 `;

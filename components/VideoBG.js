@@ -240,6 +240,12 @@ export default function VideoBG() {
 
   return (
     <VideoBGWrapper>
+      {/* Text alternative for the video (WCAG 1.2.x). Its audio is
+          instrumental music only, with no speech. */}
+      <VisuallyHiddenText>
+        Background video: a demo of Eye Site (eyesite.club), a website project,
+        being explored on a phone. Instrumental music only, no speech.
+      </VisuallyHiddenText>
       <PosterWrapper
         isPlaying={isPlaying}
         isIframeReady={isIframeReady}
@@ -248,7 +254,12 @@ export default function VideoBG() {
       >
         <iframe
           ref={iframe}
-          title="bg-video"
+          title="Eye Site demo (background video)"
+          // Our own buttons control it, and the text above describes it,
+          // so the embedded player is kept out of the tab order and
+          // hidden from screen readers
+          tabIndex={-1}
+          aria-hidden="true"
           src="https://player.vimeo.com/video/1134232578?h=c72e2e0a73&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;muted=1&amp;loop=1&amp;background=1&amp;autoplay=0&amp;quality=1080p"
           width="100%"
           height="100%"
@@ -385,6 +396,14 @@ const TimelineInput = styled.input`
   box-sizing: border-box;
   -webkit-appearance: none;
   appearance: none;
+
+  /* Visible keyboard focus: a black and white ring (drawn inside the edges,
+     since the video clips anything outside), clear over any video frame */
+  &:focus-visible {
+    outline: 3px solid white;
+    outline-offset: -3px;
+    box-shadow: inset 0 0 0 5px black;
+  }
 
   /* Track styling */
   &::-webkit-slider-runnable-track {

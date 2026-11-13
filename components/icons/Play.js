@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useId } from 'react';
 import PropTypes from 'prop-types';
-import { green } from '../../styles/colors';
+import { green, black } from '../../styles/colors';
 
 export default function Play({ color = green }) {
+  // Unique per icon, so ids never clash with other SVGs on the page
+  const shadowId = `${useId()}-shadow`;
   return (
     <svg
       aria-hidden="true"
@@ -10,12 +12,11 @@ export default function Play({ color = green }) {
       height="800px"
       width="800px"
       version="1.1"
-      id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
     >
       <defs>
-        <filter id="slimeShadow" x="-50%" y="-50%" width="200%" height="200%">
+        <filter id={shadowId} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
           <feOffset dx="0" dy="3" result="offsetblur" />
           <feComponentTransfer>
@@ -27,7 +28,10 @@ export default function Play({ color = green }) {
           </feMerge>
         </filter>
       </defs>
-      <g filter="url(#slimeShadow)">
+      <g filter={`url(#${shadowId})`}>
+        {/* Dark backing, so the cut-out triangle is always dark (not see-
+            through), whatever the video behind it is showing */}
+        <circle cx="256" cy="256" r="200" fill={black} />
         <g>
           <path
             d="M256,0C114.511,0,0,114.497,0,256c0,141.49,114.495,256,256,256c141.49,0,256-114.497,256-256C512,114.51,397.503,0,256,0

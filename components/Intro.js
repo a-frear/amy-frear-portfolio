@@ -1,8 +1,7 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
 import { motion } from 'motion/react';
-import { green, hotPink } from '../styles/colors';
-import VisuallyHiddenText from './VisuallyHiddenText';
+import { green, hotPinkText } from '../styles/colors';
 import { useParallax } from '../hooks/useParallax';
 import { useMobile } from '../hooks/useMobile';
 import {
@@ -38,13 +37,14 @@ export default function Intro() {
           </li>
         </Actions> */}
       </Content>
-      <ParallaxHeadshot ref={headshotRef} tabIndex={0} style={{ y: headshotY }}>
-        <VisuallyHiddenText>
-          An image of Amy Frear, a woman with red hair in a bun. When hovered or
-          focused on desktop, it reveals Gritty, the loyal but mischievous
-          mascot for the Philadelphia Flyers.
-        </VisuallyHiddenText>
-      </ParallaxHeadshot>
+      {/* An image (the photo is a CSS background), named for screen
+          readers. Not a tab stop: there's nothing to do with it. */}
+      <ParallaxHeadshot
+        ref={headshotRef}
+        role="img"
+        aria-label="Amy Frear, a woman with red hair in a bun. On desktop, hovering over the photo swaps in Gritty, the loyal but mischievous mascot of the Philadelphia Flyers."
+        style={{ y: headshotY }}
+      />
     </IntroSection>
   );
 }
@@ -93,11 +93,11 @@ const Actions = styled.ul`
     transition: color 0.3s ease;
     @media (pointer: fine) {
       &:hover {
-        color: ${hotPink};
+        color: ${hotPinkText};
       }
     }
     &:focus-visible {
-      color: ${hotPink};
+      color: ${hotPinkText};
     }
   }
 `;
@@ -134,7 +134,7 @@ const ParallaxHeadshot = styled(motion.div)`
     height: 400px;
 
     /* Gritty sits on top, invisible (and already loaded), and fades in on
-       hover or keyboard focus. Fading in waits a beat, so a mouse that just
+       hover. Fading in waits a beat, so a mouse that just
        passes over while scrolling doesn't set it off. */
     position: relative;
     &::after {
@@ -148,8 +148,7 @@ const ParallaxHeadshot = styled(motion.div)`
       transition: opacity 0.6s ease;
       pointer-events: none;
     }
-    &:hover::after,
-    &:focus-visible::after {
+    &:hover::after {
       opacity: 1;
       transition: opacity 0.6s ease 0.25s;
     }

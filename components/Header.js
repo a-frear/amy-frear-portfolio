@@ -95,7 +95,7 @@ export default function Header() {
               aria-hidden="true"
               onClick={() => setOpenNav(false)}
             />
-            <dialog
+            <nav
               ref={navRef}
               id="site-nav"
               className="sidenav"
@@ -119,7 +119,7 @@ export default function Header() {
                   {link.label}
                 </a>
               ))}
-            </dialog>
+            </nav>
             {/* Morphs into the X that closes the menu */}
             <div className="nav-button" ref={navButtonRef}>
               <MenuButton

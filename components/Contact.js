@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { hotPink } from "../styles/colors";
+import { hotPinkText } from "../styles/colors";
 import {
   SectionHeading,
   BodyTextSize,
@@ -7,6 +7,7 @@ import {
 } from "../styles/typography";
 import { breakpoints } from "../styles/breakpoints";
 import OutlinedText from "./OutlinedText";
+import VisuallyHiddenText from "./VisuallyHiddenText";
 import ParallaxWave from "./icons/ParallaxWave";
 import { SmallBodyTextSize } from "../styles/typography";
 
@@ -44,6 +45,7 @@ export default function Contact() {
               rel="noopener noreferrer"
             >
               LinkedIn
+              <VisuallyHiddenText> (opens in a new tab)</VisuallyHiddenText>
             </a>
             {" | "}
             <a
@@ -52,6 +54,7 @@ export default function Contact() {
               rel="noopener noreferrer"
             >
               GitHub
+              <VisuallyHiddenText> (opens in a new tab)</VisuallyHiddenText>
             </a>
             {" | "}
             <a
@@ -60,6 +63,7 @@ export default function Contact() {
               rel="noopener noreferrer"
             >
               Vimeo
+              <VisuallyHiddenText> (opens in a new tab)</VisuallyHiddenText>
             </a>
           </Body>
         </Content>
@@ -140,11 +144,11 @@ const Body = styled.p`
   }
   @media (pointer: fine) {
     a:hover {
-      color: ${hotPink};
+      color: ${hotPinkText};
     }
   }
   a:focus-visible {
-    color: ${hotPink};
+    color: ${hotPinkText};
   }
   /* The booking paragraph is justified on phones; the email and link
      lines stay centered */

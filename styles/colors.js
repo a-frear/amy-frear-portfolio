@@ -13,3 +13,7 @@ export const darkPurple = '#033860';
 export const yellow = '#FCE762';
 export const black = '#0C0A09';
 export const gold = '#d4a840';
+// Text-safe versions of the bright accents: hotPink and blue are too light
+// for text on white (about 3.4:1). These pass WCAG AA (4.5:1 or more).
+export const hotPinkText = '#C2187F'; // 5.6:1 on white
+export const blueText = '#1F5FD1'; // 5.8:1 on white

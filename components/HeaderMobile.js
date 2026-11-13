@@ -33,8 +33,10 @@ export default function Header() {
   // The subtitle fades in after the slime drops (once per visit). The
   // menu button is just there, like the title.
   const introClass = useHeroIntro();
-  // On mobile the Animate button lives inside the menu, below the links.
-  // If the menu is switched off, it stays in the header instead.
+  // The Animate button sits in the menu, below the links, but only for
+  // mouse users (narrow desktop windows), who still get the scroll
+  // fade-ins and parallax. Touch screens skip those, so it's hidden there
+  // (see .nav-toggle).
   const showNav = isFeatureEnabled('SHOW_SIDENAV');
   const showToggle = isFeatureEnabled('SHOW_ANIMATION_TOGGLE');
   useNavModal({
@@ -72,11 +74,6 @@ export default function Header() {
         </AnimatedBackground>
       )}
       <HeaderContainer openNav={openNav} animation={animation}>
-        {showToggle && !showNav && (
-          <div className="toggle-wrapper">
-            <ReducedMotionToggle />
-          </div>
-        )}
         {showNav && (
           <>
             {/* Dark tint over the page while the menu is open; clicking it
@@ -88,7 +85,7 @@ export default function Header() {
               aria-hidden="true"
               onClick={() => setOpenNav(false)}
             />
-            <dialog
+            <nav
               ref={navRef}
               id="site-nav-mobile"
               className="sidenav"
@@ -117,7 +114,7 @@ export default function Header() {
                   <ReducedMotionToggle />
                 </div>
               )}
-            </dialog>
+            </nav>
             {/* Morphs into the X that closes the menu */}
             <div className="nav-button" ref={navButtonRef}>
               <MenuButton
@@ -180,17 +177,6 @@ const HeaderContainer = styled.div`
   height: var(--header-height);
   @media (min-width: ${breakpoints.desktop}) {
     display: none;
-  }
-  /* Only used when the menu is switched off: the Animate button takes the
-     menu button's spot in the top-right corner */
-  .toggle-wrapper {
-    position: absolute;
-    z-index: 2;
-    top: 1.5rem;
-    right: 1rem;
-    @media (min-width: ${breakpoints.tablet}) {
-      right: 2rem;
-    }
   }
   /* Left-aligned, beside the menu button. Sits above the menu, so the
      menu drops in behind the title. */
@@ -285,30 +271,39 @@ const HeaderContainer = styled.div`
     }};
   }
 
-  /* The menu links: stacked and centered */
+  /* The menu links: stacked and left-aligned, with the text lined up with
+     the title's left edge. (The menu has 20px side padding and each link
+     16px, so pull back by 36px; the title is 1rem in, or 2rem on tablet.) */
   .sidenav a {
     position: relative;
     display: block;
     width: fit-content;
-    margin: 0 auto;
+    margin: 0 0 0 calc(1rem - 36px);
     padding: 10px 16px;
     font-family: 'Fjalla One', sans-serif;
     text-transform: uppercase;
     text-decoration: none;
     font-size: 28px;
     color: black;
-    text-align: center;
+    text-align: left;
+    @media (min-width: ${breakpoints.tablet}) {
+      margin-left: calc(2rem - 36px);
+    }
   }
 
   /* The Animate button, below the links, lined up with the title on the
      left (the menu has 20px side padding; the title 1rem, or 2rem on
-     tablet) */
+     tablet). Hidden on touch screens, which already skip the scroll
+     fade-ins and parallax it controls. */
   .sidenav .nav-toggle {
     display: flex;
     justify-content: flex-start;
     margin: 20px 0 0 calc(1rem - 20px);
     @media (min-width: ${breakpoints.tablet}) {
       margin-left: calc(2rem - 20px);
+    }
+    @media (pointer: coarse) {
+      display: none;
     }
   }
 

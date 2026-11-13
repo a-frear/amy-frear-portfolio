@@ -85,10 +85,11 @@ export function useNavModal({
 
     // 4. Keyboard: Escape closes, Tab loops inside the menu
     const toggleButton = toggleWrap?.querySelector('button');
+    // Only what's actually showing (the mobile menu hides its Animate
+    // button on touch screens)
     const focusables = () =>
-      // Links, plus any button inside the menu (the mobile Animate button)
       [toggleButton, ...nav.querySelectorAll('a[href], button'), button].filter(
-        Boolean
+        (el) => el && el.getClientRects().length > 0
       );
     const onKeyDown = (event) => {
       if (event.key === 'Escape') {

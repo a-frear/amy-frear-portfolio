@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { green, blue } from '../styles/colors';
+import { green, blueText } from '../styles/colors';
 import {
   SectionHeading,
   BodyTextSize,
@@ -7,6 +7,7 @@ import {
 } from '../styles/typography';
 import { breakpoints } from '../styles/breakpoints';
 import OutlinedText from './OutlinedText';
+import VisuallyHiddenText from './VisuallyHiddenText';
 
 export default function About() {
   return (
@@ -19,6 +20,7 @@ export default function About() {
           I began my web development career at{' '}
           <a href="https://www.bluecadet.com/" target="_blank" rel="noreferrer">
             Bluecadet
+            <VisuallyHiddenText> (opens in a new tab)</VisuallyHiddenText>
           </a>
           , where I spent 5+ years working alongside an incredibly
           talented team to create thoughtful, engaging digital experiences. I'm
@@ -74,10 +76,10 @@ const Body = styled.p`
   }
   @media (pointer: fine) {
     a:hover {
-      color: ${blue};
+      color: ${blueText};
     }
     a:focus-visible {
-      color: ${blue};
+      color: ${blueText};
     }
   }
 `;
