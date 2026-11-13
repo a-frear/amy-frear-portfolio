@@ -14,12 +14,12 @@ const services = [
   {
     name: "CMS builds",
     description:
-      "Drupal and WordPress theming, plus headless builds with Sanity. From component libraries to editor-friendly content models and launch.",
+      "Drupal and WordPress theming, plus headless builds with Sanity. Component libraries to editor-friendly content models.",
   },
   {
     name: "Modern front ends",
     description:
-      "React and Next.js sites with responsive layouts, purposeful motion, and accessibility considered and built in from the very beginning. Translate your designs into a polished build.",
+      "React and Next.js sites with responsive layouts, purposeful motion, and accessibility considered and built in from the very beginning. I love to translate designs into a polished build.",
   },
 ];
 
