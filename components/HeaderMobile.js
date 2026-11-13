@@ -30,8 +30,8 @@ export default function Header() {
   const navRef = useRef(null);
   const navButtonRef = useRef(null);
   const overlayRef = useRef(null);
-  // Subtitle and menu button fade in together after the slime drops
-  // (once per visit)
+  // The subtitle fades in after the slime drops (once per visit). The
+  // menu button is just there, like the title.
   const introClass = useHeroIntro();
   // On mobile the Animate button lives inside the menu, below the links.
   // If the menu is switched off, it stays in the header instead.
@@ -73,9 +73,7 @@ export default function Header() {
       )}
       <HeaderContainer openNav={openNav} animation={animation}>
         {showToggle && !showNav && (
-          <div
-            className={['toggle-wrapper', introClass].filter(Boolean).join(' ')}
-          >
+          <div className="toggle-wrapper">
             <ReducedMotionToggle />
           </div>
         )}
@@ -121,10 +119,7 @@ export default function Header() {
               )}
             </dialog>
             {/* Morphs into the X that closes the menu */}
-            <div
-              className={['nav-button', introClass].filter(Boolean).join(' ')}
-              ref={navButtonRef}
-            >
+            <div className="nav-button" ref={navButtonRef}>
               <MenuButton
                 open={openNav}
                 onClick={() => setOpenNav(!openNav)}
@@ -189,7 +184,6 @@ const HeaderContainer = styled.div`
   /* Only used when the menu is switched off: the Animate button takes the
      menu button's spot in the top-right corner */
   .toggle-wrapper {
-    ${SubtitleIntro}
     position: absolute;
     z-index: 2;
     top: 1.5rem;
@@ -233,7 +227,6 @@ const HeaderContainer = styled.div`
   /* Menu button in the top-right corner. While the menu is open it's
      pinned to the screen, so the X stays reachable if you scroll. */
   .nav-button {
-    ${SubtitleIntro}
     position: ${(props) => (props.openNav ? 'fixed' : 'absolute')};
     /* Above the title, which spans the full width beside it */
     z-index: 3;

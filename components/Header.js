@@ -31,8 +31,8 @@ export default function Header() {
   const navButtonRef = useRef(null);
   const overlayRef = useRef(null);
   const toggleRef = useRef(null);
-  // Subtitle, Animate toggle, and menu button fade in together after the
-  // slime drops (once per visit)
+  // The subtitle fades in after the slime drops (once per visit). The
+  // Animate and menu buttons are just there, like the title.
   const introClass = useHeroIntro();
   useNavModal({
     open: openNav,
@@ -71,10 +71,7 @@ export default function Header() {
       )}
       <HeaderContainer openNav={openNav} animation={animation}>
         {isFeatureEnabled('SHOW_ANIMATION_TOGGLE') && (
-          <div
-            className={['toggle-wrapper', introClass].filter(Boolean).join(' ')}
-            ref={toggleRef}
-          >
+          <div className="toggle-wrapper" ref={toggleRef}>
             <ReducedMotionToggle />
           </div>
         )}
@@ -124,10 +121,7 @@ export default function Header() {
               ))}
             </dialog>
             {/* Morphs into the X that closes the menu */}
-            <div
-              className={['nav-button', introClass].filter(Boolean).join(' ')}
-              ref={navButtonRef}
-            >
+            <div className="nav-button" ref={navButtonRef}>
               <MenuButton
                 open={openNav}
                 onClick={() => setOpenNav(!openNav)}
@@ -178,7 +172,6 @@ const HeaderContainer = styled.div`
   }
   /* Animate button stays on top of (and usable in) the open menu */
   .toggle-wrapper {
-    ${SubtitleIntro}
     position: relative;
     z-index: 2;
     margin: 1.2rem 0 0 2rem;
@@ -213,7 +206,6 @@ const HeaderContainer = styled.div`
   /* Menu button in the top-right corner. While the menu is open it's
      pinned to the screen, so the X stays reachable if you scroll. */
   .nav-button {
-    ${SubtitleIntro}
     position: ${(props) => (props.openNav ? 'fixed' : 'absolute')};
     z-index: 2;
     top: 1rem;
