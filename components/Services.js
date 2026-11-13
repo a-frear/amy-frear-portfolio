@@ -91,13 +91,18 @@ const LogoCircle = styled.div`
   justify-content: center;
   width: 200px;
   height: 200px;
-  margin: 0 auto;
+  /* On mobile the logo sits between the service list and the Contact
+     wave. The wave's box starts ~30px above its visible stroke, so 38px
+     here makes the space below the logo match the space above it (60px
+     plus the bit of line height under the last line of text). */
+  margin: 0 auto 38px;
   border: 10px solid ${green};
   border-radius: 50%;
   /* Keeps the green dot inside the circle while it rises into place */
   overflow: hidden;
 
   @media (min-width: ${breakpoints.tablet}) {
+    margin-bottom: 0;
     width: clamp(200px, 20vw, 300px);
     height: clamp(200px, 20vw, 300px);
   }

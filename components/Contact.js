@@ -25,7 +25,7 @@ export default function Contact() {
         </Heading>
         <Content>
           <Body className="small">
-            Frear Projects is booking freelance and agency work.
+            Frear Projects is booking freelance and agency work for 2027.
             <br />
             Have a project in mind, or need an extra set of hands on your team?
             I'd love to hear about it.
@@ -91,6 +91,7 @@ const Inner = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 0 20px 50px;
+  max-width: 90%;
   @media (min-width: ${breakpoints.tablet}) {
     max-width: 80%;
     padding: 0 60px 100px;
