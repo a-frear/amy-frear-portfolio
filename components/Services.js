@@ -133,4 +133,7 @@ const ServiceDescription = styled.p`
   line-height: 1.5;
   color: black;
   max-width: 60ch;
+  @media (min-width: ${breakpoints.desktop}) {
+    max-width: 50ch;
+  }
 `;

@@ -28,15 +28,13 @@ export const SectionHeading = css`
 `;
 
 // Body paragraphs on phones: fully justified in a centered column, capped
-// at a comfortable reading width. Hyphenation (needs <html lang>) breaks
-// long words so justified lines don't get big gaps between words.
+// at a comfortable reading width. No hyphenation, so words are never
+// broken (lines can have wider gaps between words instead).
 export const MobileJustified = css`
   @media (max-width: ${parseInt(breakpoints.tablet, 10) - 0.02}px) {
     max-width: 30rem;
     margin-left: auto;
     margin-right: auto;
     text-align: justify;
-    -webkit-hyphens: auto;
-    hyphens: auto;
   }
 `;
