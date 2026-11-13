@@ -10,10 +10,10 @@ const IMAGE_ALT = 'Frear Projects logo: FP. inside a green circle';
 
 export default function SEO({
   title = 'Frear Projects | Independent Web Development for Creative Teams',
-  description = 'Frear Projects is the independent web development practice of Amy Frear in Philadelphia, partnering with agencies and creative teams on front-end development and creative digital experiences.',
+  description = 'Frear Projects is the independent web development practice of Amy Frear in Philadelphia, partnering with agencies, creative teams, and independent clients on front-end development and creative digital experiences, with a background in museums, universities, and cultural institutions.',
   image = SHARE_IMAGE,
   url = SITE_URL,
-  keywords = 'freelance web developer, front-end development, agency subcontracting, Drupal, WordPress, React, Next.js, accessibility, Philadelphia',
+  keywords = 'freelance web developer, front-end development, agency subcontracting, museum websites, cultural institutions, Drupal, WordPress, React, Next.js, accessibility, Philadelphia',
 }) {
   const structuredData = {
     '@context': 'https://schema.org',

@@ -24,18 +24,10 @@ export default function Intro() {
           <OutlinedText>I'm Amy.</OutlinedText>
         </Heading>
         <Body>
-          I'm an independent web developer in Philly. Through Frear Projects, I
-          partner with agencies and creative teams to build websites that are
-          accessible, engaging, and fun to explore.
+          I'm a freelance web developer in Philly. Through Frear Projects, I
+          partner with agencies, creative teams, and independent clients to
+          build websites that are accessible, engaging, and fun to explore.
         </Body>
-        {/* <Actions>
-          <li>
-            <a href="#contact">Work with me</a>
-          </li>
-          <li>
-            <a href="#work">Selected work</a>
-          </li>
-        </Actions> */}
       </Content>
       {/* An image (the photo is a CSS background), named for screen
           readers. Not a tab stop: there's nothing to do with it. */}
@@ -73,33 +65,6 @@ const Content = styled.div`
 
 const Heading = styled.h2`
   ${SectionHeading}
-`;
-
-const Actions = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px 28px;
-  margin-top: 2rem;
-  @media (min-width: ${breakpoints.tablet}) {
-    justify-content: flex-start;
-  }
-  padding: 0;
-  list-style: none;
-  a {
-    ${BodyTextSize}
-    color: black;
-    text-underline-offset: 4px;
-    transition: color 0.3s ease;
-    @media (pointer: fine) {
-      &:hover {
-        color: ${hotPinkText};
-      }
-    }
-    &:focus-visible {
-      color: ${hotPinkText};
-    }
-  }
 `;
 
 const Body = styled.p`

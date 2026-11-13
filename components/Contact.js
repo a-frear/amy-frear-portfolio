@@ -30,7 +30,7 @@ export default function Contact() {
         </Heading>
         <Content>
           <Body className="small">
-            Frear Projects is booking freelance and agency work for 2027. Have a project in mind, or need an extra set of hands on your team?
+            Frear Projects is booking agency and independent projects for 2027. Have a project in mind, or need an extra set of hands on your team?
             I'd love to hear about it.
           </Body>
           <Body>
@@ -102,7 +102,7 @@ const Inner = styled.div`
     padding: 0 60px 100px;
   }
   @media (min-width: ${breakpoints.desktop}) {
-    max-width: 50%;
+    max-width: 60%;
   }
   @media (min-width: 1528px) {
     padding-left: calc((100vw - 1440px) / 2);
@@ -154,5 +154,8 @@ const Body = styled.p`
      lines stay centered */
   &.small {
     ${MobileJustified}
+    /* Evens out the line lengths, so the last line isn't left with just
+       a word or two */
+    text-wrap: balance;
   }
 `;

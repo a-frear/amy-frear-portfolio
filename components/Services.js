@@ -12,6 +12,11 @@ const services = [
       "I am available for contract and overflow front-end support. I can slot into your team’s process, tools, and timelines.",
   },
   {
+    name: "Independent projects",
+    description:
+      "Have a site of your own in mind? I work directly with organizations, artists, and individuals from first conversation to launch, and can take on the design as well.",
+  },
+  {
     name: "CMS builds",
     description:
       "Drupal and WordPress theming, plus headless builds with Sanity. Component libraries to editor-friendly content models.",

@@ -23,9 +23,11 @@ export default function About() {
             <VisuallyHiddenText> (opens in a new tab)</VisuallyHiddenText>
           </a>
           , where I spent 5+ years working alongside an incredibly
-          talented team to create thoughtful, engaging digital experiences. I'm
-          now bringing that experience to freelance work, partnering with
-          agencies and creative teams to bring ideas to life.
+          talented team to create thoughtful, engaging digital experiences,
+          mostly for museums, universities, and cultural institutions. I'm now
+          bringing that experience to freelance work, partnering with agencies
+          and creative teams, and working directly with clients on projects of
+          their own.
         </Body>
         <Body>
           My approach to developing is heavily influenced by my background in
