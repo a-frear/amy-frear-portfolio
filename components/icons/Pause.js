@@ -28,15 +28,15 @@ export default function Pause({ color = green }) {
           </feMerge>
         </filter>
       </defs>
-      {/* Dark backing, so the cut-out bars are always dark (not see-
-          through), whatever the video behind it is showing */}
-      <circle cx="256" cy="256" r="200" fill={black} />
-      <path
-        d="M256,0C114.617,0,0,114.615,0,256s114.617,256,256,256s256-114.615,256-256S397.383,0,256,0z M224,320
-	c0,8.836-7.164,16-16,16h-32c-8.836,0-16-7.164-16-16V192c0-8.836,7.164-16,16-16h32c8.836,0,16,7.164,16,16V320z M352,320
-	c0,8.836-7.164,16-16,16h-32c-8.836,0-16-7.164-16-16V192c0-8.836,7.164-16,16-16h32c8.836,0,16,7.164,16,16V320z"
-        filter={`url(#${shadowId})`}
-      />
+      {/* Green disc with a black border and two black outlined bars,
+          matching the play button (and the menu and Animate buttons) */}
+      <g filter={`url(#${shadowId})`}>
+        <circle cx="256" cy="256" r="224" stroke={black} strokeWidth="32" />
+        <g fill="none" stroke={black} strokeWidth="32">
+          <rect x="160" y="176" width="56" height="160" rx="22" />
+          <rect x="296" y="176" width="56" height="160" rx="22" />
+        </g>
+      </g>
     </svg>
   );
 }

@@ -246,7 +246,12 @@ export default function VideoBG() {
         Background video: a demo of Eye Site (eyesite.club), a website project,
         being explored on a phone. Instrumental music only, no speech.
       </VisuallyHiddenText>
+      {/* Clicking or tapping the video plays and pauses it too. A mouse
+          and touch shortcut only: keyboard and screen reader users have
+          the Play/Pause button, so this isn't a separate tab stop. */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <PosterWrapper
+        onClick={togglePlayPause}
         isPlaying={isPlaying}
         isIframeReady={isIframeReady}
         isVideoActuallyPlaying={isVideoActuallyPlaying}
@@ -354,6 +359,8 @@ const PosterWrapper = styled.div`
   background-image: url('/assets/eyesite-demo-still.jpeg');
   background-size: cover;
   background-position: center;
+  /* Clickable: plays and pauses the video */
+  cursor: pointer;
 
   @media (max-width: ${breakpoints.tablet}) {
     background-position: 73% 30%;

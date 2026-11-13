@@ -29,17 +29,17 @@ export default function Play({ color = green }) {
         </filter>
       </defs>
       <g filter={`url(#${shadowId})`}>
-        {/* Dark backing, so the cut-out triangle is always dark (not see-
-            through), whatever the video behind it is showing */}
-        <circle cx="256" cy="256" r="200" fill={black} />
-        <g>
-          <path
-            d="M256,0C114.511,0,0,114.497,0,256c0,141.49,114.495,256,256,256c141.49,0,256-114.497,256-256C512,114.51,397.503,0,256,0
-			z M348.238,284.418l-120.294,69.507c-10.148,5.864-22.661,5.874-32.826,0.009c-10.158-5.862-16.415-16.699-16.415-28.426V186.493
-			c0-11.728,6.258-22.564,16.415-28.426c5.076-2.93,10.741-4.395,16.406-4.395c5.67,0,11.341,1.468,16.42,4.402l120.295,69.507
-			c10.149,5.864,16.4,16.696,16.4,28.418C364.639,267.722,358.387,278.553,348.238,284.418z"
-          />
-        </g>
+        {/* Green disc with a black border and a black outlined triangle,
+            in the same proportions as the menu and Animate buttons (a 3px
+            line on a 48px button) */}
+        <circle cx="256" cy="256" r="224" stroke={black} strokeWidth="32" />
+        <path
+          d="M348.238,284.418l-120.294,69.507c-10.148,5.864-22.661,5.874-32.826,0.009c-10.158-5.862-16.415-16.699-16.415-28.426V186.493c0-11.728,6.258-22.564,16.415-28.426c5.076-2.93,10.741-4.395,16.406-4.395c5.67,0,11.341,1.468,16.42,4.402l120.295,69.507c10.149,5.864,16.4,16.696,16.4,28.418C364.639,267.722,358.387,278.553,348.238,284.418z"
+          fill="none"
+          stroke={black}
+          strokeWidth="32"
+          strokeLinejoin="round"
+        />
       </g>
     </svg>
   );
