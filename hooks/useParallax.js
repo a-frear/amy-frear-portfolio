@@ -30,8 +30,17 @@ export function useParallax(intensity = 0.08, elementRef = null) {
     }
   }, [elementRef]);
 
-  // Always create the transform, but use 0 intensity if animations are disabled
-  const effectiveIntensity = animation ? intensity : 0;
+  // Touch screens (phones, tablets): no parallax. Their scrolling runs
+  // separately from the page's JavaScript, so moving things on every
+  // scroll frame lags a beat behind your finger and looks jittery.
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    setIsTouch(window.matchMedia('(pointer: coarse)').matches);
+  }, []);
+
+  // Always create the transform, but use 0 intensity if animations are
+  // disabled or on touch screens
+  const effectiveIntensity = animation && !isTouch ? intensity : 0;
 
   // Create parallax effect that:
   // 1. Before element reaches viewport: element rises up

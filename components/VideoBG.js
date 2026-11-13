@@ -312,6 +312,10 @@ const VideoBGWrapper = styled.div`
   }
 
   iframe {
+    /* The video is controlled by our own buttons, so the Vimeo frame never
+       needs touches. Without this, a swipe that starts on the video goes
+       into the iframe instead of scrolling the page (janky on iPhone). */
+    pointer-events: none;
     width: 100vw;
     height: 56.25vw; /* Given a 16:9 aspect ratio, 9/16*100 = 56.25 */
     min-height: 100vh;
