@@ -74,11 +74,13 @@ const AnimateButton = styled.button`
 
   .label {
     font-family: 'Fjalla One', sans-serif;
-    font-size: 12px;
+    /* Bigger on phones and tablets, where it sits in the menu below the
+       links; smaller in the corner of the desktop header */
+    font-size: 16px;
     line-height: 1;
     text-transform: uppercase;
     white-space: nowrap;
-    @media (min-width: ${breakpoints.tablet}) {
+    @media (min-width: ${breakpoints.desktop}) {
       font-size: 13px;
     }
   }
