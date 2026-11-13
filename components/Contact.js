@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { hotPink } from "../styles/colors";
-import { SectionHeading, BodyTextSize } from "../styles/typography";
+import {
+  SectionHeading,
+  BodyTextSize,
+  MobileJustified,
+} from "../styles/typography";
 import { breakpoints } from "../styles/breakpoints";
 import OutlinedText from "./OutlinedText";
 import ParallaxWave from "./icons/ParallaxWave";
@@ -25,9 +29,7 @@ export default function Contact() {
         </Heading>
         <Content>
           <Body className="small">
-            Frear Projects is booking freelance and agency work for 2027.
-            <br />
-            Have a project in mind, or need an extra set of hands on your team?
+            Frear Projects is booking freelance and agency work for 2027. Have a project in mind, or need an extra set of hands on your team?
             I'd love to hear about it.
           </Body>
           <Body>
@@ -91,7 +93,6 @@ const Inner = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 0 20px 50px;
-  max-width: 90%;
   @media (min-width: ${breakpoints.tablet}) {
     max-width: 80%;
     padding: 0 60px 100px;
@@ -144,5 +145,10 @@ const Body = styled.p`
   }
   a:focus-visible {
     color: ${hotPink};
+  }
+  /* The booking paragraph is justified on phones; the email and link
+     lines stay centered */
+  &.small {
+    ${MobileJustified}
   }
 `;

@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { green, blue } from '../styles/colors';
-import { SectionHeading, BodyTextSize } from '../styles/typography';
+import {
+  SectionHeading,
+  BodyTextSize,
+  MobileJustified,
+} from '../styles/typography';
 import { breakpoints } from '../styles/breakpoints';
 import OutlinedText from './OutlinedText';
 
@@ -59,6 +63,7 @@ const Content = styled.div`
 
 const Body = styled.p`
   ${BodyTextSize}
+  ${MobileJustified}
   color: black;
   line-height: 165%;
   & + & {

@@ -5,7 +5,11 @@ import { green, hotPink } from '../styles/colors';
 import VisuallyHiddenText from './VisuallyHiddenText';
 import { useParallax } from '../hooks/useParallax';
 import { useMobile } from '../hooks/useMobile';
-import { SectionHeading, BodyTextSize } from '../styles/typography';
+import {
+  SectionHeading,
+  BodyTextSize,
+  MobileJustified,
+} from '../styles/typography';
 import { breakpoints } from '../styles/breakpoints';
 import OutlinedText from './OutlinedText';
 
@@ -100,6 +104,7 @@ const Actions = styled.ul`
 
 const Body = styled.p`
   ${BodyTextSize}
+  ${MobileJustified}
   line-height: 140%;
   margin-top: 2rem;
   color: black;

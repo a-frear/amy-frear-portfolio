@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
 import { green } from './colors';
+import { breakpoints } from './breakpoints';
 
 export const HeadingBase = css`
   font-size: clamp(52px, 8vw, 76px);
@@ -24,4 +25,18 @@ export const SmallBodyTextSize = css`
 export const SectionHeading = css`
   ${HeadingBase}
   color: ${green};
+`;
+
+// Body paragraphs on phones: fully justified in a centered column, capped
+// at a comfortable reading width. Hyphenation (needs <html lang>) breaks
+// long words so justified lines don't get big gaps between words.
+export const MobileJustified = css`
+  @media (max-width: ${parseInt(breakpoints.tablet, 10) - 0.02}px) {
+    max-width: 30rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
 `;
