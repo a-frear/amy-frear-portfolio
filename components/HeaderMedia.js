@@ -14,7 +14,11 @@ export default function HeaderMedia() {
 }
 
 const IntroSection = styled.section`
+  /* Full screen height that never changes. Plain vh changes on phones
+     when the browser toolbars slide away while scrolling, which resized
+     (zoomed) the video and made the page jump. lvh stays fixed. */
   height: 100vh;
+  height: 100lvh;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

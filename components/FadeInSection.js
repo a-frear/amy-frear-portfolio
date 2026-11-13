@@ -10,6 +10,9 @@ const SHOWN = { opacity: 1, y: 0 };
  * Fades a section up the first time it scrolls into view.
  *
  * - Only when the Animate toggle is on. Turning it off shows everything.
+ * - Not on touch screens (phones, tablets): content changing while a
+ *   finger is scrolling the page reads as stutter, so sections are just
+ *   there.
  * - Content is visible in the server HTML, so nothing is hidden if
  *   JavaScript is slow or off. Sections below the fold are hidden right
  *   after the page loads (off screen, so you never see it happen); anything
@@ -26,7 +29,8 @@ export default function FadeInSection({ children }) {
   // Once we know the Animate setting, hide sections that are below the fold
   useEffect(() => {
     if (!mounted || phase === 'shown') return;
-    if (!animation) {
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    if (!animation || isTouch) {
       setPhase('idle');
       return;
     }
