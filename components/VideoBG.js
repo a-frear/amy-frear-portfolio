@@ -314,12 +314,13 @@ const VideoBGWrapper = styled.div`
   iframe {
     width: 100vw;
     height: 56.25vw; /* Given a 16:9 aspect ratio, 9/16*100 = 56.25 */
-    /* lvh (not vh) so the video doesn't resize when phone toolbars
-       slide away while scrolling */
+    /* Covers the hero, using its locked height (see HeaderMedia.js) rather
+       than the screen height, so the video doesn't resize when phone
+       toolbars slide away while scrolling */
     min-height: 100vh;
-    min-height: 100lvh;
+    min-height: var(--hero-height, 100lvh);
     min-width: 177.77vh; /* Given a 16:9 aspect ratio, 16/9*100 = 177.77 */
-    min-width: 177.77lvh;
+    min-width: calc(var(--hero-height, 100lvh) * 16 / 9);
     position: absolute;
     top: 50%;
     left: 1%;
